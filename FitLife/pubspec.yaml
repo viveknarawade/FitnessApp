@@ -7,10 +7,12 @@ environment:
   sdk: '>=3.4.4 <4.0.0'
 
 dependencies:
+  fl_chart: ^0.69.0
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.2.1
+  simple_animation_progress_bar: ^1.8.2
     
 
 dev_dependencies:
@@ -24,14 +26,20 @@ flutter:
       - assets/workout/skipping.png
       - assets/workout/fullBody-navs.png
       - assets/workout/warm-up.png
+      - assets/icon/meal.png
+      - assets/icon/walk.png
 
 
       - assets/icon/Icon-Next.png
       - assets/icon/correct.svg
       - assets/icon/Button-Next.svg
       - assets/icon/calories.svg
-
-
+      - assets/icon/home.svg
+      - assets/icon/activity.svg
+      - assets/icon/profile.svg
+      - assets/meal/meal1.svg
+      - assets/meal/meal2.svg
+      - assets/workout/fullbody.svg
 
       - assets/workout/finishWorkout.svg
       - assets/meal/salad.svg
