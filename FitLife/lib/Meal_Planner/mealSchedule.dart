@@ -10,7 +10,9 @@ class MealSchedule extends StatefulWidget {
   const MealSchedule({super.key});
   @override
   State createState() => _MealScheduleState();
+  
 }
+
 
 class _MealScheduleState extends State {
   @override
@@ -24,6 +26,7 @@ class _MealScheduleState extends State {
           SizedBox(
             height: 15,
           ),
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
