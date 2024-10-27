@@ -1,5 +1,7 @@
+import 'package:fitness_app/Meal_Planner/mealLineChart.dart';
 import 'package:fitness_app/Meal_Planner/mealSchedule.dart';
 import 'package:fitness_app/Meal_Planner/mealCategory.dart';
+import 'package:fitness_app/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,18 +28,14 @@ class _MealhomeState extends State {
                     fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
-                height: 10,
+                height: 40,
               ),
-              Container(
-                width: 360,
-                height: 190,
-                color: Colors.red,
-              ),
+              Meallinechart(),
               const SizedBox(
                 height: 10,
               ),
 
-              //  Daily Meal Shedule
+              // Daily Meal Shedule
 
               Container(
                 padding:
@@ -198,9 +196,11 @@ class _MealhomeState extends State {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                    return Category();
-                                  }),);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) {
+                                      return Category();
+                                    }),
+                                  );
                                 },
                                 child: Text(
                                   "Select",
