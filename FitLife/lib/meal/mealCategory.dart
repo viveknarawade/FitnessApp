@@ -1,5 +1,6 @@
+
+
 import 'package:fitness_app/meal/mealDetail.dart';
-import 'package:fitness_app/workout/exerciseCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
