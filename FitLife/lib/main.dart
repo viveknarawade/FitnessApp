@@ -1,4 +1,5 @@
 import 'package:fitness_app/Dashboard/home_ui.dart';
+import 'package:fitness_app/Dashboard/profile_ui.dart';
 import 'package:fitness_app/Meal_Planner/mealCategory.dart';
 import 'package:fitness_app/Meal_Planner/mealHome.dart';
 import 'package:fitness_app/workout/workoutLineChart.dart';
