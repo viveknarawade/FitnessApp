@@ -37,10 +37,13 @@ flutter:
       - assets/icon/home.svg
       - assets/icon/activity.svg
       - assets/icon/profile.svg
+      - assets/icon/next-btn.svg
+      - assets/icon/dinner.svg
+      - assets/icon/fire.svg
+      - assets/icon/bell.svg
       - assets/meal/meal1.svg
       - assets/meal/meal2.svg
       - assets/workout/fullbody.svg
-
       - assets/workout/finishWorkout.svg
       - assets/meal/salad.svg
       - assets/meal/pancakes.svg

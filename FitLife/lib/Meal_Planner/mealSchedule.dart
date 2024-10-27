@@ -19,73 +19,89 @@ class _MealScheduleState extends State {
       appBar: AppBar(
         title: const Text("Meal Schedule"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    "Today",
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                  ),
-                ],
+              const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.grey,
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text("Breakfast"),
               SizedBox(
-                height: 10,
+                width:15,
               ),
-              Breakfast(),
+              Text(
+                "Today",
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  color: Colors.grey,
+                ),
+              ),
               SizedBox(
-                height: 10,
+                width: 20,
               ),
-              Text("Lunch"),
-              SizedBox(
-                height: 10,
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey,
               ),
-              Lunch(),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Dinner"),
-              SizedBox(
-                height: 10,
-              ),
-              Dinner(),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Snacks"),
-              SizedBox(
-                height: 10,
-              ),
-              Snacks(),
             ],
           ),
-        ),
+          SizedBox(
+            height: 20,
+          ),
+          const Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Breakfast"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Breakfast(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Lunch"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Lunch(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Dinner"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Dinner(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Snacks"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Snacks(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

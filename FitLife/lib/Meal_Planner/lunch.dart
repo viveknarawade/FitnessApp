@@ -12,45 +12,52 @@ class _BreakfastState extends State {
   @override
   Widget build(context) {
     return ListView.builder(
+      itemCount:3,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 3,  // Adjust based on your data
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.7),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                  offset: Offset(0,3)
+                ),
+              ],
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromRGBO(234, 239, 255, 1)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  const SizedBox(width: 10),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromRGBO(234, 238, 255, 1),
-                    ),
-                    child: SvgPicture.asset("assets/img/meal1.svg"),
+                  const SizedBox(
+                    width: 10,
                   ),
-                  const SizedBox(width: 30),
+                  SvgPicture.asset("assets/meal/meal1.svg"),
+                  const SizedBox(
+                    width: 30,
+                  ),
                   const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Honey Pancake"),
-                      Text("07:00 AM"),
+                      Text("Salmon Nigiri"),
+                      Text("Today | 7 am"),
                     ],
                   ),
                 ],
               ),
               SvgPicture.asset(
-                "assets/icons/next-btn.svg",
-                width: 40,
-                height: 35,
+                "assets/icon/Button-Next.svg",
+                width: 30,
+                height: 33,
               ),
             ],
           ),
         );
       },
     );
-  }
+   }
 }

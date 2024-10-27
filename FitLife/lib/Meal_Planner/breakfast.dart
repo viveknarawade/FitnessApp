@@ -13,64 +13,48 @@ class _BreakfastState extends State {
   @override
   Widget build(context) {
     return ListView.builder(
-      itemCount: 8,
+      itemCount:9,
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 14,
-                  offset: Offset(0, 5),
+                  color: Colors.grey.withOpacity(0.7),
                   spreadRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                )
-              ]),
+                  blurRadius: 10,
+                  offset: Offset(0,3)
+                ),
+              ],
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromRGBO(234, 239, 255, 1)),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  SvgPicture.asset(
-                    "assets/meal/pancakes.svg",
-                    height: 50,
-                    width: 50,
+                  const SizedBox(
+                    width: 10,
                   ),
-                  const SizedBox(width: 19),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SvgPicture.asset("assets/meal/meal1.svg"),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  const Column(
                     children: [
-                      Text(
-                        "cake",
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        "120 cal",
-                        style: GoogleFonts.poppins(
-                          fontSize: 15,
-                        ),
-                      ),
+                      Text("Salmon Nigiri"),
+                      Text("Today | 7 am"),
                     ],
                   ),
                 ],
               ),
-              const Spacer(),
-              GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    "assets/icons/next-btn.svg",
-                    height: 30,
-                    width: 30,
-                  )),
-              const SizedBox(width: 10),
+              SvgPicture.asset(
+                "assets/icon/Button-Next.svg",
+                width: 30,
+                height: 33,
+              ),
             ],
           ),
         );

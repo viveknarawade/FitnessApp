@@ -107,7 +107,7 @@ class _MealhomeState extends State {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 19, vertical: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: const Color.fromRGBO(234, 239, 255, 1)),
@@ -132,10 +132,11 @@ class _MealhomeState extends State {
                       ],
                     ),
                     SvgPicture.asset(
-                      "assets/icons/bell.svg",
+                      "assets/icon/bell.svg",
                       width: 30,
                       height: 23,
                     ),
+                   
                   ],
                 ),
               ),

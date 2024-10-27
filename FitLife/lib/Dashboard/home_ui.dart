@@ -78,7 +78,8 @@ class _HomeUiState extends State {
                           width: 100,
                           height: 100,
                           child: PieChart(
-                            swapAnimationDuration: const Duration(milliseconds: 700),
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 700),
                             PieChartData(
                               centerSpaceRadius: 30,
                               sections: [
@@ -86,16 +87,16 @@ class _HomeUiState extends State {
                                   showTitle: false,
                                   radius: 20,
                                   value: 30,
-                                  color: Colors.blue,
+                                  color: Color.fromRGBO(249, 198, 52, 1),
                                 ),
                                 PieChartSectionData(
                                   showTitle: false,
-                                  color: Colors.purple,
+                                  color: Color.fromRGBO(239, 152, 58, 1),
                                   radius: 20,
                                   value: 300,
                                 ),
                                 PieChartSectionData(
-                                  color: Colors.grey,
+                                  color: Color.fromRGBO(124, 117, 255, 1),
                                   showTitle: false,
                                   radius: 20,
                                   value: 30,
@@ -110,36 +111,32 @@ class _HomeUiState extends State {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(right: 20, bottom: 20),
+                                  const EdgeInsets.only(right: 20, bottom: 10,top: 5),
                               child: Column(
                                 children: [
-                                  Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.purple,
-                                        shape: BoxShape.circle,
-                                      )),
-                                  const SizedBox(
-                                    height: 29,
+                                  Icon(
+                                    Icons.flag,
+                                    color: Color.fromRGBO(249, 198, 52, 1),
+                                    size: 30,
                                   ),
-                                  Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.grey,
-                                        shape: BoxShape.circle,
-                                      )),
                                   const SizedBox(
-                                    height: 29,
+                                    height: 17,
                                   ),
-                                  Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.circle,
-                                      )),
+                                  SvgPicture.asset(
+                                    "assets/icon/dinner.svg",
+                                    color: Color.fromRGBO(239, 152, 58, 1),
+                                    width: 20,
+                                    height: 30,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  SvgPicture.asset(
+                                    "assets/icon/fire.svg",
+                                    color: Color.fromRGBO(124, 117, 255, 1),
+                                    width: 20,
+                                    height: 30,
+                                  ),
                                 ],
                               ),
                             ),
@@ -148,9 +145,15 @@ class _HomeUiState extends State {
                               children: [
                                 Text("Goal"),
                                 Text("2,340"),
-                                Text("Consumed"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Food"),
                                 Text("0"),
-                                Text("Remaining"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Exercise"),
                                 Text("0")
                               ],
                             ),
@@ -198,7 +201,6 @@ class _HomeUiState extends State {
                           const SizedBox(
                             height: 16,
                           ),
-                        
                           Stack(
                             alignment: Alignment.center,
                             children: [
@@ -231,12 +233,16 @@ class _HomeUiState extends State {
                                     color:
                                         const Color.fromRGBO(146, 163, 253, 1),
                                   ),
-                                  child:  Column(
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.asset("assets/icon/walk.png",width: 23 ,height: 23,),
+                                      Image.asset(
+                                        "assets/icon/walk.png",
+                                        width: 23,
+                                        height: 23,
+                                      ),
                                       const Text(
                                         "684 meter",
                                         style: TextStyle(fontSize: 14),
@@ -249,10 +255,7 @@ class _HomeUiState extends State {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 21,
-                  ),
-
+                  Spacer(),
                   Container(
                     width: 140,
                     height: 180,
@@ -281,7 +284,6 @@ class _HomeUiState extends State {
                           SizedBox(
                             height: 6,
                           ),
-                       
                         ],
                       ),
                     ),
@@ -315,7 +317,7 @@ class _HomeUiState extends State {
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 15,
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,13 +347,11 @@ class _HomeUiState extends State {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        width: 15,
-                      ),
+                      Spacer(),
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: SvgPicture.asset(
-                          "assets/icons/next-btn.svg",
+                          "assets/icon/next-btn.svg",
                           width: 40,
                           height: 35,
                         ),
@@ -379,19 +379,21 @@ class _HomeUiState extends State {
                   width: 50,
                 ),
                 GestureDetector(
-                  onTap:(){
-                      Navigator.of(context).push(MaterialPageRoute(builder:(context){
-                      return WorkoutTracker();
-                    }));
-                  },
-                  child: SvgPicture.asset("assets/icon/activity.svg")),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return WorkoutTracker();
+                      }));
+                    },
+                    child: SvgPicture.asset("assets/icon/activity.svg")),
               ],
             ),
             Row(
               children: [
                 GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder:(context){
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
                       return Mealhome();
                     }));
                   },
