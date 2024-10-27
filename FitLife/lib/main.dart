@@ -1,5 +1,6 @@
-import 'package:fitness_app/meal/mealCategory.dart';
-import 'package:fitness_app/profile.dart';
+import 'package:fitness_app/Dashboard/home_ui.dart';
+import 'package:fitness_app/Meal_Planner/mealCategory.dart';
+import 'package:fitness_app/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
 import './workout/workoutTracker.dart';
 
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:Profile(),
+      home:HomeUi(),
     );
   }
 }

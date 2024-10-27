@@ -1,8 +1,5 @@
-
-
-import 'package:fitness_app/meal/mealDetail.dart';
+import 'package:fitness_app/Meal_Planner/mealDetail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +15,10 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Breakfast",style: GoogleFonts.poppins(fontSize: 25,fontWeight: FontWeight.w600),),
+        title: Text(
+          "Breakfast",
+          style: GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -82,13 +82,12 @@ class _CategoryState extends State<Category> {
               ),
             ),
             const SizedBox(height: 20),
-              Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text("Recommendation for Diet",
                   style: GoogleFonts.poppins(
                       fontSize: 18, fontWeight: FontWeight.w600)),
             ),
-        
             const SizedBox(height: 10),
             SizedBox(
               height: 200,
@@ -123,7 +122,8 @@ class _CategoryState extends State<Category> {
                         ),
                         GestureDetector(
                           onTap: () {
-                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Detail()));
                           },
                           child: Container(
                             height: 30,
@@ -149,7 +149,6 @@ class _CategoryState extends State<Category> {
               ),
             ),
             const SizedBox(height: 20),
-            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(

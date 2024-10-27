@@ -1,5 +1,7 @@
 import 'package:fitness_app/workout/workoutCard.dart';
+import 'package:fitness_app/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutTracker extends StatefulWidget {
   const WorkoutTracker({super.key});
@@ -15,10 +17,27 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Color.fromRGBO(148, 171, 253, 1.0),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                "Workout Tracker",
+                style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+              ),
+            ),
+            backgroundColor: const Color.fromRGBO(148, 171, 253, 1.0),
             expandedHeight: MediaQuery.of(context).size.width * 0.9,
             elevation: 0.0,
             pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding:
+                    const EdgeInsets.only(top: 120.0, left: 30, bottom: 40),
+                child: Workoutlinechart(),
+              ),
+            ),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(0.0),
               child: Container(
@@ -36,19 +55,14 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
                   height: 5.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: Color.fromRGBO(233, 232, 232, 1.0),
+                    color: const Color.fromRGBO(233, 232, 232, 1.0),
                   ),
                 ),
               ),
             ),
             leadingWidth: 80,
-            leading: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.arrow_back_ios),
-            ),
           ),
           SliverToBoxAdapter(
-            
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -59,7 +73,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
               ),
             ),
           ),
-          Workoutcard(),
+          const Workoutcard(), // Assuming Workoutcard is also a widget
         ],
       ),
     );
