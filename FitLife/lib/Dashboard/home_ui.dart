@@ -18,33 +18,6 @@ class _HomeUiState extends State {
   @override
   Widget build(context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Welcome Back", style: GoogleFonts.poppins(fontSize: 18)),
-            Text("Yash Narawade",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500, fontSize: 20)),
-          ],
-        ),
-        actions: [
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const ReminderUi();
-                    },
-                  ),
-                );
-              },
-              child: const Icon(Icons.notification_add)),
-          const SizedBox(
-            width: 20,
-          )
-        ],
-      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
@@ -52,9 +25,35 @@ class _HomeUiState extends State {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Activity Status"),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  Text("Hello ,", style: GoogleFonts.poppins(fontSize: 18)),
+                  Spacer(),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ReminderUi();
+                            },
+                          ),
+                        );
+                      },
+                      child: SvgPicture.asset("assets/icon/bell-home.svg",height: 2,width: 20,)),
+                ],
+              ),
+              Text("Vivek Narawade",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500, fontSize: 20)),
               const SizedBox(
                 height: 20,
+              ),
+              Text("Activity Status", style: GoogleFonts.poppins(fontSize: 18)),
+              const SizedBox(
+                height: 10,
               ),
               Container(
                 padding: const EdgeInsets.only(
@@ -110,8 +109,8 @@ class _HomeUiState extends State {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 20, bottom: 10,top: 5),
+                              padding: const EdgeInsets.only(
+                                  right: 20, bottom: 10, top: 5),
                               child: Column(
                                 children: [
                                   Icon(

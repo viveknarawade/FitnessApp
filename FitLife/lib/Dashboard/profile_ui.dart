@@ -9,6 +9,12 @@ class _ProfileUiState extends State<ProfileUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text("Profile"),
+     
+
+      ),
       body: Column(
         children: [
           Stack(
@@ -18,13 +24,13 @@ class _ProfileUiState extends State<ProfileUi> {
                 clipper: ContainerClipper(),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 270,
+                  height: 190,
                   color: Colors.blue,
                 ),
               ),
               // Profile picture and camera icon
               Positioned(
-                top: 130,
+                top: 60,
                 left: MediaQuery.of(context).size.width / 2 - 65,
                 child: Stack(
                   children: [

@@ -12,7 +12,7 @@ class _BreakfastState extends State {
   @override
   Widget build(context) {
     return ListView.builder(
-      itemCount:5,
+      itemCount:2,
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return Container(
