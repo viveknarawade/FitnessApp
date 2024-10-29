@@ -1,5 +1,4 @@
 import 'package:fitness_app/Authentication/login.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,9 +37,7 @@ class Onbording extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30,),
             ],
           ),
         ),
