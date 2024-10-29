@@ -21,7 +21,7 @@ class Onbording extends StatelessWidget {
                 style: GoogleFonts.poppins(
                     fontSize: 23, fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: 400),
+              Spacer(),
               SizedBox(
                 width: 370,
                 height: 70,
@@ -36,7 +36,8 @@ class Onbording extends StatelessWidget {
                         fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 30,),
             ],
           ),
         ),
