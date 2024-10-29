@@ -17,26 +17,26 @@ class _SignupState extends State<Signup> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            top: 70,
+            top: 90,
             left: 35,
             right: 35,
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch, // Ensure full width
+            crossAxisAlignment: CrossAxisAlignment.center, // Ensure full width
             children: [
               Text(
                 "Hey there,",
                 style: GoogleFonts.poppins(
                     fontSize: 17, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Text(
-                "Welcome Back",
+                "Create an Account",
                 style: GoogleFonts.poppins(
                     fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -49,7 +49,10 @@ class _SignupState extends State<Signup> {
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/email.svg"),
+                    child: SvgPicture.asset(
+                      "assets/icon/profile.svg",
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -66,7 +69,8 @@ class _SignupState extends State<Signup> {
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/Lock.svg"),
+                    child: SvgPicture.asset("assets/icon/profile.svg",
+                        color: Colors.black),
                   ),
                 ),
               ),
@@ -83,7 +87,7 @@ class _SignupState extends State<Signup> {
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/Lock.svg"),
+                    child: SvgPicture.asset("assets/icon/email.svg"),
                   ),
                 ),
               ),
@@ -107,7 +111,7 @@ class _SignupState extends State<Signup> {
               const SizedBox(height: 60),
               SizedBox(
                 width: double.infinity,
-                height: 70,
+                height: 60,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(

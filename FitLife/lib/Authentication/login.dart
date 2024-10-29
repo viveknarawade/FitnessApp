@@ -23,14 +23,14 @@ class _LoginState extends State<Login> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch, // Ensure full width
+            crossAxisAlignment: CrossAxisAlignment.center, // Ensure full width
             children: [
               Text(
                 "Hey there",
                 style: GoogleFonts.poppins(
                     fontSize: 17, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 15),
+             // const SizedBox(height: 7),
               Text(
                 "Welcome Back",
                 style: GoogleFonts.poppins(
@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 60),
               SizedBox(
                 width: double.infinity,
-                height: 70,
+                height: 60,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
