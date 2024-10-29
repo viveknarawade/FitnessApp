@@ -42,6 +42,8 @@ flutter:
       - assets/icon/fire.svg
       - assets/icon/bell.svg
       - assets/icon/email.svg
+      - assets/icon/Lock.svg
+      - assets/icon/Login.svg
       - assets/icon/bell-home.svg
       - assets/meal/meal1.svg
       - assets/meal/meal2.svg
@@ -50,5 +52,6 @@ flutter:
       - assets/meal/salad.svg
       - assets/meal/pancakes.svg
       - assets/meal/pancake1.svg
+      - assets/authentication/loginScr.svg
   
     
