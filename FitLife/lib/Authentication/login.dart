@@ -1,3 +1,4 @@
+import 'package:fitness_app/Authentication/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -140,6 +141,11 @@ class _LoginState extends State<Login> {
                     width: 8,
                   ),
                   GestureDetector(
+                    onTap: (){
+                              Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Signup()),
+                    );
+                    },
                       child: Text(
                     "Register",
                     style: GoogleFonts.poppins(
