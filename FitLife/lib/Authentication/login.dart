@@ -1,4 +1,5 @@
 import 'package:fitness_app/Authentication/signUp.dart';
+import 'package:fitness_app/Dashboard/home_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +27,7 @@ class _LoginState extends State<Login> {
                     fontSize: 17, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Text(
                 "Welcome Back",
@@ -97,7 +98,7 @@ class _LoginState extends State<Login> {
                           Color.fromRGBO(150, 179, 254, 1))),
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Login()));
+                        MaterialPageRoute(builder: (context) => const HomeUi()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
