@@ -2,6 +2,7 @@ import 'package:fitness_app/Dashboard/home_ui.dart';
 import 'package:fitness_app/Authentication/login.dart';
 import 'package:fitness_app/Authentication/onboarding.dart';
 import 'package:fitness_app/Theme/color.dart';
+import 'package:fitness_app/workout/workoutTracker.dart';
 import 'package:flutter/material.dart';
 
 void main() {

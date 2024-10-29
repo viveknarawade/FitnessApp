@@ -4,11 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
+
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
 
-class _LoginState extends State {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,11 +106,13 @@ class _LoginState extends State {
                         width: 30,
                         height: 24,
                       ),
+
                       const SizedBox(
                         width: 10,
                       ),
+                     
                       Text(
-                        "Get Started",
+                        "Login",
                         style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -118,6 +121,31 @@ class _LoginState extends State {
                     ],
                   ),
                 ),
+              ),
+
+
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account yet?",
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  GestureDetector(
+                      child: Text(
+                    "Register",
+                    style: GoogleFonts.poppins(
+                        fontSize: 17, color: Color.fromRGBO(150, 179, 254, 1)),
+                  )),
+                ],
               ),
             ],
           ),

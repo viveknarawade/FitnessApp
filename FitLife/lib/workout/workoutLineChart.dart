@@ -6,40 +6,17 @@ class Workoutlinechart extends StatefulWidget {
   const Workoutlinechart({super.key});
 
   @override
-  State<Workoutlinechart> createState() => _WorkoutlinechartState();
+  State<Workoutlinechart> createState() => _DemoState();
 }
 
 TextStyle textStyle() {
   return GoogleFonts.poppins(
       fontSize: 14,
       color: Colors.white,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w700); // Make sure to return the TextStyle
 }
 
-class _WorkoutlinechartState extends State<Workoutlinechart> {
-  // This list will hold the dynamic calories burned data
-  List<FlSpot> caloriesData = [
-    FlSpot(0, 0), // Sunday
-    FlSpot(1, 0), // Monday
-    FlSpot(2, 0), // Tuesday
-    FlSpot(3, 0), // Wednesday
-    FlSpot(4, 0), // Thursday
-    FlSpot(5, 0), // Friday
-    FlSpot(6, 0), // Saturday
-  ];
-
-  // Function to update calories burned data
-  void updateCaloriesData(int dayIndex, double calories) {
-    setState(() {
-      caloriesData[dayIndex] = FlSpot(dayIndex.toDouble(), calories);
-    });
-  }
-
-  // Example function to simulate user burning calories
-  void burnCalories(int dayIndex, double calories) {
-    updateCaloriesData(dayIndex, calories);
-  }
-
+class _DemoState extends State<Workoutlinechart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +27,15 @@ class _WorkoutlinechartState extends State<Workoutlinechart> {
           LineChartData(
             lineBarsData: [
               LineChartBarData(
-                spots: caloriesData, // Use dynamic calories data here
+                spots: [
+                  FlSpot(0, 20),
+                  FlSpot(1, 0),
+                  FlSpot(2, 90),
+                  FlSpot(3, 30),
+                  FlSpot(4, 30),
+                  FlSpot(5, 0),
+                  FlSpot(6, 60),
+                ],
                 color: Colors.white,
                 isCurved: true,
                 curveSmoothness: 0.35,
@@ -61,43 +46,46 @@ class _WorkoutlinechartState extends State<Workoutlinechart> {
                     return false;
                   },
                 ),
-              ),
+              )
             ],
+            minY: 0, // Set minY to ensure 0 is always displayed
+            maxY: 100, // Set maxY for the percentage scale
             titlesData: FlTitlesData(
               rightTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
+                    // Change to display 0% when spots are zero
                     switch (value.toInt()) {
                       case 0:
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8.0, left: 8),
-                          child: Text('0', style: textStyle()),
+                          child: Text('0%', style: textStyle()),
                         );
                       case 20:
                         return Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text('20', style: textStyle()),
+                          child: Text('20%', style: textStyle()),
                         );
                       case 40:
                         return Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text('40', style: textStyle()),
+                          child: Text('40%', style: textStyle()),
                         );
                       case 60:
                         return Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text('60', style: textStyle()),
+                          child: Text('60%', style: textStyle()),
                         );
                       case 80:
                         return Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text('80', style: textStyle()),
+                          child: Text('80%', style: textStyle()),
                         );
                       case 100:
                         return Padding(
                           padding: const EdgeInsets.only(left: 3.0),
-                          child: Text('100', style: textStyle()),
+                          child: Text('100%', style: textStyle()),
                         );
                       default:
                         return const SizedBox.shrink();
@@ -120,32 +108,50 @@ class _WorkoutlinechartState extends State<Workoutlinechart> {
                       case 1:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Mon', style: textStyle()),
+                          child: Text(
+                            'Mon',
+                            style: textStyle(),
+                          ),
                         );
                       case 2:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Tue', style: textStyle()),
+                          child: Text(
+                            'Tue',
+                            style: textStyle(),
+                          ),
                         );
                       case 3:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Wed', style: textStyle()),
+                          child: Text(
+                            'Wed',
+                            style: textStyle(),
+                          ),
                         );
                       case 4:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Thu', style: textStyle()),
+                          child: Text(
+                            'Thu',
+                            style: textStyle(),
+                          ),
                         );
                       case 5:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Fri', style: textStyle()),
+                          child: Text(
+                            'Fri',
+                            style: textStyle(),
+                          ),
                         );
                       case 6:
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text('Sat', style: textStyle()),
+                          child: Text(
+                            'Sat',
+                            style: textStyle(),
+                          ),
                         );
                       default:
                         return const SizedBox.shrink();
@@ -162,15 +168,20 @@ class _WorkoutlinechartState extends State<Workoutlinechart> {
                 sideTitles: SideTitles(showTitles: false),
               ),
             ),
-            borderData: FlBorderData(show: false),
+            borderData: FlBorderData(
+              show: false, // This hides the border
+            ),
             gridData: FlGridData(
-              show: true,
-              drawHorizontalLine: true,
-              drawVerticalLine: false,
+              show: true, // Set to true to show grid lines
+              drawHorizontalLine:
+                  true, // Set to true to show horizontal grid lines
+              drawVerticalLine:
+                  false, // Set to false to hide vertical grid lines
               getDrawingHorizontalLine: (value) {
                 return FlLine(
-                  color: Colors.white.withOpacity(0.5),
-                  strokeWidth: 1,
+                  color: Colors.white
+                      .withOpacity(0.5), // Set color for horizontal grid lines
+                  strokeWidth: 1, // Set stroke width for horizontal grid lines
                 );
               },
             ),
