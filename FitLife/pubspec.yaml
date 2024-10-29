@@ -45,6 +45,9 @@ flutter:
       - assets/icon/Lock.svg
       - assets/icon/Login.svg
       - assets/icon/bell-home.svg
+      - assets/icon/gender.svg
+      - assets/icon/weight.svg
+      - assets/icon/height.svg
       - assets/meal/meal1.svg
       - assets/meal/meal2.svg
       - assets/workout/fullbody.svg

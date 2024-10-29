@@ -20,6 +20,7 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 70, horizontal: 35),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center, // Ensure full width
             children: [
               Text(
                 "Hey there",
@@ -29,6 +30,7 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 10,
               ),
+             // const SizedBox(height: 7),
               Text(
                 "Welcome Back",
                 style: GoogleFonts.poppins(

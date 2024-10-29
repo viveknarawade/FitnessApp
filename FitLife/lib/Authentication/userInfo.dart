@@ -1,17 +1,20 @@
 import 'package:fitness_app/Authentication/login.dart';
-import 'package:fitness_app/Authentication/userInfo.dart';
+import 'package:fitness_app/Dashboard/home_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Userinfo extends StatefulWidget {
+  const Userinfo({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Userinfo> createState() => _UserinfoState();
 }
 
-class _SignupState extends State<Signup> {
+class _UserinfoState extends State<Userinfo> {
+  String? selectedValue; // To store the selected dropdown value
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,24 +29,27 @@ class _SignupState extends State<Signup> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center, // Ensure full width
             children: [
-              Text(
-                "Hey there,",
-                style: GoogleFonts.poppins(
-                    fontSize: 17, fontWeight: FontWeight.w500),
+              SizedBox(height: 30,),
+              Text("Let’s complete your profile",style: GoogleFonts.poppins(
+                    fontSize: 24, fontWeight: FontWeight.bold),
+              
               ),
               const SizedBox(height: 10),
-              Text(
-                "Create an Account",
-                style: GoogleFonts.poppins(
-                    fontSize: 20, fontWeight: FontWeight.bold),
+
+              Text("It will help us to know more about you!",style: GoogleFonts.poppins(
+                    fontSize: 15, fontWeight: FontWeight.w400),
+              
               ),
+
               const SizedBox(height: 30),
+              
+              
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(13),
                   ),
-                  hintText: "First Name",
+                  hintText: "Choose Gender",
                   filled: true,
                   fillColor: const Color.fromRGBO(247, 248, 248, 1),
                   hintStyle: GoogleFonts.poppins(
@@ -51,7 +57,7 @@ class _SignupState extends State<Signup> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
                     child: SvgPicture.asset(
-                      "assets/icon/profile.svg",
+                      "assets/icon/gender.svg",
                       color: Colors.black,
                     ),
                   ),
@@ -63,14 +69,14 @@ class _SignupState extends State<Signup> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(13),
                   ),
-                  hintText: "Last Name",
+                  hintText: "Your Weight",
                   filled: true,
                   fillColor: const Color.fromRGBO(247, 248, 248, 1),
                   hintStyle: GoogleFonts.poppins(
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/profile.svg",
+                    child: SvgPicture.asset("assets/icon/weight.svg",
                         color: Colors.black),
                   ),
                 ),
@@ -81,32 +87,43 @@ class _SignupState extends State<Signup> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(13),
                   ),
-                  hintText: "Email",
+                  hintText: "Your Height",
                   filled: true,
                   fillColor: const Color.fromRGBO(247, 248, 248, 1),
                   hintStyle: GoogleFonts.poppins(
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/email.svg"),
+                    child: SvgPicture.asset("assets/icon/height.svg"),
                   ),
                 ),
               ),
+             
               const SizedBox(height: 30),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(247, 248, 248, 1),
                     borderRadius: BorderRadius.circular(13),
-                  ),
-                  hintText: "Password",
-                  filled: true,
-                  fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                  hintStyle: GoogleFonts.poppins(
-                      fontSize: 17, fontWeight: FontWeight.w300),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/Lock.svg"),
-                  ),
+                    border: Border.all(width: 1)),
+                child: DropdownButton<String>(
+                  isExpanded: true, // Make dropdown occupy full width
+                  value: selectedValue,
+                  hint: Text("Choose Goal"),
+                  items: <String>["gain", "loss", "maintain"]
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedValue = newValue; // Update the selected value
+                    });
+                  },
                 ),
               ),
               const SizedBox(height: 60),
@@ -121,7 +138,7 @@ class _SignupState extends State<Signup> {
                   onPressed: () {
                     // Handle login logic here
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Userinfo()),
+                      MaterialPageRoute(builder: (context) => const Login()),
                     );
                   },
                   child: Row(
@@ -134,7 +151,7 @@ class _SignupState extends State<Signup> {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        "Register",
+                        "Next",
                         style: GoogleFonts.poppins(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -144,36 +161,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account yet?",
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => const Login()),
-                        );
-                      },
-                      child: Text(
-                        "Login",
-                        style: GoogleFonts.poppins(
-                            fontSize: 17,
-                            color: Color.fromRGBO(150, 179, 254, 1)),
-                      )),
-                ],
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
