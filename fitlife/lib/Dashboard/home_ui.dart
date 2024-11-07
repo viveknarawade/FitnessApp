@@ -1,4 +1,4 @@
-
+import 'package:fitlife/Dashboard/bottelShape.dart';
 import 'package:fitlife/Dashboard/letest_workout_listView.dart';
 import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Dashboard/reminder_ui.dart';
@@ -8,6 +8,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 class HomeUi extends StatefulWidget {
@@ -33,7 +34,9 @@ class _HomeUiState extends State {
                 ),
                 Row(
                   children: [
-                    Text("Hello ,", style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w400)),
+                    Text("Hello ,",
+                        style: GoogleFonts.poppins(
+                            fontSize: 18, fontWeight: FontWeight.w400)),
                     const Spacer(),
                     GestureDetector(
                         onTap: () {
@@ -59,7 +62,8 @@ class _HomeUiState extends State {
                   height: 20,
                 ),
                 Text("Activity Status",
-                    style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500)),
+                    style: GoogleFonts.poppins(
+                        fontSize: 18, fontWeight: FontWeight.w500)),
                 const SizedBox(
                   height: 10,
                 ),
@@ -74,14 +78,12 @@ class _HomeUiState extends State {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text("Calories",
-                      
-                       style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400)
-                      ),
-                       Text("Remaining=goal+Exercise",
-                       style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w300)
-                      
-                      ),
+                      Text("Calories",
+                          style: GoogleFonts.poppins(
+                              fontSize: 16, fontWeight: FontWeight.w400)),
+                      Text("Remaining=goal+Exercise",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14, fontWeight: FontWeight.w300)),
                       Row(
                         children: [
                           const SizedBox(
@@ -158,36 +160,36 @@ class _HomeUiState extends State {
                                   ],
                                 ),
                               ),
-                               Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Goal",
-                       style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w500)
-                                  
-                                  ),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500)),
                                   Text("2,340",
-                       style: GoogleFonts.poppins(fontSize: 14,)
-                                  
-                                  ),
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                      )),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text("Food",
-                       style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w500)
-                                  
-                                  ),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500)),
                                   const Text("0"),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Text("Exercise",
-                       style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w500)
-                                  
-                                  ),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500)),
                                   Text("0",
-                       style: GoogleFonts.poppins(fontSize: 14,)
-                                  
-                                  )
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                      ))
                                 ],
                               ),
                               const SizedBox(
@@ -228,12 +230,9 @@ class _HomeUiState extends State {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             Text(
-                              "Steps",
-
-                       style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400)
-
-                            ),
+                            Text("Steps",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16, fontWeight: FontWeight.w400)),
                             const SizedBox(
                               height: 16,
                             ),
@@ -307,19 +306,40 @@ class _HomeUiState extends State {
                       ),
                       // ignore: prefer_const_constructors
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child:  Column(
+                        padding: const EdgeInsets.only(
+                            bottom: 10, top: 10, left: 18),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Water Intake",
-
-                       style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w400)
-
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, fontWeight: FontWeight.w400),
                             ),
-                            const SizedBox(
-                              height: 6,
+
+                            // LiquidCustomProgressIndicator(
+                            //   direction: Axis.vertical,
+                            //   value: .3,
+                            //   valueColor: AlwaysStoppedAnimation(Colors.blue),
+                            //   shapePath: BottleShape().getPath(Size(50, 150)),
+                            // )
+                            SizedBox(
+                              height: 20,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: LiquidCircularProgressIndicator(
+                              value: 0.5, // Half-filled indicator
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.blueAccent),
+                                backgroundColor: Colors.white,
+                                borderColor: Colors.blueAccent,
+                                borderWidth: 3.0,
+                                direction: Axis
+                                    .vertical,
+                                    center: Text("50%"), // Change to horizontal or leave as default
+                              ),
                             ),
                           ],
                         ),
@@ -330,12 +350,11 @@ class _HomeUiState extends State {
                 const SizedBox(
                   height: 30,
                 ),
-                 Text("Latest workout",
-                       style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400)
-                
-                ),
+                Text("Latest workout",
+                    style: GoogleFonts.poppins(
+                        fontSize: 16, fontWeight: FontWeight.w400)),
                 LetestWorkoutListview(),
-           ],
+              ],
             ),
           ),
         ),
