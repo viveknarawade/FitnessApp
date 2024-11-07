@@ -1,6 +1,6 @@
-
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
+import 'package:fitlife/Firebase/User/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +13,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,7 @@ class _LoginState extends State<Login> {
               const SizedBox(
                 height: 10,
               ),
-             // const SizedBox(height: 7),
+              // const SizedBox(height: 7),
               Text(
                 "Welcome Back",
                 style: GoogleFonts.poppins(
@@ -45,10 +47,11 @@ class _LoginState extends State<Login> {
                 height: 40,
               ),
               TextField(
+                controller: userNameController,
                 decoration: InputDecoration(
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(13)),
-                  hintText: "Email",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(13)),
+                  hintText: "Username",
                   filled: true,
                   fillColor: const Color.fromRGBO(247, 248, 248, 1),
                   hintStyle: GoogleFonts.poppins(
@@ -68,6 +71,7 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: TextField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(13)),
@@ -99,9 +103,22 @@ class _LoginState extends State<Login> {
                   style: const ButtonStyle(
                       backgroundColor: const WidgetStatePropertyAll(
                           Color.fromRGBO(150, 179, 254, 1))),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const HomeUi()));
+                  onPressed: () async {
+                    if (userNameController.text.trim().isNotEmpty &&
+                        passwordController.text.trim().isNotEmpty) {
+                      bool isAuthenticated = await Authservice().authenticate(
+                        userNameController.text.trim(),
+                        passwordController.text.trim(),
+                      );
+                      if (isAuthenticated) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeUi(),
+                          ),
+                        );
+                      }
+                    }
+                    setState(() {});
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -111,11 +128,9 @@ class _LoginState extends State<Login> {
                         width: 30,
                         height: 24,
                       ),
-
                       const SizedBox(
                         width: 10,
                       ),
-                     
                       Text(
                         "Login",
                         style: GoogleFonts.poppins(
@@ -127,7 +142,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-
 
               SizedBox(
                 height: 10,
@@ -145,16 +159,18 @@ class _LoginState extends State<Login> {
                     width: 8,
                   ),
                   GestureDetector(
-                    onTap: (){
-                              Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Signup()),
-                    );
-                    },
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const Signup()),
+                        );
+                      },
                       child: Text(
-                    "Register",
-                    style: GoogleFonts.poppins(
-                        fontSize: 17, color: Color.fromRGBO(150, 179, 254, 1)),
-                  )),
+                        "Register",
+                        style: GoogleFonts.poppins(
+                            fontSize: 17,
+                            color: Color.fromRGBO(150, 179, 254, 1)),
+                      )),
                 ],
               ),
             ],
