@@ -1,0 +1,55 @@
+name: fitlife
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+      - assets/workout/skipping.png
+      - assets/workout/fullBody-navs.png
+      - assets/workout/warm-up.png
+      - assets/icon/meal.png
+      - assets/icon/walk.png
+
+
+      - assets/icon/Icon-Next.png
+      - assets/icon/correct.svg
+      - assets/icon/Button-Next.svg
+      - assets/icon/calories.svg
+      - assets/icon/home.svg
+      - assets/icon/activity.svg
+      - assets/icon/profile.svg
+      - assets/icon/next-btn.svg
+      - assets/icon/dinner.svg
+      - assets/icon/fire.svg
+      - assets/icon/bell.svg
+      - assets/icon/email.svg
+      - assets/icon/Lock.svg
+      - assets/icon/Login.svg
+      - assets/icon/bell-home.svg
+      - assets/icon/gender.svg
+      - assets/icon/weight.svg
+      - assets/icon/height.svg
+      - assets/meal/meal1.svg
+      - assets/meal/meal2.svg
+      - assets/workout/fullbody.svg
+      - assets/workout/finishWorkout.svg
+      - assets/meal/salad.svg
+      - assets/meal/pancakes.svg
+      - assets/meal/pancake1.svg
+      - assets/authentication/loginScr.svg
+  
+    
