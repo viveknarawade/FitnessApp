@@ -1,10 +1,16 @@
+import 'package:fitlife/Firebase/Storage/foodData.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
+import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Category extends StatefulWidget {
-  const Category({super.key});
+  String category;
+  List<Map<String, dynamic>> itemsData;
+
+  // Constructor to accept the selected category and item data
+  Category({super.key, required this.category, required this.itemsData});
 
   @override
   State<Category> createState() => _CategoryState();
@@ -13,10 +19,12 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
+    print("${widget.itemsData.length}");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Breakfast",
+          widget.category,
           style: GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -93,8 +101,9 @@ class _CategoryState extends State<Category> {
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: widget.itemsData.length,
                 itemBuilder: (context, index) {
+                  final foodItem = widget.itemsData[index];
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     padding: const EdgeInsets.symmetric(
@@ -113,7 +122,7 @@ class _CategoryState extends State<Category> {
                         ),
                         const SizedBox(height: 9),
                         Text(
-                          "Salad",
+                          foodItem["food_item"],
                           style: GoogleFonts.poppins(
                               fontSize: 15, fontWeight: FontWeight.w600),
                         ),
@@ -122,8 +131,14 @@ class _CategoryState extends State<Category> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Detail()));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Detail(
+                                  itemData: foodItem,
+                                  category: widget.category,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             height: 30,
@@ -162,25 +177,27 @@ class _CategoryState extends State<Category> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 8,
+                itemCount: widget.itemsData.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  final foodItem = widget.itemsData[index];
                   return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                     margin: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            blurRadius: 14,
-                            offset: Offset(0, 5),
-                            spreadRadius: 5,
-                            blurStyle: BlurStyle.outer,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          blurRadius: 14,
+                          offset: Offset(0, 5),
+                          spreadRadius: 5,
+                          blurStyle: BlurStyle.outer,
+                        )
+                      ],
+                    ),
                     child: Row(
                       children: [
                         Row(
@@ -195,7 +212,7 @@ class _CategoryState extends State<Category> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "cake",
+                                  foodItem["food_item"],
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
@@ -203,7 +220,7 @@ class _CategoryState extends State<Category> {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  "120 cal",
+                                  foodItem["calories"],
                                   style: GoogleFonts.poppins(
                                     fontSize: 15,
                                   ),
@@ -215,10 +232,14 @@ class _CategoryState extends State<Category> {
                         const Spacer(),
                         GestureDetector(
                             onTap: () {
+                              print(foodItem);
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return Detail();
+                                    return Detail(
+                                      itemData: foodItem,
+                                      category: widget.category,
+                                    );
                                   },
                                 ),
                               );

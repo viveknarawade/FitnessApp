@@ -55,6 +55,31 @@ class _SignupState extends State<Signup> {
                 style: GoogleFonts.poppins(
                     fontSize: 20, fontWeight: FontWeight.bold),
               ),
+              const SizedBox(height: 20),
+              Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(150, 179, 254, 1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(
+                      "assets/icon/profile.svg",
+                    ),
+                  ),
+                  Positioned(
+                    left: 55,
+                    top: 55,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.edit),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 30),
               TextField(
                 controller: userNameController,

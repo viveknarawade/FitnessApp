@@ -16,6 +16,7 @@ dependencies:
   
   google_fonts: ^6.2.1
   simple_animation_progress_bar: ^1.8.2  
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -29,14 +30,23 @@ flutter:
       - assets/workout/skipping.png
       - assets/workout/fullBody-navs.png
       - assets/workout/warm-up.png
-      - assets/icon/meal.png
-      - assets/icon/walk.png
+     
+      - assets/workout/fullbody.svg
+      - assets/workout/finishWorkout.svg
+      
 
 
       - assets/icon/Icon-Next.png
       - assets/icon/correct.svg
       - assets/icon/Button-Next.svg
+      - assets/icon/meal.png
+      - assets/icon/walk.png
+
       - assets/icon/calories.svg
+      - assets/icon/Fat-Icon.svg
+      - assets/icon/protein1.svg
+      - assets/icon/Carbo-Icon.svg
+
       - assets/icon/home.svg
       - assets/icon/activity.svg
       - assets/icon/profile.svg
@@ -51,13 +61,14 @@ flutter:
       - assets/icon/gender.svg
       - assets/icon/weight.svg
       - assets/icon/height.svg
+
       - assets/meal/meal1.svg
       - assets/meal/meal2.svg
-      - assets/workout/fullbody.svg
-      - assets/workout/finishWorkout.svg
+    
       - assets/meal/salad.svg
       - assets/meal/pancakes.svg
       - assets/meal/pancake1.svg
       - assets/authentication/loginScr.svg
+      - assets/authentication/profileIcon.jpg
   
     

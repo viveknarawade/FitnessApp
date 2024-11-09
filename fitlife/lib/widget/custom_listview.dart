@@ -1,37 +1,24 @@
-import 'package:fitlife/Meal_Planner/mealCategory.dart';
-import 'package:fitlife/Meal_Planner/mealDetail.dart'; // Import your MealDetail screen
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class Breakfast extends StatefulWidget {
-  const Breakfast({super.key});
+class CustomListView extends StatelessWidget {
+  final List<Map<String, dynamic>> data;
+
+  const CustomListView({Key? key, required this.data}) : super(key: key);
 
   @override
-  State createState() => _BreakfastState();
-}
-
-class _BreakfastState extends State {
-  @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 3,
+      itemCount: data.length,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
+        final meal = data[index];
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
           decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.7),
-                spreadRadius: 5,
-                blurRadius: 10,
-                offset: Offset(0, 3),
-              ),
-            ],
             borderRadius: BorderRadius.circular(20),
-            color: const Color.fromRGBO(234, 239, 255, 1),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,13 +26,24 @@ class _BreakfastState extends State {
               Row(
                 children: [
                   const SizedBox(width: 10),
-                  SvgPicture.asset("assets/meal/meal1.svg"),
+                  SvgPicture.asset(
+                    "assets/meal/meal1.svg",
+                    width: 40,
+                    height: 40,
+                  ),
                   const SizedBox(width: 30),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Salmon Nigiri"),
-                      Text("Today | 7 am"),
+                      Text(
+                        meal['food_item'],
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "${meal['Day']} | ${meal['Time']}",
+                        style: const TextStyle(color: Colors.grey),
+                      ),
                     ],
                   ),
                 ],
@@ -62,4 +60,3 @@ class _BreakfastState extends State {
     );
   }
 }
-

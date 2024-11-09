@@ -3,9 +3,9 @@ import 'package:fitlife/Authentication/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fitlife/Firebase/User/auth.dart';
-import 'package:fitlife/Model/user.dart';
-import 'package:fitlife/Firebase/User/goalGenration.dart';  // Import GoalGeneration class
+import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+
+import 'package:fitlife/Firebase/Firestore/User/goalGenration.dart'; // Import GoalGeneration class
 
 class Userinfo extends StatefulWidget {
   const Userinfo({super.key});
@@ -45,21 +45,27 @@ class _UserinfoState extends State<Userinfo> {
               SizedBox(height: 30),
               Text(
                 "Let’s complete your profile",
-                style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Text(
                 "It will help us to know more about you!",
-                style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w400),
+                style: GoogleFonts.poppins(
+                    fontSize: 15, fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 30),
-              _buildTextField("Your Gender", genderController, "assets/icon/gender.svg"),
+              _buildTextField(
+                  "Your Gender", genderController, "assets/icon/gender.svg"),
               const SizedBox(height: 30),
-              _buildTextField("Your Weight", weightController, "assets/icon/weight.svg"),
+              _buildTextField(
+                  "Your Weight", weightController, "assets/icon/weight.svg"),
               const SizedBox(height: 30),
-              _buildTextField("Your Height", heightController, "assets/icon/height.svg"),
+              _buildTextField(
+                  "Your Height", heightController, "assets/icon/height.svg"),
               const SizedBox(height: 30),
-              _buildTextField("Your Age", ageController, "assets/icon/height.svg"),
+              _buildTextField(
+                  "Your Age", ageController, "assets/icon/height.svg"),
               const SizedBox(height: 30),
               _buildDropdown(),
               const SizedBox(height: 60),
@@ -73,7 +79,8 @@ class _UserinfoState extends State<Userinfo> {
   }
 
   // Helper function to build text fields
-  Widget _buildTextField(String hintText, TextEditingController controller, String iconPath) {
+  Widget _buildTextField(
+      String hintText, TextEditingController controller, String iconPath) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -81,7 +88,8 @@ class _UserinfoState extends State<Userinfo> {
         hintText: hintText,
         filled: true,
         fillColor: const Color.fromRGBO(247, 248, 248, 1),
-        hintStyle: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.w300),
+        hintStyle:
+            GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.w300),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(11),
           child: SvgPicture.asset(iconPath),
@@ -136,7 +144,8 @@ class _UserinfoState extends State<Userinfo> {
           double height = double.parse(heightController.text.trim());
           double age = double.parse(ageController.text.trim());
           String gender = genderController.text.trim();
-          String goal = selectedValue ?? "maintain"; // Default to "maintain" if not selected
+          String goal = selectedValue ??
+              "maintain"; // Default to "maintain" if not selected
 
           // Instantiate the GoalGeneration class with the captured data
           GoalGeneration goalGeneration = GoalGeneration(
@@ -177,7 +186,10 @@ class _UserinfoState extends State<Userinfo> {
             const SizedBox(width: 10),
             Text(
               "Next",
-              style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+              style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
             ),
           ],
         ),

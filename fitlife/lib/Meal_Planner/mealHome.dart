@@ -1,8 +1,12 @@
+import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealLineChart.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
 import 'package:fitlife/Meal_Planner/mealCategory.dart';
+import 'package:fitlife/Firebase/Storage/foodData.dart';
+import 'package:fitlife/widget/custom_listview.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,8 +14,13 @@ class Mealhome extends StatefulWidget {
   createState() => _MealhomeState();
 }
 
-class _MealhomeState extends State {
-  Widget build(context) {
+List foodCategory = ["Breakfast", "Lunch", "Dinner"]; // Food categories list
+
+class _MealhomeState extends State<Mealhome> {
+  String? selectedCategoryValue = "Breakfast"; // Default value is "Breakfast"
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meal Planner"),
@@ -27,16 +36,11 @@ class _MealhomeState extends State {
                 style: GoogleFonts.poppins(
                     fontSize: 18, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Meallinechart(),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
 
-              // Daily Meal Shedule
-
+              // Daily Meal Schedule
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -53,15 +57,29 @@ class _MealhomeState extends State {
                     const Spacer(),
                     ElevatedButton(
                       style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
+                        backgroundColor: MaterialStatePropertyAll(
                           Color.fromRGBO(147, 168, 253, 1),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return MealSchedule();
-                        }));
+                      onPressed: () async {
+                        MealIntake mealIntake = MealIntake();
+
+                        // Fetch meal data before navigation
+                        await mealIntake.getMealData();
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MealSchedule(
+                                mealBreakfastScheduleData:
+                                    mealIntake.mealBreakfastData,
+                                mealLunchScheduleData: mealIntake.mealLunchData,
+                                mealDinnerScheduleData:
+                                    mealIntake.mealDinnerData,
+                              );
+                            },
+                          ),
+                        );
                       },
                       child: Text(
                         "Check",
@@ -71,11 +89,9 @@ class _MealhomeState extends State {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
 
-              //  Today Meals
+              // Today Meals - Dropdown for meal selection
               Row(
                 children: [
                   Text(
@@ -85,77 +101,69 @@ class _MealhomeState extends State {
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(234, 239, 255, 1)),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Text("Breakfast"),
-                        SizedBox(
-                          width: 7,
+                        // Display the selected category value in the Text widget
+                        DropdownButton<String>(
+                          value: selectedCategoryValue,
+
+                          icon: Icon(Icons.arrow_downward_outlined),
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors
+                                .black, // Set text color to black for the selected item
+                          ),
+                          dropdownColor: Colors
+                              .white, // Optional: Set the background color of the dropdown menu
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedCategoryValue =
+                                  newValue; // Update selected category
+                            });
+                          },
+                          items: <String>["Breakfast", "Lunch", "Dinner"]
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: GoogleFonts.poppins(
+                                  color: Colors
+                                      .black, // Set text color to black for each dropdown item
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        Icon(Icons.arrow_downward_outlined)
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 19, vertical: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromRGBO(234, 239, 255, 1)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SvgPicture.asset("assets/meal/meal1.svg"),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Column(
-                          children: [
-                            Text("Salmon Nigiri"),
-                            Text("Today | 7 am"),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SvgPicture.asset(
-                      "assets/icon/bell.svg",
-                      width: 30,
-                      height: 23,
-                    ),
-                  ],
-                ),
-              ),
+              CustomListView(data: MealIntake().mealBreakfastData),
+              const SizedBox(height: 10),
 
+              // Finding Something to Eat
               Text(
                 "Finding Something to Eat",
                 style: GoogleFonts.poppins(
                     fontSize: 18, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
 
+              // Horizontal list of food categories
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 250,
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 3,
+                    itemCount: foodCategory.length,
                     itemBuilder: (context, index) {
                       return Stack(children: [
                         Container(
@@ -174,32 +182,41 @@ class _MealhomeState extends State {
                           child: Column(
                             children: [
                               Text(
-                                "Breakfast",
+                                foodCategory[index],
                                 style: GoogleFonts.poppins(
                                     fontSize: 16, fontWeight: FontWeight.w400),
                               ),
-                              const SizedBox(
-                                height: 8,
-                              ),
+                              const SizedBox(height: 8),
                               Text(
                                 "20+ Foods",
                                 style: GoogleFonts.poppins(
                                     fontSize: 14, fontWeight: FontWeight.w300),
                               ),
-                              const SizedBox(
-                                height: 8,
-                              ),
+                              const SizedBox(height: 8),
                               ElevatedButton(
                                 style: const ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
+                                  backgroundColor: MaterialStatePropertyAll(
                                     Color.fromRGBO(147, 168, 253, 1),
                                   ),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
+                                  // Wait for the data to load from getFoodData
+                                  List<Map<String, dynamic>> tempFoodData =
+                                      await Food()
+                                          .getFoodData(foodCategory[index]);
+
+                                  // Navigate to the Category screen and pass the data
                                   Navigator.of(context).push(
-                                    MaterialPageRoute(builder: (context) {
-                                      return Category();
-                                    }),
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return Category(
+                                          category: foodCategory[
+                                              index], // Pass the category name
+                                          itemsData:
+                                              tempFoodData, // Pass the fetched food data
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                                 child: Text(

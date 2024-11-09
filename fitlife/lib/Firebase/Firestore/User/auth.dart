@@ -20,6 +20,7 @@ class Authservice {
           User(
             userName: response.docs[i]["userName"],
             email: response.docs[i]["email"],
+            id: response.docs[i].id,
             password: response.docs[i]["password"],
             age: response.docs[i]["age"],
             coloriesGoal: response.docs[i]["caloriesGoal"],

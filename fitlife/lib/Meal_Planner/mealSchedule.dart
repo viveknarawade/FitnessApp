@@ -1,42 +1,44 @@
-import 'package:fitlife/Meal_Planner/breakfast.dart';
 import 'package:fitlife/Meal_Planner/dinner.dart';
-import 'package:fitlife/Meal_Planner/lunch.dart';
+
 import 'package:fitlife/Meal_Planner/snacks.dart';
+import 'package:fitlife/widget/custom_listview.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MealSchedule extends StatefulWidget {
-  const MealSchedule({super.key});
+  final List<Map<String, dynamic>> mealBreakfastScheduleData;
+  final List<Map<String, dynamic>> mealLunchScheduleData;
+  final List<Map<String, dynamic>> mealDinnerScheduleData;
+
+  const MealSchedule({
+    Key? key,
+    required this.mealBreakfastScheduleData,
+    required this.mealLunchScheduleData,
+    required this.mealDinnerScheduleData,
+  }) : super(key: key);
+
   @override
   State createState() => _MealScheduleState();
-  
 }
 
-
-class _MealScheduleState extends State {
+class _MealScheduleState extends State<MealSchedule> {
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meal Schedule"),
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 15,
-          ),
-          
+          const SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.grey,
-              ),
-              SizedBox(
-                width:15,
-              ),
+              const Icon(Icons.arrow_back_ios, color: Colors.grey),
+              const SizedBox(width: 15),
               Text(
                 "Today",
                 style: GoogleFonts.poppins(
@@ -44,61 +46,30 @@ class _MealScheduleState extends State {
                   color: Colors.grey,
                 ),
               ),
-              SizedBox(
-                width: 20,
-              ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey,
-              ),
+              const SizedBox(width: 20),
+              const Icon(Icons.arrow_forward_ios, color: Colors.grey),
             ],
           ),
-          SizedBox(
-            height: 20,
-          ),
-          const Expanded(
+          const SizedBox(height: 20),
+          Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Breakfast"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Breakfast(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Lunch"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Lunch(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Dinner"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Dinner(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Snacks"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Snacks(),
+                    const SizedBox(height: 10),
+                    const Text("Breakfast"),
+                    const SizedBox(height: 10),
+                    CustomListView(data: widget.mealBreakfastScheduleData),
+                    const SizedBox(height: 20),
+                    const Text("Lunch"),
+                    const SizedBox(height: 10),
+                    CustomListView(data: widget.mealLunchScheduleData),
+                    const SizedBox(height: 20),
+                    const Text("Dinner"),
+                    const SizedBox(height: 10),
+                    CustomListView(data: widget.mealDinnerScheduleData),
                   ],
                 ),
               ),

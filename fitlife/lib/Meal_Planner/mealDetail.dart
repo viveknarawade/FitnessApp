@@ -1,22 +1,23 @@
+import 'package:fitlife/Firebase/Firestore/Meal/calories.dart';
+
+import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
+import 'package:fitlife/Meal_Planner/mealSchedule.dart';
+import 'package:fitlife/Model/date_time_day.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Detail extends StatefulWidget {
-  const Detail({super.key});
+  final Map<String, dynamic> itemData;
+  String category;
+  Detail({Key? key, required this.itemData, required this.category})
+      : super(key: key);
 
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
-  final nutritionData = [
-    {"icon": "assets/icon/calories.svg", "label": "Calories"},
-    {"icon": "assets/icon/protein.svg", "label": "Protein"},
-    {"icon": "assets/icon/carbs.svg", "label": "Carbs"},
-    {"icon": "assets/icon/fat.svg", "label": "Fat"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +83,7 @@ class _DetailState extends State<Detail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Blueberry Pancake",
+                    widget.itemData["food_item"],
                     style: GoogleFonts.poppins(
                       fontSize: 23,
                       fontWeight: FontWeight.w700,
@@ -98,38 +99,172 @@ class _DetailState extends State<Detail> {
                   ),
                   const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      for (int i = 0; i < nutritionData.length; i++)
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color.fromRGBO(148, 171, 253, 1.0),
-                            ),
-                            child: Column(
+                      // Increased font size for Calories
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
                                 SvgPicture.asset(
-                                  nutritionData[i]["icon"]!,
+                                  "assets/icon/calories.svg",
                                   height: 20,
                                   width: 20,
                                 ),
-                                const SizedBox(height: 5),
+                                const SizedBox(width: 10),
                                 Text(
-                                  nutritionData[i]["label"]!,
+                                  widget.itemData["calories"],
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
+                                    fontSize: 16, // Increased font size
                                     color: Colors.black,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "Calories",
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      // Increased font size for Fat
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icon/Fat-Icon.svg",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.itemData["fat"],
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16, // Increased font size
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "Fat",
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Increased font size for Protein
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icon/protein1.svg",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.itemData["protein"],
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16, // Increased font size
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "Protein",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Increased font size for Carbs
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icon/Carbo-Icon.svg",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.itemData["carbs"],
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16, // Increased font size
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              "Carbs",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -156,20 +291,40 @@ class _DetailState extends State<Detail> {
                     height: 45,
                   ),
                   Center(
-                    child: Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        Calories().addCaloriesData(
+                            widget.category, widget.itemData["calories"]);
 
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: const Color.fromRGBO(148, 171, 253, 1.0),
-                      ),
-                      child: Text(
-                        "Add to Breakfast Meal",
-                        style: GoogleFonts.poppins(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
+                        // Print the formatted time, date, and day
+                        print("Current Time: ${DateTimeDay().formattedTime}");
+                        print("Current Date: ${DateTimeDay().formattedDate}");
+                        print("Day of the Week: ${DateTimeDay().dayOfWeek}");
+                        widget.itemData.addAll(
+                          {
+                            "Time": "${DateTimeDay().formattedTime}",
+                            "Date": " ${DateTimeDay().formattedDate}",
+                            "Day": "${DateTimeDay().dayOfWeek}"
+                          },
+                        );
+                        print(widget.itemData);
+                        MealIntake()
+                            .addMealData(widget.category, widget.itemData);
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Text(
+                          "Add to Breakfast Meal",
+                          style: GoogleFonts.poppins(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ),
                   ),
