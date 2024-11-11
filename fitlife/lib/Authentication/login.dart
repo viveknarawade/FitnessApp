@@ -1,6 +1,7 @@
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,10 +113,14 @@ class _LoginState extends State<Login> {
                       );
                       if (isAuthenticated) {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeUi(),
-                          ),
-                        );
+                            MaterialPageRoute(
+                              builder: (context) => const HomeUi(),
+                            ),
+                          );
+                      
+                      } else {
+                        CustomSnackBar.customSnackBar(
+                            context, "Invalid Username and Password",Colors.red);
                       }
                     }
                     setState(() {});

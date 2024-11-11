@@ -2,6 +2,7 @@ import 'package:fitlife/Dashboard/bottelShape.dart';
 import 'package:fitlife/Dashboard/letest_workout_listView.dart';
 import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Dashboard/reminder_ui.dart';
+import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -12,6 +13,7 @@ import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:fitlife/widget/CustomWaterBottomSheet.dart';
 
 class HomeUi extends StatefulWidget {
   const HomeUi({super.key});
@@ -87,7 +89,7 @@ class _HomeUiState extends State {
                         )),
                   ],
                 ),
-                Text("Vivek Narawade",
+                Text(userData[0].userName,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600, fontSize: 20)),
                 const SizedBox(
@@ -322,7 +324,7 @@ class _HomeUiState extends State {
                     ),
                     const Spacer(),
                     Container(
-                      width: 140,
+                      width: 150,
                       height: 180,
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -336,17 +338,28 @@ class _HomeUiState extends State {
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(217, 217, 217, 1),
                       ),
-                      // ignore: prefer_const_constructors
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            bottom: 10, top: 10, left: 18),
+                            bottom: 10, top: 10, left: 13, right: 8),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              "Water Intake",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 15, fontWeight: FontWeight.w400),
+                            Row(
+                              children: [
+                                Text(
+                                  "Water Intake",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                     CustomWaterBottomSheet.showWaterLevelBottomsheet(context);
+                                    }, child: Icon(Icons.add)),
+                              ],
                             ),
 
                             // LiquidCustomProgressIndicator(
@@ -463,6 +476,7 @@ class _HomeUiState extends State {
             ],
           ),
         ),
+       
       ),
       Positioned(
         bottom: 40,

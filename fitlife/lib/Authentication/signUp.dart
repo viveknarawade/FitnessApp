@@ -1,5 +1,6 @@
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/userInfo.dart';
+import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -183,6 +184,7 @@ class _SignupState extends State<Signup> {
                         },
                       );
                       print(signupData);
+                      CustomSnackBar.customSnackBar(context,"Register Sucsseful",Colors.green);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const Userinfo(),

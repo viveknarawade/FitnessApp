@@ -46,7 +46,7 @@ class _ProfileUiState extends State<ProfileUi> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "$userData[0]",
+                        "${userData[0].userName}",
                         style: TextStyle(
                             fontSize: 23, fontWeight: FontWeight.w500),
                       ),
@@ -94,7 +94,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "180 cm",
+                            "${userData[0].height}"+" Cm",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -124,7 +124,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "65 Kg",
+                            "${userData[0].weight}"+" Kg",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -154,7 +154,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "22 yrs",
+                            "${userData[0].age}",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
