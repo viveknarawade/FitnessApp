@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
+import 'package:pedometer/pedometer.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 class HomeUi extends StatefulWidget {
@@ -18,8 +20,38 @@ class HomeUi extends StatefulWidget {
 }
 
 class _HomeUiState extends State {
+  int step = 0;
+  int stepsGoal = 10000;
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
+
+  // Request the permisson for pedometer
+  requestPermission() async {
+    if (await Permission.activityRecognition.isGranted) {
+      startListning();
+    } else {
+      if (await Permission.activityRecognition.request().isGranted) {
+        await startListning();
+      }
+    }
+  }
+
+  startListning() async {
+    await Pedometer.stepCountStream.listen(countSteps);
+  }
+
+  countSteps(StepCount count) {
+    step = count.steps;
+    setState(() {});
+  }
+
   @override
   Widget build(context) {
+    double progressVal = step / stepsGoal;
     return Stack(children: [
       Scaffold(
         body: SingleChildScrollView(
@@ -239,11 +271,11 @@ class _HomeUiState extends State {
                             Stack(
                               alignment: Alignment.center,
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   width: 100,
                                   height: 100,
                                   child: CircularProgressIndicator(
-                                    value: .7,
+                                    value: progressVal,
                                     backgroundColor: Colors.grey,
                                     strokeWidth: 13,
                                   ),
@@ -276,8 +308,8 @@ class _HomeUiState extends State {
                                           width: 23,
                                           height: 23,
                                         ),
-                                        const Text(
-                                          "684 meter",
+                                        Text(
+                                          "$step",
                                           style: TextStyle(fontSize: 14),
                                         ),
                                       ],
@@ -330,15 +362,15 @@ class _HomeUiState extends State {
                               width: 100,
                               height: 100,
                               child: LiquidCircularProgressIndicator(
-                              value: 0.5, // Half-filled indicator
+                                value: 0.5, // Half-filled indicator
                                 valueColor:
                                     AlwaysStoppedAnimation(Colors.blueAccent),
                                 backgroundColor: Colors.white,
                                 borderColor: Colors.blueAccent,
                                 borderWidth: 3.0,
-                                direction: Axis
-                                    .vertical,
-                                    center: Text("50%"), // Change to horizontal or leave as default
+                                direction: Axis.vertical,
+                                center: Text(
+                                    "50%"), // Change to horizontal or leave as default
                               ),
                             ),
                           ],

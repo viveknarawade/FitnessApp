@@ -203,7 +203,7 @@ class _CategoryState extends State<Category> {
                         Row(
                           children: [
                             SvgPicture.asset(
-                              "assets/meal/pancakes.svg",
+                              "assets/meal/egg.png",
                               height: 50,
                               width: 50,
                             ),

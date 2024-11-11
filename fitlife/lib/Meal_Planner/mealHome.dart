@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Mealhome extends StatefulWidget {
+  Mealhome();
   createState() => _MealhomeState();
 }
 

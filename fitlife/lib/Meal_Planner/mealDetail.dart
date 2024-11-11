@@ -1,5 +1,4 @@
-import 'package:fitlife/Firebase/Firestore/Meal/calories.dart';
-
+import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
 import 'package:fitlife/Model/date_time_day.dart';
@@ -45,7 +44,7 @@ class _DetailState extends State<Detail> {
                   Positioned(
                     top: 140,
                     child: SvgPicture.asset(
-                      "assets/meal/pancake1.svg",
+                      "assets/meal/egg.png",
                       height: 220,
                       width: 220,
                     ),
@@ -293,9 +292,6 @@ class _DetailState extends State<Detail> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        Calories().addCaloriesData(
-                            widget.category, widget.itemData["calories"]);
-
                         // Print the formatted time, date, and day
                         print("Current Time: ${DateTimeDay().formattedTime}");
                         print("Current Date: ${DateTimeDay().formattedDate}");
@@ -307,6 +303,10 @@ class _DetailState extends State<Detail> {
                             "Day": "${DateTimeDay().dayOfWeek}"
                           },
                         );
+
+                        caloriesIntake()
+                            .addDayCaloriesData(widget.itemData["calories"]);
+
                         print(widget.itemData);
                         MealIntake()
                             .addMealData(widget.category, widget.itemData);

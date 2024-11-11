@@ -8,6 +8,7 @@
 
 #include <cloud_firestore/cloud_firestore_plugin_c_api.h>
 #include <firebase_core/firebase_core_plugin_c_api.h>
+#include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <simple_animation_progress_bar/simple_animation_progress_bar_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
@@ -15,6 +16,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("CloudFirestorePluginCApi"));
   FirebaseCorePluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
+  PermissionHandlerWindowsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   SimpleAnimationProgressBarPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("SimpleAnimationProgressBarPluginCApi"));
 }

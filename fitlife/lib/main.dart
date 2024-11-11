@@ -3,6 +3,7 @@ import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/onboarding.dart';
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
+import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Mealhome(),
+        body: Login(),
       ),
     );
   }
