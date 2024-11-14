@@ -10,7 +10,7 @@ class CustomSnackBar {
           style:
               GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400),
         ),
-        backgroundColor:color,
+        backgroundColor: color,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),

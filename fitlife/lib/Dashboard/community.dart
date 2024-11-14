@@ -1,106 +1,105 @@
+import 'package:fitlife/Dashboard/feed.dart';
+import 'package:fitlife/Dashboard/groups.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Community extends StatefulWidget {
-  const Community({super.key});
+  Community({super.key});
 
   @override
-  State<Community> createState() => _CommunityState();
+  State createState() => _CommunityState();
 }
 
-class _CommunityState extends State<Community> {
+class _CommunityState extends State {
+  String whichTab = "Feed";
+ChagingNavigationtan(){
+  if(whichTab=="Feed"){
+        Feed();
+      }else if(whichTab=="Groups"){
+        Groups();
+      } else{
+        print("Invalid Tab"); 
+      }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Community"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.grey[300],
+      body: Feed(),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const Groups();
+                    },
+                  ),
+                );
+                whichTab="Feed";
+                setState(() {
+                  
+                });
+              },
+              child: Text(
+                "feed",
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      ClipOval(
-                        child: Image.network(
-                          "https://tse2.mm.bing.net/th?id=OIP.8kdDYRZyn8HElQ40Npuv1wHaLH&pid=Api&P=0&h=180",
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 17,
-                      ),
-                      Text(
-                        "Yash |",
-                        style: GoogleFonts.poppins(
-                            fontSize: 17, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        width: 7,
-                      ),
-                      Text(
-                        "Today",
-                        style: GoogleFonts.poppins(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const Groups();
+                    },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Image.network(
-                      "https://ifbb-academy.com/wp-content/uploads/2020/05/master-bb.jpg"),
-                  SizedBox(height: 10),
-                  Text(
-                    "Hitting the gym after a month",
-                    style: GoogleFonts.poppins(
-                        fontSize: 17, fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("4"),
-                      SizedBox(
-                        width: 50,
-                      ),
-                      Icon(
-                        Icons.message,
-                      ),
-                    ],
-                  )
-                ],
+                );
+                whichTab="Groups";
+                setState(() {
+                  
+                });
+              },
+
+              child: Text(
+                "Groups",
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
               ),
-            );
-          },
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const Groups();
+                    },
+                  ),
+                );
+                whichTab="";
+setState(() {
+  
+});              },
+
+              child: Text(
+                "Workout Partner",
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
       ),
     );
   }

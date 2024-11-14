@@ -8,6 +8,7 @@ import 'package:fitlife/Firebase/Config/config.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
+import 'package:fitlife/Onboarding/splashScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -21,6 +22,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Login(),
       ),

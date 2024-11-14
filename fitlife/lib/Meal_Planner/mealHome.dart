@@ -11,7 +11,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Mealhome extends StatefulWidget {
-  Mealhome();
+  const Mealhome({super.key});
+
+  @override
   createState() => _MealhomeState();
 }
 
@@ -19,6 +21,27 @@ List foodCategory = ["Breakfast", "Lunch", "Dinner"]; // Food categories list
 
 class _MealhomeState extends State<Mealhome> {
   String? selectedCategoryValue = "Breakfast"; // Default value is "Breakfast"
+  List<Map<String, dynamic>> localMealData = [];
+  getLocalData({String? category}) async {
+    MealIntake mealIntake = MealIntake();
+    await mealIntake.getMealData();
+
+    if (category == "Dinner") {
+      localMealData = mealIntake.mealDinnerData;
+    } else if (category == "Lunch") {
+      localMealData = mealIntake.mealLunchData;
+    } else {
+      localMealData = mealIntake.mealBreakfastData;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLocalData(category: "Breakfast");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +88,6 @@ class _MealhomeState extends State<Mealhome> {
                       onPressed: () async {
                         MealIntake mealIntake = MealIntake();
 
-                        // Fetch meal data before navigation
                         await mealIntake.getMealData();
 
                         Navigator.of(context).push(
@@ -125,6 +147,7 @@ class _MealhomeState extends State<Mealhome> {
                             setState(() {
                               selectedCategoryValue =
                                   newValue; // Update selected category
+                              getLocalData(category: selectedCategoryValue);
                             });
                           },
                           items: <String>["Breakfast", "Lunch", "Dinner"]
@@ -146,7 +169,7 @@ class _MealhomeState extends State<Mealhome> {
                   ),
                 ],
               ),
-              CustomListView(data: MealIntake().mealBreakfastData),
+              CustomListview(data: localMealData),
               const SizedBox(height: 10),
 
               // Finding Something to Eat

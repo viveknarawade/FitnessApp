@@ -1,19 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomListView extends StatelessWidget {
+class CustomListview extends StatefulWidget {
   final List<Map<String, dynamic>> data;
 
-  const CustomListView({Key? key, required this.data}) : super(key: key);
+  const CustomListview({super.key, required this.data});
+
+  @override
+  State<CustomListview> createState() => _CustomListviewState();
+}
+
+class _CustomListviewState extends State<CustomListview> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    log("CustomListview = ${widget.data}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: widget.data.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final meal = data[index];
+        final meal = widget.data[index];
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
