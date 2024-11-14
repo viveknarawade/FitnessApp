@@ -1,3 +1,4 @@
+import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,14 +28,13 @@ class _MeallinechartState extends State<Meallinechart> {
             lineBarsData: [
               LineChartBarData(
                 spots: [
-                  FlSpot(0, 0),
+                  FlSpot(0, 50),
                   FlSpot(1, 1),
-                  FlSpot(2, 1),
+                  FlSpot(2, 31),
                   FlSpot(3, 50),
                   FlSpot(4, 0),
                   FlSpot(5, 30),
                   FlSpot(6, 0),
-                 
                 ],
                 color: Colors.blue,
                 isCurved: true,

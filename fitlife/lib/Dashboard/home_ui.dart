@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:fitlife/Dashboard/bottelShape.dart';
 import 'package:fitlife/Dashboard/community.dart';
 import 'package:fitlife/Dashboard/letest_workout_listView.dart';
 import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Dashboard/reminder_ui.dart';
+
+import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
@@ -29,6 +33,7 @@ class _HomeUiState extends State {
   @override
   void initState() {
     super.initState();
+    getCalories();
     requestPermission();
   }
 
@@ -49,6 +54,11 @@ class _HomeUiState extends State {
 
   countSteps(StepCount count) {
     step = count.steps;
+    setState(() {});
+  }
+
+  getCalories() {
+    CaloriesIntake().getCaloriesIntakeData();
     setState(() {});
   }
 
@@ -202,7 +212,7 @@ class _HomeUiState extends State {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text("2,340",
+                                  Text(userData[0].coloriesGoal.toString(),
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                       )),
@@ -213,7 +223,7 @@ class _HomeUiState extends State {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  const Text("0"),
+                                  Text(CaloriesIntake.dayCalories.toString()),
                                   const SizedBox(
                                     height: 10,
                                   ),

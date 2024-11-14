@@ -84,9 +84,6 @@ class ExerciseStorage {
       // Add to the foodCategoryData list
       exerciseStorageData.add(foodItem);
     }
-
-   
-
     return exerciseStorageData;
   }
 }

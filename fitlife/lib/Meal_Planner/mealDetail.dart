@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
@@ -281,7 +283,7 @@ class _DetailState extends State<Detail> {
                   ),
                   Container(
                     child: Text(
-                      "Pancakes are a breakfast favorite for many – who doesn’t love a stack of fluffy pancakes, especially with a drizzle of real honey cascading over the top? Of course, everyone enjoys that! Besides being delicious, pancakes can also be...",
+                      widget.itemData["description"],
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.poppins(),
                     ),
@@ -293,9 +295,9 @@ class _DetailState extends State<Detail> {
                     child: GestureDetector(
                       onTap: () {
                         // Print the formatted time, date, and day
-                        print("Current Time: ${DateTimeDay().formattedTime}");
-                        print("Current Date: ${DateTimeDay().formattedDate}");
-                        print("Day of the Week: ${DateTimeDay().dayOfWeek}");
+                        log("Current Time: ${DateTimeDay().formattedTime}");
+                        log("Current Date: ${DateTimeDay().formattedDate}");
+                        log("Day of the Week: ${DateTimeDay().dayOfWeek}");
                         widget.itemData.addAll(
                           {
                             "Time": "${DateTimeDay().formattedTime}",
@@ -304,7 +306,7 @@ class _DetailState extends State<Detail> {
                           },
                         );
 
-                        caloriesIntake()
+                        CaloriesIntake()
                             .addDayCaloriesData(widget.itemData["calories"]);
 
                         print(widget.itemData);
@@ -319,7 +321,7 @@ class _DetailState extends State<Detail> {
                           color: const Color.fromRGBO(148, 171, 253, 1.0),
                         ),
                         child: Text(
-                          "Add to Breakfast Meal",
+                          "Add to ${widget.category} Meal",
                           style: GoogleFonts.poppins(
                               fontSize: 17,
                               color: Colors.white,
