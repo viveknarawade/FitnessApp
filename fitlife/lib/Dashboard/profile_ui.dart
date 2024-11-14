@@ -50,11 +50,21 @@ class _ProfileUiState extends State<ProfileUi> {
                         style: TextStyle(
                             fontSize: 23, fontWeight: FontWeight.w500),
                       ),
-                      Text(
-                        "Lose a fat Program",
-                        style: TextStyle(
-                            color: Color.fromRGBO(123, 111, 114, 1),
-                            fontSize: 15),
+                      Row(
+                        children: [
+                          Text(
+                            userData[0].goal,
+                            style: TextStyle(
+                                color: Color.fromRGBO(123, 111, 114, 1),
+                                fontSize: 15),
+                          ),
+                          Text(
+                            " Program",
+                            style: TextStyle(
+                                color: Color.fromRGBO(123, 111, 114, 1),
+                                fontSize: 15),
+                          ),
+                        ],
                       ),
                     ],
                   ),
