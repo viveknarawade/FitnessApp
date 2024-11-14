@@ -11,6 +11,11 @@ class WorkoutTracker extends StatefulWidget {
 }
 
 class _WorkoutTrackerState extends State<WorkoutTracker> {
+  List<Map<String, dynamic>> exerciseCardData = [
+    {"title": "FullBody", "noOfExcercise": "11 Excercise", "min": "  32Mins"},
+    {"title": "LowerBody", "noOfExcercise": "8 Excercise", "min": "  22Mins"},
+    {"title": "UpperBody", "noOfExcercise": "5 Excercise", "min": "  76Mins"},
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +78,9 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
               ),
             ),
           ),
-          const Workoutcard(), // Assuming Workoutcard is also a widget
+          Workoutcard(
+            exerciseCardData: exerciseCardData,
+          ),
         ],
       ),
     );

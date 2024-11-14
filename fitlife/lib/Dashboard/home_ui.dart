@@ -426,7 +426,7 @@ class _HomeUiState extends State {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Exercisedata().showData();
+                      //  Exercisedata().showData();
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {

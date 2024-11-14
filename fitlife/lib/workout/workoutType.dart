@@ -1,19 +1,44 @@
+import 'dart:developer';
+
+import 'package:fitlife/Firebase/Storage/exerciseData.dart';
 import 'package:fitlife/workout/exerciseCard.dart';
 import 'package:fitlife/workout/startExercise.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class workoutType extends StatefulWidget {
-  const workoutType({super.key});
+  List<Map<String, dynamic>> exerciseCardData = [];
+  String workoutTypeName;
+  workoutType(
+      {super.key,
+      required this.exerciseCardData,
+      required this.workoutTypeName});
 
   @override
   State<workoutType> createState() => _FullbodyState();
 }
 
 class _FullbodyState extends State<workoutType> {
+  List<Map<String, dynamic>> tempexerciseData = [];
+  storeData() async {
+    tempexerciseData =
+        await ExerciseStorage().getExerciseData(widget.workoutTypeName);
+    // Print the result for debugging purposes
+    log("tempexerciseData = $tempexerciseData");
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    log("in initState ");
+    storeData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -76,7 +101,7 @@ class _FullbodyState extends State<workoutType> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Fullbody Workout",
+                    widget.workoutTypeName + "  Workout",
                     style: GoogleFonts.poppins(
                         fontSize: 23, fontWeight: FontWeight.w700),
                   ),
@@ -92,7 +117,9 @@ class _FullbodyState extends State<workoutType> {
               ),
             ),
           ),
-          Exercisecard(),
+          Exercisecard(
+            tempexerciseData: tempexerciseData,
+          ),
         ],
       ),
       floatingActionButton: Container(
