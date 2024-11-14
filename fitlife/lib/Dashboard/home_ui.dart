@@ -1,4 +1,5 @@
 import 'package:fitlife/Dashboard/bottelShape.dart';
+import 'package:fitlife/Dashboard/community.dart';
 import 'package:fitlife/Dashboard/letest_workout_listView.dart';
 import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Dashboard/reminder_ui.dart';
@@ -357,8 +358,10 @@ class _HomeUiState extends State {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                     CustomWaterBottomSheet.showWaterLevelBottomsheet(context);
-                                    }, child: Icon(Icons.add)),
+                                      CustomWaterBottomSheet
+                                          .showWaterLevelBottomsheet(context);
+                                    },
+                                    child: Icon(Icons.add)),
                               ],
                             ),
 
@@ -423,10 +426,13 @@ class _HomeUiState extends State {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return const WorkoutTracker();
-                        }));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const WorkoutTracker();
+                            },
+                          ),
+                        );
                       },
                       child: SvgPicture.asset(
                         "assets/icon/activity.svg",
@@ -458,7 +464,7 @@ class _HomeUiState extends State {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {
-                              return ProfileUi();
+                              return Community();
                             },
                           ),
                         );
@@ -476,7 +482,6 @@ class _HomeUiState extends State {
             ],
           ),
         ),
-       
       ),
       Positioned(
         bottom: 40,
