@@ -76,7 +76,7 @@ flutter:
 
       - assets/authentication/loginScr.svg
       - assets/authentication/profileIcon.jpg
-      - assets/authentication/logo.jpg
+      - assets/authentication/logo.png
      
       - assets/bottomsheet/cup.png
       - assets/bottomsheet/glass.png

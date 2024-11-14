@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
-
+import 'package:fitlife/Firebase/Storage/exerciseData.dart';
 
 import 'package:flutter/material.dart';
 
@@ -171,7 +171,8 @@ class _FooddataState extends State<Fooddata> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Food().addFoodData();
+            //Food().addFoodData();
+            ExerciseStorage().addFoodData();
           },
           child: Text("add data"),
         ),

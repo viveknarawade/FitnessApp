@@ -9,7 +9,7 @@ class Splashscreen extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(60),
-          child: Image.asset("assets/authentication/logo.jpg"),
+          child: Image.asset("assets/authentication/logo.png"),
         ),
       ),
     );

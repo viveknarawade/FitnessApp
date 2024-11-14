@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Workoutcard extends StatefulWidget {
-  const Workoutcard({super.key});
+  List<Map<String, dynamic>> exerciseCardData = [];
+  Workoutcard({super.key, required this.exerciseCardData});
 
   @override
   State<Workoutcard> createState() => _WorkoutcardState();
@@ -13,7 +14,7 @@ class _WorkoutcardState extends State<Workoutcard> {
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
-        itemCount: 4,
+        itemCount: widget.exerciseCardData.length,
         itemBuilder: (context, index) {
           return Container(
             height: 135,
@@ -32,7 +33,7 @@ class _WorkoutcardState extends State<Workoutcard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "FullBody Workout",
+                        widget.exerciseCardData[index]["title"] + "  Workout",
                         style: GoogleFonts.poppins(
                             fontSize: 15, fontWeight: FontWeight.w500),
                       ),
@@ -40,7 +41,8 @@ class _WorkoutcardState extends State<Workoutcard> {
                         height: 4,
                       ),
                       Text(
-                        "11 Exercises | 32mins",
+                        widget.exerciseCardData[index]["noOfExcercise"] +
+                            widget.exerciseCardData[index]["min"],
                         style: GoogleFonts.poppins(
                             fontSize: 12, color: Colors.grey),
                       ),
@@ -52,7 +54,11 @@ class _WorkoutcardState extends State<Workoutcard> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return workoutType();
+                                return workoutType(
+                                  exerciseCardData: widget.exerciseCardData,
+                                  workoutTypeName:
+                                      widget.exerciseCardData[index]["title"],
+                                );
                               },
                             ),
                           );

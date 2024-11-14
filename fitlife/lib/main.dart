@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 void main() async {
   await config();
   runApp(const MainApp());
-  
 }
 
 class MainApp extends StatelessWidget {
@@ -23,6 +22,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Splashscreen(),
       ),
