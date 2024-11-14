@@ -20,6 +20,7 @@ dependencies:
   permission_handler: ^11.3.1
   get: ^4.6.6
   video_player: ^2.9.2
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +81,9 @@ flutter:
      
       - assets/bottomsheet/cup.png
       - assets/bottomsheet/glass.png
+      - assets/bottomsheet/smallBottle.png
       - assets/bottomsheet/bottle.png
+      - assets/bottomsheet/group.png
 
 
   

@@ -1,10 +1,23 @@
+import 'package:fitlife/Authentication/login.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreen extends StatelessWidget {
   const Splashscreen({super.key});
+  navigateToLogin(BuildContext context) {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return Login();
+          },
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    navigateToLogin(context);
     return Scaffold(
       body: Center(
         child: Padding(

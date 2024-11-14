@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
                     child: SvgPicture.asset(
-                      "assets/icon/email.svg",
+                      "assets/icon/profile.svg",color: const Color.fromRGBO(123, 111, 114, 1)
                     ),
                   ),
                 ),
@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(11),
                       child: SvgPicture.asset(
-                        "assets/icon/Lock.svg",
+                        "assets/icon/Lock.svg", color: const Color.fromRGBO(123, 111, 114, 1),
                       ),
                     ),
                   ),
@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                       
                       } else {
                         CustomSnackBar.customSnackBar(
-                            context, "Invalid Username and Password",Colors.red);
+                            context:context,message:  "Invalid Username and Password",color:Colors.red);
                       }
                     }
                     setState(() {});

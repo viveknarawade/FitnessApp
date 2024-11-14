@@ -26,7 +26,7 @@ class _LetestWorkoutListviewState extends State {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.7),
-                spreadRadius: 5,
+                spreadRadius: 2,
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               ),

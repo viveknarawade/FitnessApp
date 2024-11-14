@@ -68,7 +68,7 @@ class _SignupState extends State<Signup> {
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
-                      "assets/icon/profile.svg",
+                      "assets/icon/profile.svg"
                     ),
                   ),
                   Positioned(
@@ -96,8 +96,7 @@ class _SignupState extends State<Signup> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
                     child: SvgPicture.asset(
-                      "assets/icon/profile.svg",
-                      color: Colors.black,
+                      "assets/icon/profile.svg",color: const Color.fromRGBO(123, 111, 114, 1),
                     ),
                   ),
                 ),
@@ -184,7 +183,7 @@ class _SignupState extends State<Signup> {
                         },
                       );
                       print(signupData);
-                      CustomSnackBar.customSnackBar(context,"Register Sucsseful",Colors.green);
+                      CustomSnackBar.customSnackBar(context: context,message: "Register Sucsseful",color:Colors.green);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const Userinfo(),

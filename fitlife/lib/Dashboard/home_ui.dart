@@ -248,14 +248,7 @@ class _HomeUiState extends State {
                       width: 150,
                       height: 180,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
+                      
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(217, 217, 217, 1),
                       ),
@@ -328,14 +321,7 @@ class _HomeUiState extends State {
                       width: 150,
                       height: 180,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
+                       
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(217, 217, 217, 1),
                       ),
@@ -358,7 +344,7 @@ class _HomeUiState extends State {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      CustomWaterBottomSheet
+                                      CustomWaterBottomSheetHelper
                                           .showWaterLevelBottomsheet(context);
                                     },
                                     child: Icon(Icons.add)),

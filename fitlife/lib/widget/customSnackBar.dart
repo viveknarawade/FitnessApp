@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomSnackBar {
-  static customSnackBar(BuildContext context, String message,Color color) {
+  static customSnackBar({required BuildContext context,required String message,required Color color,TextField? textfield}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
