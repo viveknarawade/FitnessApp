@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
@@ -293,9 +295,9 @@ class _DetailState extends State<Detail> {
                     child: GestureDetector(
                       onTap: () {
                         // Print the formatted time, date, and day
-                        print("Current Time: ${DateTimeDay().formattedTime}");
-                        print("Current Date: ${DateTimeDay().formattedDate}");
-                        print("Day of the Week: ${DateTimeDay().dayOfWeek}");
+                        log("Current Time: ${DateTimeDay().formattedTime}");
+                        log("Current Date: ${DateTimeDay().formattedDate}");
+                        log("Day of the Week: ${DateTimeDay().dayOfWeek}");
                         widget.itemData.addAll(
                           {
                             "Time": "${DateTimeDay().formattedTime}",
@@ -304,7 +306,7 @@ class _DetailState extends State<Detail> {
                           },
                         );
 
-                        caloriesIntake()
+                        CaloriesIntake()
                             .addDayCaloriesData(widget.itemData["calories"]);
 
                         print(widget.itemData);

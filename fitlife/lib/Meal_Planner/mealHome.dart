@@ -169,7 +169,10 @@ class _MealhomeState extends State<Mealhome> {
                   ),
                 ],
               ),
-              CustomListview(data: localMealData),
+              CustomListview(
+                data: localMealData,
+                categories: selectedCategoryValue,
+              ),
               const SizedBox(height: 10),
 
               // Finding Something to Eat
