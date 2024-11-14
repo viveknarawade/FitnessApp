@@ -283,7 +283,7 @@ class _DetailState extends State<Detail> {
                   ),
                   Container(
                     child: Text(
-                      "Pancakes are a breakfast favorite for many – who doesn’t love a stack of fluffy pancakes, especially with a drizzle of real honey cascading over the top? Of course, everyone enjoys that! Besides being delicious, pancakes can also be...",
+                      widget.itemData["description"],
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.poppins(),
                     ),
@@ -321,7 +321,7 @@ class _DetailState extends State<Detail> {
                           color: const Color.fromRGBO(148, 171, 253, 1.0),
                         ),
                         child: Text(
-                          "Add to Breakfast Meal",
+                          "Add to ${widget.category} Meal",
                           style: GoogleFonts.poppins(
                               fontSize: 17,
                               color: Colors.white,

@@ -39,6 +39,7 @@ class _CustomListviewState extends State<CustomListview> {
           ),
           child: GestureDetector(
             onTap: () {
+              log("${widget.data[0]}");
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {

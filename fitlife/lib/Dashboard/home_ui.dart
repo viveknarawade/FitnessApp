@@ -33,7 +33,7 @@ class _HomeUiState extends State {
   @override
   void initState() {
     super.initState();
-    CaloriesIntake().getCaloriesIntakeData();
+    getCalories();
     requestPermission();
   }
 
@@ -57,9 +57,10 @@ class _HomeUiState extends State {
     setState(() {});
   }
 
-  // getCalories() {
-  //   CaloriesIntake().getCaloriesIntakeData();
-  // }
+  getCalories() {
+    CaloriesIntake().getCaloriesIntakeData();
+    setState(() {});
+  }
 
   @override
   Widget build(context) {
