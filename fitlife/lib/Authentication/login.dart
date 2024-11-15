@@ -113,14 +113,13 @@ class _LoginState extends State<Login> {
                       );
                       if (isAuthenticated) {
                         Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeUi(),
-                            ),
-                          );
-                      
+                          MaterialPageRoute(
+                            builder: (context) => HomeUi(),
+                          ),
+                        );
                       } else {
-                        CustomSnackBar.customSnackBar(
-                            context, "Invalid Username and Password",Colors.red);
+                        CustomSnackBar.customSnackBar(context,
+                            "Invalid Username and Password", Colors.red);
                       }
                     }
                     setState(() {});

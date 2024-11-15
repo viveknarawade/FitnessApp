@@ -40,7 +40,7 @@ class _MealhomeState extends State<Mealhome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getLocalData(category: "Breakfast");
+    getLocalData(category: selectedCategoryValue);
   }
 
   @override
