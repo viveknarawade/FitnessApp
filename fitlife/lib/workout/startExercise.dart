@@ -1,17 +1,68 @@
-import 'package:fitlife/workout/workoutSet.dart';
-import 'package:fitlife/workout/workoutfinish.dart';
+import 'dart:async'; // For the Timer class
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'workoutfinish.dart';
+import 'workoutSet.dart';
 
 class StartExercise extends StatefulWidget {
-  const StartExercise({super.key});
+  final List<Map<String, dynamic>> exerciseCardData;
+  final String workoutTypeName;
+
+  StartExercise({
+    Key? key,
+    required this.exerciseCardData,
+    required this.workoutTypeName,
+  }) : super(key: key);
 
   @override
   State<StartExercise> createState() => _StartExerciseState();
 }
 
 class _StartExerciseState extends State<StartExercise> {
+  late Timer _timer;
+  int _seconds = 0; // Timer count in seconds
+
+  String _formattedTime = "00:00"; // Time display in MM:SS format
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer(); // Start the timer as soon as the screen is loaded
+  }
+
+  // Start the timer
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _seconds++;
+        _formattedTime = _formatTime(_seconds); // Update the time every second
+      });
+    });
+  }
+
+  // Stop the timer
+  void _stopTimer() {
+    _timer.cancel(); // This stops the periodic timer
+  }
+
+  // Format seconds to MM:SS format
+  String _formatTime(int seconds) {
+    int minutes = seconds ~/ 60; // Get the number of minutes
+    int remainingSeconds = seconds % 60; // Get the remaining seconds
+    return "${_padZero(minutes)}:${_padZero(remainingSeconds)}";
+  }
+
+  // Pad single digits with leading zero for proper format (MM:SS)
+  String _padZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
+  @override
+  void dispose() {
+    _stopTimer(); // Stop the timer when the widget is disposed
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +75,7 @@ class _StartExerciseState extends State<StartExercise> {
             child: Center(
               child: GestureDetector(
                 onTap: () {
+                  _stopTimer(); // Stop the timer when workout is finished
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) {
@@ -46,20 +98,27 @@ class _StartExerciseState extends State<StartExercise> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "FullBody Workout",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              widget.workoutTypeName + " Workout",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const Text(
-              "12.12",
-              style: TextStyle(
-                fontSize: 18,
+            // Displaying the timer
+            Text(
+              _formattedTime,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-            Expanded(child: Workoutset()),
+            Expanded(
+                child: Workoutset(
+              exerciseCardData: widget.exerciseCardData,
+            )),
             Center(
               child: GestureDetector(
-                  onTap: () {
+                onTap: () {
+                  _stopTimer(); // Stop the timer when workout is canceled
                   Navigator.of(context).pop();
                 },
                 child: Container(

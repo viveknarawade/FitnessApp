@@ -48,6 +48,7 @@ class _MealhomeState extends State<Mealhome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meal Planner"),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(

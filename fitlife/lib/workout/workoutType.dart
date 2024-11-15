@@ -137,7 +137,10 @@ class _FullbodyState extends State<workoutType> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return StartExercise();
+                  return StartExercise(
+                    exerciseCardData: widget.exerciseCardData,
+                    workoutTypeName: widget.workoutTypeName,
+                  );
                 },
               ),
             );

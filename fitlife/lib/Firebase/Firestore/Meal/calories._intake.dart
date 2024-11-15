@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 
@@ -48,7 +49,7 @@ class CaloriesIntake {
     log("Total calories for today: $dayCalories");
   }
 
-  Future<void> getCaloriesIntakeData() async {
+  Future<int> getCaloriesIntakeData() async {
     try {
       String dayAndDateId = MealIntake().generateDayDateDocumentId();
 
@@ -77,5 +78,7 @@ class CaloriesIntake {
     } catch (e) {
       log("Error fetching calorie intake data: $e");
     }
+
+    return dayCalories;
   }
 }

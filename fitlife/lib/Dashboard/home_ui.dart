@@ -32,7 +32,7 @@ class _HomeUiState extends State<HomeUi> {
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
   double Goal = userData[0].coloriesGoal.toDouble();
-  double Food = CaloriesIntake.dayCalories.toDouble();
+  int Food = 0;
   double Exercise = 100;
 
   @override
@@ -55,6 +55,7 @@ class _HomeUiState extends State<HomeUi> {
 
   startListning() async {
     await Pedometer.stepCountStream.listen(countSteps);
+    setState(() {});
   }
 
   countSteps(StepCount count) {
@@ -62,8 +63,8 @@ class _HomeUiState extends State<HomeUi> {
     setState(() {});
   }
 
-  getCalories() {
-    CaloriesIntake().getCaloriesIntakeData();
+  getCalories() async {
+    Food = await CaloriesIntake().getCaloriesIntakeData();
     setState(() {});
   }
 
@@ -236,7 +237,7 @@ class _HomeUiState extends State<HomeUi> {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text("$Food"),
+                                  Text(Food.toString()),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -367,13 +368,6 @@ class _HomeUiState extends State<HomeUi> {
                                     onTap: () {}, child: Icon(Icons.add)),
                               ],
                             ),
-
-                            // LiquidCustomProgressIndicator(
-                            //   direction: Axis.vertical,
-                            //   value: .3,
-                            //   valueColor: AlwaysStoppedAnimation(Colors.blue),
-                            //   shapePath: BottleShape().getPath(Size(50, 150)),
-                            // )
                             SizedBox(
                               height: 20,
                             ),
@@ -471,7 +465,7 @@ class _HomeUiState extends State<HomeUi> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {
-                              return Community();
+                              return ProfileUi();
                             },
                           ),
                         );
