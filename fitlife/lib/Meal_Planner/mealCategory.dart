@@ -35,60 +35,6 @@ class _CategoryState extends State<Category> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text("Category",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, fontWeight: FontWeight.w600)),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 130,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromRGBO(234, 239, 254, 1.0),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              height: 70,
-                              width: 70,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SvgPicture.asset(
-                              "assets/meal/salad.svg",
-                              height: 40,
-                              width: 40,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "Salad",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
