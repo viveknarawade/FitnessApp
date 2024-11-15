@@ -1,3 +1,4 @@
+import 'package:fitlife/workout/workoutType.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
@@ -78,10 +79,15 @@ class _LetestWorkoutListviewState extends State {
               ),
               const Spacer(),
               Container(
-                child: SvgPicture.asset(
-                  "assets/icon/next-btn.svg",
-                  width: 40,
-                  height: 35,
+                child: GestureDetector(
+                  onTap: (){
+
+                  },
+                  child: SvgPicture.asset(
+                    "assets/icon/next-btn.svg",
+                    width: 40,
+                    height: 35,
+                  ),
                 ),
               ),
             ],

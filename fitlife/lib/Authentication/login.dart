@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
                       if (isAuthenticated) {
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const HomeUi(),
+                              builder: (context) =>  HomeUi(),
                             ),
                           );
                       

@@ -66,10 +66,22 @@ flutter:
       - assets/icon/gender.svg
       - assets/icon/weight.svg
       - assets/icon/height.svg
+      - assets/icon/Calendar.svg
 
       - assets/meal/meal1.svg
       - assets/meal/meal2.svg
       - assets/meal/egg.png
+      - assets/meal/broccoli.png
+      - assets/meal/apple.png
+      - assets/meal/oats.png
+      - assets/meal/yogurt.png
+      - assets/meal/banana.png
+      - assets/meal/almonds.png
+      - assets/meal/avocado.png
+      - assets/meal/rice.png
+      - assets/meal/mixSalad.png
+      - assets/meal/tofu.png
+      - assets/meal/sweetPatato.png
     
       - assets/meal/salad.svg
       - assets/meal/pancakes.svg

@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 class Category extends StatefulWidget {
   String category;
   List<Map<String, dynamic>> itemsData;
-
+  List foodImages;
   // Constructor to accept the selected category and item data
-  Category({super.key, required this.category, required this.itemsData});
+  Category({super.key, required this.category, required this.itemsData, required this.foodImages});
 
   @override
   State<Category> createState() => _CategoryState();
@@ -202,11 +202,7 @@ class _CategoryState extends State<Category> {
                       children: [
                         Row(
                           children: [
-                            SvgPicture.asset(
-                              "assets/meal/egg.png",
-                              height: 50,
-                              width: 50,
-                            ),
+                           Image.asset(widget.foodImages[index],width: 60,height: 60,),
                             const SizedBox(width: 19),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

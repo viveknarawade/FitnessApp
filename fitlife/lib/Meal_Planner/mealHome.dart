@@ -18,10 +18,29 @@ class Mealhome extends StatefulWidget {
 }
 
 List foodCategory = ["Breakfast", "Lunch", "Dinner"]; // Food categories list
+List BreakfastImages = [
+  "assets/meal/apple.png",
+  "assets/meal/egg.png",
+  "assets/meal/oats.png",
+  "assets/meal/yogurt.png",
+  "assets/meal/banana.png",
+  "assets/meal/almonds.png"
+];
+List lunchImages = [
+  "assets/meal/broccoli.png",
+  "assets/meal/avocado.png",
+];
+List dinnerImages = [
+  "assets/meal/rice.png",
+  "assets/meal/mixSalad.png",
+  "assets/meal/tofu.png",
+  "assets/meal/sweetPatato.png"
+];
 
 class _MealhomeState extends State<Mealhome> {
   String? selectedCategoryValue = "Breakfast"; // Default value is "Breakfast"
   List<Map<String, dynamic>> localMealData = [];
+
   getLocalData({String? category}) async {
     MealIntake mealIntake = MealIntake();
     await mealIntake.getMealData();
@@ -41,6 +60,16 @@ class _MealhomeState extends State<Mealhome> {
     // TODO: implement initState
     super.initState();
     getLocalData(category: "Breakfast");
+  }
+
+  List CatergoryImages(String categoriyName) {
+    if (categoriyName == "Breakfast") {
+      return BreakfastImages;
+    } else if (categoriyName == "Lunch") {
+      return lunchImages;
+    } else {
+      return dinnerImages;
+    }
   }
 
   @override
@@ -239,8 +268,9 @@ class _MealhomeState extends State<Mealhome> {
                                         return Category(
                                           category: foodCategory[
                                               index], // Pass the category name
-                                          itemsData:
-                                              tempFoodData, // Pass the fetched food data
+                                          itemsData: tempFoodData,
+                                          foodImages: CatergoryImages(foodCategory[
+                                              index]), // Pass the fetched food data
                                         );
                                       },
                                     ),

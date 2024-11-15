@@ -21,14 +21,19 @@ import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart
 import 'package:fitlife/widget/CustomWaterBottomSheet.dart';
 
 class HomeUi extends StatefulWidget {
-  const HomeUi({super.key});
+  int? liter;
+  HomeUi({this.liter, super.key});
   @override
   State createState() => _HomeUiState();
 }
 
-class _HomeUiState extends State {
+class _HomeUiState extends State<HomeUi> {
   int step = 0;
   int stepsGoal = 10000;
+  double waterIntakeGoal = 2500.0;
+  double Goal = userData[0].coloriesGoal.toDouble();
+  double Food = CaloriesIntake.dayCalories.toDouble();
+  double Exercise = 100;
 
   @override
   void initState() {
@@ -65,6 +70,14 @@ class _HomeUiState extends State {
   @override
   Widget build(context) {
     double progressVal = step / stepsGoal;
+    double waterIntakeVal = (widget.liter ?? 0) / waterIntakeGoal;
+
+    // Calculate the total to derive percentage values
+    double total = Goal + Food + Exercise;
+    double goalPercentage = (Goal / total) * 100;
+    double foodPercentage = (Food / total) * 100;
+    double exercisePercentage = (Exercise / total) * 100;
+log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
     return Stack(children: [
       Scaffold(
         body: SingleChildScrollView(
@@ -146,7 +159,7 @@ class _HomeUiState extends State {
                                   PieChartSectionData(
                                     showTitle: false,
                                     radius: 20,
-                                    value: 30,
+                                    value: goalPercentage,
                                     color:
                                         const Color.fromRGBO(249, 198, 52, 1),
                                   ),
@@ -155,14 +168,14 @@ class _HomeUiState extends State {
                                     color:
                                         const Color.fromRGBO(239, 152, 58, 1),
                                     radius: 20,
-                                    value: 300,
+                                    value: foodPercentage,
                                   ),
                                   PieChartSectionData(
                                     color:
                                         const Color.fromRGBO(124, 117, 255, 1),
                                     showTitle: false,
                                     radius: 20,
-                                    value: 30,
+                                    value: exercisePercentage,
                                   ),
                                 ],
                               ),
@@ -212,7 +225,7 @@ class _HomeUiState extends State {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text(userData[0].coloriesGoal.toString(),
+                                  Text("$Goal",
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                       )),
@@ -223,7 +236,7 @@ class _HomeUiState extends State {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text(CaloriesIntake.dayCalories.toString()),
+                                  Text("$Food"),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -231,7 +244,7 @@ class _HomeUiState extends State {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text("0",
+                                  Text("$Exercise",
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                       ))
@@ -258,7 +271,6 @@ class _HomeUiState extends State {
                       width: 150,
                       height: 180,
                       decoration: BoxDecoration(
-                      
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(217, 217, 217, 1),
                       ),
@@ -331,7 +343,6 @@ class _HomeUiState extends State {
                       width: 150,
                       height: 180,
                       decoration: BoxDecoration(
-                       
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromRGBO(217, 217, 217, 1),
                       ),
@@ -354,8 +365,10 @@ class _HomeUiState extends State {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      CustomWaterBottomSheetHelper
-                                          .showWaterLevelBottomsheet(context);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CustomWaterBottomSheet()));
                                     },
                                     child: Icon(Icons.add)),
                               ],
@@ -374,7 +387,7 @@ class _HomeUiState extends State {
                               width: 100,
                               height: 100,
                               child: LiquidCircularProgressIndicator(
-                                value: 0.5, // Half-filled indicator
+                                value: waterIntakeVal, // Half-filled indicator
                                 valueColor:
                                     AlwaysStoppedAnimation(Colors.blueAccent),
                                 backgroundColor: Colors.white,
@@ -382,7 +395,11 @@ class _HomeUiState extends State {
                                 borderWidth: 3.0,
                                 direction: Axis.vertical,
                                 center: Text(
-                                    "50%"), // Change to horizontal or leave as default
+                                    "${(waterIntakeVal * 100).toInt()}%",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight
+                                            .w500)), // Change to horizontal or leave as default
                               ),
                             ),
                           ],
