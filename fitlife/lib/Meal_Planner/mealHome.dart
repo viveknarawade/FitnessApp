@@ -59,7 +59,7 @@ class _MealhomeState extends State<Mealhome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getLocalData(category: "Breakfast");
+    getLocalData(category: selectedCategoryValue);
   }
 
   List CatergoryImages(String categoriyName) {
@@ -77,6 +77,7 @@ class _MealhomeState extends State<Mealhome> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meal Planner"),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(

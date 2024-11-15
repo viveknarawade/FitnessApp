@@ -4,7 +4,11 @@ import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
 import 'package:fitlife/Model/date_time_day.dart';
+<<<<<<< HEAD
 import 'package:fitlife/workout/workoutSchedule.dart';
+=======
+import 'package:fitlife/widget/customAlertDemo.dart';
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -317,7 +321,14 @@ class _DetailState extends State<Detail> {
                         MealIntake()
                             .addMealData(widget.category, widget.itemData);
 
+<<<<<<< HEAD
 
+=======
+                        CustomAlertBoxDemo().showMyDialog(
+                            context,
+                            widget.itemData["food_item"] +
+                                " added successfully");
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
                       },
                       child: Container(
                         padding:

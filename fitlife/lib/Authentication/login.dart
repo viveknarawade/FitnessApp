@@ -113,6 +113,7 @@ class _LoginState extends State<Login> {
                       );
                       if (isAuthenticated) {
                         Navigator.of(context).push(
+<<<<<<< HEAD
                             MaterialPageRoute(
                               builder: (context) =>  HomeUi(),
                             ),
@@ -121,6 +122,15 @@ class _LoginState extends State<Login> {
                       } else {
                         CustomSnackBar.customSnackBar(
                             context:context,message:  "Invalid Username and Password",color:Colors.red);
+=======
+                          MaterialPageRoute(
+                            builder: (context) => HomeUi(),
+                          ),
+                        );
+                      } else {
+                        CustomSnackBar.customSnackBar(context,
+                            "Invalid Username and Password", Colors.red);
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
                       }
                     }
                     setState(() {});

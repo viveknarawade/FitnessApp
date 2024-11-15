@@ -32,7 +32,11 @@ class _HomeUiState extends State<HomeUi> {
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
   double Goal = userData[0].coloriesGoal.toDouble();
+<<<<<<< HEAD
   double Food = CaloriesIntake.dayCalories.toDouble();
+=======
+  int Food = 0;
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
   double Exercise = 100;
 
   @override
@@ -55,6 +59,7 @@ class _HomeUiState extends State<HomeUi> {
 
   startListning() async {
     await Pedometer.stepCountStream.listen(countSteps);
+    setState(() {});
   }
 
   countSteps(StepCount count) {
@@ -62,8 +67,8 @@ class _HomeUiState extends State<HomeUi> {
     setState(() {});
   }
 
-  getCalories() {
-    CaloriesIntake().getCaloriesIntakeData();
+  getCalories() async {
+    Food = await CaloriesIntake().getCaloriesIntakeData();
     setState(() {});
   }
 
@@ -77,7 +82,11 @@ class _HomeUiState extends State<HomeUi> {
     double goalPercentage = (Goal / total) * 100;
     double foodPercentage = (Food / total) * 100;
     double exercisePercentage = (Exercise / total) * 100;
+<<<<<<< HEAD
 log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
+=======
+    log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
     return Stack(children: [
       Scaffold(
         body: SingleChildScrollView(
@@ -236,7 +245,11 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
+<<<<<<< HEAD
                                   Text("$Food"),
+=======
+                                  Text(Food.toString()),
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -364,6 +377,7 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                                   width: 6,
                                 ),
                                 GestureDetector(
+<<<<<<< HEAD
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -371,15 +385,11 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                                                   CustomWaterBottomSheet()));
                                     },
                                     child: Icon(Icons.add)),
+=======
+                                    onTap: () {}, child: Icon(Icons.add)),
+>>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
                               ],
                             ),
-
-                            // LiquidCustomProgressIndicator(
-                            //   direction: Axis.vertical,
-                            //   value: .3,
-                            //   valueColor: AlwaysStoppedAnimation(Colors.blue),
-                            //   shapePath: BottleShape().getPath(Size(50, 150)),
-                            // )
                             SizedBox(
                               height: 20,
                             ),
@@ -477,7 +487,7 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {
-                              return Community();
+                              return ProfileUi();
                             },
                           ),
                         );

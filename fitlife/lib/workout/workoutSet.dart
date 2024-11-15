@@ -3,7 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Workoutset extends StatefulWidget {
-  const Workoutset({super.key});
+  final List<Map<String, dynamic>> exerciseCardData;
+  const Workoutset({super.key, required this.exerciseCardData});
 
   @override
   State<Workoutset> createState() => _WorkoutsetState();
@@ -27,10 +28,10 @@ class _WorkoutsetState extends State<Workoutset> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Text(
-                  "Skipping",
+                  widget.exerciseCardData[index]["exersiceName"],
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -65,8 +66,7 @@ class _WorkoutsetState extends State<Workoutset> {
                         Text("$i", style: GoogleFonts.poppins(fontSize: 20)),
                         for (int j = 0; j < 2; j++)
                           const Padding(
-                            padding:
-                                EdgeInsets.symmetric(horizontal: 4.0),
+                            padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: SizedBox(
                               height: 33,
                               width: 75,
