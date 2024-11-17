@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:developer';
 
 class Workoutset extends StatefulWidget {
   final List<Map<String, dynamic>> exerciseCardData;
@@ -11,6 +12,7 @@ class Workoutset extends StatefulWidget {
 }
 
 class _WorkoutsetState extends State<Workoutset> {
+  TextEditingController setController = TextEditingController();
   List<int> sets = [1, 2, 3];
   addSet() {
     sets.add(sets.length + 1);
@@ -19,9 +21,10 @@ class _WorkoutsetState extends State<Workoutset> {
 
   @override
   Widget build(BuildContext context) {
+    log("EXERCISE DATA${widget.exerciseCardData}");
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: 4,
+      itemCount: widget.exerciseCardData.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
@@ -43,7 +46,10 @@ class _WorkoutsetState extends State<Workoutset> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text("Set", style: GoogleFonts.poppins(fontSize: 18)),
+                  Text(
+                    "Set",
+                    style: GoogleFonts.poppins(fontSize: 18),
+                  ),
                   const SizedBox(
                     width: 60,
                   ),
@@ -65,12 +71,13 @@ class _WorkoutsetState extends State<Workoutset> {
                       children: [
                         Text("$i", style: GoogleFonts.poppins(fontSize: 20)),
                         for (int j = 0; j < 2; j++)
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: SizedBox(
                               height: 33,
                               width: 75,
                               child: TextField(
+                                controller: setController,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),

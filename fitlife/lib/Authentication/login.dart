@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/SqfLite/intializeSqfLite.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
-
+  Login({super.key});
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
@@ -59,9 +62,8 @@ class _LoginState extends State<Login> {
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset(
-                      "assets/icon/profile.svg",color: const Color.fromRGBO(123, 111, 114, 1)
-                    ),
+                    child: SvgPicture.asset("assets/icon/profile.svg",
+                        color: const Color.fromRGBO(123, 111, 114, 1)),
                   ),
                 ),
               ),
@@ -84,7 +86,8 @@ class _LoginState extends State<Login> {
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(11),
                       child: SvgPicture.asset(
-                        "assets/icon/Lock.svg", color: const Color.fromRGBO(123, 111, 114, 1),
+                        "assets/icon/Lock.svg",
+                        color: const Color.fromRGBO(123, 111, 114, 1),
                       ),
                     ),
                   ),
@@ -111,26 +114,22 @@ class _LoginState extends State<Login> {
                         userNameController.text.trim(),
                         passwordController.text.trim(),
                       );
-                      if (isAuthenticated) {
-                        Navigator.of(context).push(
-<<<<<<< HEAD
-                            MaterialPageRoute(
-                              builder: (context) =>  HomeUi(),
-                            ),
-                          );
                       
-                      } else {
-                        CustomSnackBar.customSnackBar(
-                            context:context,message:  "Invalid Username and Password",color:Colors.red);
-=======
+                       log("Calling insertData with map: ${Authservice().toMap()}");
+                      
+                      MainApp().sqfliteObj?.insertData(Authservice().toMap());
+
+                      if (isAuthenticated) {
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => HomeUi(),
                           ),
                         );
                       } else {
-                        CustomSnackBar.customSnackBar(context,
-                            "Invalid Username and Password", Colors.red);
->>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
+                        CustomSnackBar.customSnackBar(
+                            context: context,
+                            message: "Invalid Username and Password",
+                            color: Colors.red);
                       }
                     }
                     setState(() {});

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealLineChart.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
@@ -17,7 +19,20 @@ class Mealhome extends StatefulWidget {
   createState() => _MealhomeState();
 }
 
-List foodCategory = ["Breakfast", "Lunch", "Dinner"]; // Food categories list
+List foodCategory = [
+  {
+    'name': 'Breakfast',
+    'image': "assets/meal/breakfast.png",
+  },
+  {
+    'name': "Lunch",
+    'image': "assets/meal/lunch.png",
+  },
+  {
+    'name': "Dinner",
+    'image': "assets/meal/dinner.png",
+  }
+]; // Food categories list
 List BreakfastImages = [
   "assets/meal/apple.png",
   "assets/meal/egg.png",
@@ -239,7 +254,7 @@ class _MealhomeState extends State<Mealhome> {
                           child: Column(
                             children: [
                               Text(
-                                foodCategory[index],
+                                foodCategory[index]['name'],
                                 style: GoogleFonts.poppins(
                                     fontSize: 16, fontWeight: FontWeight.w400),
                               ),
@@ -260,18 +275,19 @@ class _MealhomeState extends State<Mealhome> {
                                   // Wait for the data to load from getFoodData
                                   List<Map<String, dynamic>> tempFoodData =
                                       await Food()
-                                          .getFoodData(foodCategory[index]);
+                                          .getFoodData(foodCategory[index]['name']);
 
                                   // Navigate to the Category screen and pass the data
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) {
+                                        log("SELECT BUTTON CLICKED");
                                         return Category(
-                                          category: foodCategory[
-                                              index], // Pass the category name
+                                          category: foodCategory[index]['name'], // Pass the category name
                                           itemsData: tempFoodData,
-                                          foodImages: CatergoryImages(foodCategory[
-                                              index]), // Pass the fetched food data
+                                          foodImages: CatergoryImages(
+                                            foodCategory[index]['name'],
+                                          ), // Pass the fetched food data
                                         );
                                       },
                                     ),
@@ -289,8 +305,8 @@ class _MealhomeState extends State<Mealhome> {
                         Positioned(
                           left: 52,
                           top: 5,
-                          child: SvgPicture.asset(
-                            "assets/meal/meal2.svg",
+                          child: Image.asset(
+                            foodCategory[index]['image'],
                             width: 130,
                           ),
                         ),

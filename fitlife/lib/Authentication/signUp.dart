@@ -1,11 +1,16 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/userInfo.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 Map<String, dynamic> signupData = {};
 
@@ -17,6 +22,8 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  static File? image;
+
   // Controllers to capture user input
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -29,6 +36,17 @@ class _SignupState extends State<Signup> {
     emailController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
+  }
+
+  pickImage() async {
+    ImagePicker picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      image = File(pickedImage.path);
+      setState(() {});
+    } else {
+      log("NO IMAGE SELECTED");
+    }
   }
 
   @override
@@ -59,24 +77,28 @@ class _SignupState extends State<Signup> {
               const SizedBox(height: 20),
               Stack(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(150, 179, 254, 1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icon/profile.svg"
-                    ),
-                  ),
-                  Positioned(
-                    left: 55,
-                    top: 55,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.edit),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(150, 179, 254, 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: image != null
+                          ? ClipOval(
+                              child: Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            )
+                          : SvgPicture.asset("assets/icon/profile.svg"),
                     ),
                   ),
                 ],
@@ -96,7 +118,8 @@ class _SignupState extends State<Signup> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
                     child: SvgPicture.asset(
-                      "assets/icon/profile.svg",color: const Color.fromRGBO(123, 111, 114, 1),
+                      "assets/icon/profile.svg",
+                      color: const Color.fromRGBO(123, 111, 114, 1),
                     ),
                   ),
                 ),
@@ -180,10 +203,15 @@ class _SignupState extends State<Signup> {
                           "userName": userNameController.text.trim(),
                           "email": emailController.text.trim(),
                           "password": confirmPasswordController.text.trim(),
+                          "profilePic": image
                         },
                       );
                       print(signupData);
-                      CustomSnackBar.customSnackBar(context: context,message: "Register Sucsseful",color:Colors.green);
+                     
+                      CustomSnackBar.customSnackBar(
+                          context: context,
+                          message: "Register Sucsseful",
+                          color: Colors.green);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const Userinfo(),
@@ -233,7 +261,7 @@ class _SignupState extends State<Signup> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => const Login()),
+                              builder: (context) =>  Login()),
                         );
                       },
                       child: Text(

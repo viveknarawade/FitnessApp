@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:fitlife/Meal_Planner/mealCategory.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
+import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -46,6 +48,7 @@ class _CustomListviewState extends State<CustomListview> {
                     return Detail(
                       itemData: widget.data[0],
                       category: widget.categories!,
+                      specificImage:"assets/meal/lunch.png",
                     );
                   },
                 ),

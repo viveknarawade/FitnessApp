@@ -1,6 +1,7 @@
 import 'package:fitlife/Firebase/Storage/foodData.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
+import 'package:fitlife/widget/colorsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,11 @@ class Category extends StatefulWidget {
   List<Map<String, dynamic>> itemsData;
   List foodImages;
   // Constructor to accept the selected category and item data
-  Category({super.key, required this.category, required this.itemsData, required this.foodImages});
+  Category(
+      {super.key,
+      required this.category,
+      required this.itemsData,
+      required this.foodImages});
 
   @override
   State<Category> createState() => _CategoryState();
@@ -82,6 +87,7 @@ class _CategoryState extends State<Category> {
                                 builder: (context) => Detail(
                                   itemData: foodItem,
                                   category: widget.category,
+                                   specificImage:widget.foodImages[index] ,
                                 ),
                               ),
                             );
@@ -148,7 +154,17 @@ class _CategoryState extends State<Category> {
                       children: [
                         Row(
                           children: [
-                           Image.asset(widget.foodImages[index],width: 60,height: 60,),
+                            Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colorslist().colorList[ index%Colorslist().colorList.length],
+                                ),
+                                child: Image.asset(
+                                  widget.foodImages[index],
+                                  width: 60,
+                                  height: 60,
+                                )),
                             const SizedBox(width: 19),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,6 +197,7 @@ class _CategoryState extends State<Category> {
                                     return Detail(
                                       itemData: foodItem,
                                       category: widget.category,
+                                      specificImage:widget.foodImages[index] ,
                                     );
                                   },
                                 ),

@@ -122,7 +122,7 @@ class _FullbodyState extends State<workoutType> {
                       
 
                       onTap: (){
-                          //Schedule a Meal
+                          
                         Navigator.push(
                           context,MaterialPageRoute(builder: (context){
                           return  Workoutschedule();
@@ -170,7 +170,7 @@ class _FullbodyState extends State<workoutType> {
               MaterialPageRoute(
                 builder: (context) {
                   return StartExercise(
-                    exerciseCardData: widget.exerciseCardData,
+                    exerciseCardData: tempexerciseData,
                     workoutTypeName: widget.workoutTypeName,
                   );
                 },

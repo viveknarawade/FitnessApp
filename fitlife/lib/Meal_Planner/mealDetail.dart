@@ -4,19 +4,16 @@ import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
 import 'package:fitlife/Model/date_time_day.dart';
-<<<<<<< HEAD
 import 'package:fitlife/workout/workoutSchedule.dart';
-=======
-import 'package:fitlife/widget/customAlertDemo.dart';
->>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Detail extends StatefulWidget {
   final Map<String, dynamic> itemData;
+  String specificImage;
   String category;
-  Detail({Key? key, required this.itemData, required this.category})
+  Detail({Key? key, required this.itemData, required this.category,required this.specificImage})
       : super(key: key);
 
   @override
@@ -24,8 +21,13 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
+
+  @override
+  
   @override
   Widget build(BuildContext context) {
+    log("SPecific Image:${widget.specificImage}");
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -49,9 +51,10 @@ class _DetailState extends State<Detail> {
                     ),
                   ),
                   Positioned(
+                    
                     top: 140,
-                    child: SvgPicture.asset(
-                      "assets/meal/egg.png",
+                    child: Image.asset(
+                    widget.specificImage,
                       height: 220,
                       width: 220,
                     ),
@@ -321,14 +324,6 @@ class _DetailState extends State<Detail> {
                         MealIntake()
                             .addMealData(widget.category, widget.itemData);
 
-<<<<<<< HEAD
-
-=======
-                        CustomAlertBoxDemo().showMyDialog(
-                            context,
-                            widget.itemData["food_item"] +
-                                " added successfully");
->>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
                       },
                       child: Container(
                         padding:
