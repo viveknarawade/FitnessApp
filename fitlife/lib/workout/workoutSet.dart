@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +14,7 @@ class Workoutset extends StatefulWidget {
 }
 
 class _WorkoutsetState extends State<Workoutset> {
+  bool doneButtonIsClicked = false;
   TextEditingController setController = TextEditingController();
   List<int> sets = [1, 2, 3];
   addSet() {
@@ -71,7 +74,7 @@ class _WorkoutsetState extends State<Workoutset> {
                       children: [
                         Text("$i", style: GoogleFonts.poppins(fontSize: 20)),
                         for (int j = 0; j < 2; j++)
-                           Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: SizedBox(
                               height: 33,
@@ -79,6 +82,7 @@ class _WorkoutsetState extends State<Workoutset> {
                               child: TextField(
                                 controller: setController,
                                 textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding:
@@ -95,18 +99,26 @@ class _WorkoutsetState extends State<Workoutset> {
                               Container(
                                 height: 40,
                                 width: 40,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.grey,
+                                  color: doneButtonIsClicked
+                                      ? Colors.green
+                                      : Colors.grey,
                                 ),
                               ),
                               GestureDetector(
+                                onTap: () {
+                                  doneButtonIsClicked=true;
+                                  setState(() {
+                                    
+                                  });
+                                },
                                 child: SvgPicture.asset(
                                   "assets/icon/correct.svg",
                                   height: 20,
                                   width: 20,
                                 ),
-                              ),
+                             ),
                             ],
                           ),
                         ),

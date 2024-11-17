@@ -1,4 +1,5 @@
 import 'dart:async'; // For the Timer class
+import 'package:fitlife/Dashboard/letest_workout_listView.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'workoutfinish.dart';
@@ -75,7 +76,9 @@ class _StartExerciseState extends State<StartExercise> {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  _stopTimer(); // Stop the timer when workout is finished
+                  _stopTimer(); 
+                  LetestWorkoutListview(workoutTypeName: widget.workoutTypeName,exerciseCardData: widget.exerciseCardData,);
+                  // Stop the timer when workout is finished
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) {

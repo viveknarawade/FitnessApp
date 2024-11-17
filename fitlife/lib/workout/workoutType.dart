@@ -11,10 +11,13 @@ import 'package:google_fonts/google_fonts.dart';
 class workoutType extends StatefulWidget {
   List<Map<String, dynamic>> exerciseCardData = [];
   String workoutTypeName;
-  workoutType(
-      {super.key,
-      required this.exerciseCardData,
-      required this.workoutTypeName});
+  List workoutImags=[];
+  workoutType({
+    super.key,
+    required this.exerciseCardData,
+    required this.workoutTypeName,
+    required this.workoutImags
+  });
 
   @override
   State<workoutType> createState() => _FullbodyState();
@@ -113,29 +116,31 @@ class _FullbodyState extends State<workoutType> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(233, 237, 255, 1)
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(233, 237, 255, 1)),
                     child: GestureDetector(
-                      
-
-                      onTap: (){
-                          
-                        Navigator.push(
-                          context,MaterialPageRoute(builder: (context){
-                          return  Workoutschedule();
-
-                          })
-                        );
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Workoutschedule();
+                        }));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset("assets/icon/Calendar.svg",width: 18,height: 27,),
-                          Text("Schedule Workout     5/27, 9:00 AM",style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w400),),
-                          Icon(Icons.arrow_forward_ios,color: Colors.grey)
+                          SvgPicture.asset(
+                            "assets/icon/Calendar.svg",
+                            width: 18,
+                            height: 27,
+                          ),
+                          Text(
+                            "Schedule Workout     5/27, 9:00 AM",
+                            style: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
+                          Icon(Icons.arrow_forward_ios, color: Colors.grey)
                         ],
                       ),
                     ),
@@ -151,6 +156,7 @@ class _FullbodyState extends State<workoutType> {
           ),
           Exercisecard(
             tempexerciseData: tempexerciseData,
+            workoutImags: widget.workoutImags,
           ),
         ],
       ),

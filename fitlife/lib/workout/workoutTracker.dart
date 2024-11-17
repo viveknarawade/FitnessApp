@@ -4,18 +4,49 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutTracker extends StatefulWidget {
-  const WorkoutTracker({super.key});
-
-  @override
-  State<WorkoutTracker> createState() => _WorkoutTrackerState();
-}
-
-class _WorkoutTrackerState extends State<WorkoutTracker> {
+  WorkoutTracker({super.key});
   List<Map<String, dynamic>> exerciseCardData = [
     {"title": "FullBody", "noOfExcercise": "11 Excercise", "min": "  32Mins"},
     {"title": "LowerBody", "noOfExcercise": "8 Excercise", "min": "  22Mins"},
     {"title": "UpperBody", "noOfExcercise": "5 Excercise", "min": "  76Mins"},
   ];
+
+  List fullBodyImages = [
+    "assets/workout/burpees.png",
+    "assets/workout/mountainClimber.png",
+    "assets/workout/bicycleCrunches.png",
+    "assets/workout/pushup.png",
+    "assets/workout/plank.png",
+    "assets/workout/skipping_workout.png",
+    "assets/workout/squats.png",
+    "assets/workout/lunges.png",
+    "assets/workout/pushup.png",
+  ];
+  List lowerbodyImages = [
+    "assets/workout/stepups.png",
+    "assets/workout/squats.png",
+    "assets/workout/gluteBridges.png",
+    "assets/workout/lunges.png",
+    "assets/workout/wallSit.png",
+    "assets/workout/jumpSquates.png",
+    "assets/workout/sideLunges.png",
+    "assets/workout/calfRaises.png",
+  ];
+  List upperbodyImages = [
+    "assets/workout/planlToPushUp.png",
+    "assets/workout/renegadeRows.png",
+    "assets/workout/pushup.png",
+    "assets/workout/shoulderPress.png",
+    "assets/workout/tricepDips.png",
+    "assets/workout/bicepCurl.png",
+    "assets/workout/latePullDown.png",
+    "assets/workout/chestPullDown.png",
+  ];
+  @override
+  State<WorkoutTracker> createState() => _WorkoutTrackerState();
+}
+
+class _WorkoutTrackerState extends State<WorkoutTracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +110,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
             ),
           ),
           Workoutcard(
-            exerciseCardData: exerciseCardData,
+            exerciseCardData: widget.exerciseCardData,
           ),
         ],
       ),

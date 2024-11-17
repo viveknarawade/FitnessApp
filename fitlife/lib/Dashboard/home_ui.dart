@@ -12,6 +12,7 @@ import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
@@ -78,7 +79,7 @@ class _HomeUiState extends State<HomeUi> {
     double goalPercentage = (Goal / total) * 100;
     double foodPercentage = (Food / total) * 100;
     double exercisePercentage = (Exercise / total) * 100;
-log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
+    log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
     return Stack(children: [
       Scaffold(
         body: SingleChildScrollView(
@@ -408,7 +409,7 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                 Text("Latest workout",
                     style: GoogleFonts.poppins(
                         fontSize: 16, fontWeight: FontWeight.w400)),
-                LetestWorkoutListview(),
+                //LetestWorkoutListview(),
               ],
             ),
           ),
@@ -432,20 +433,17 @@ log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
                     width: 50,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const WorkoutTracker();
-                            },
-                          ),
-                        );
-                      },
-                      child: SvgPicture.asset(
-                        "assets/icon/activity.svg",
-                        width: 30,
-                        height: 33,
-                      )),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return  WorkoutTracker();
+                          },
+                        ),
+                      );
+                    },
+                    child:Icon(FontAwesomeIcons.dumbbell,color: Colors.grey,)
+                  ),
                 ],
               ),
               Row(

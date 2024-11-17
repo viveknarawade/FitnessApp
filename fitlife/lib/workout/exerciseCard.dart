@@ -4,11 +4,18 @@ import 'package:fitlife/Firebase/Storage/exerciseData.dart';
 import 'package:fitlife/workout/startExercise.dart';
 import 'package:fitlife/workout/workoutVedio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Exercisecard extends StatefulWidget {
   List<Map<String, dynamic>> tempexerciseData = [];
-  Exercisecard({super.key, required this.tempexerciseData});
+  List workoutImags =[];
+  Exercisecard({
+    super.key,
+    required this.tempexerciseData,
+    required this.workoutImags
+    
+  });
 
   @override
   State<Exercisecard> createState() => _ExerciseState();
@@ -36,8 +43,10 @@ class _ExerciseState extends State<Exercisecard> {
               children: [
                 Row(
                   children: [
-                    Image.asset(
-                      "assets/workout/warm-up.png",
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(widget.workoutImags[index],
+                          width: 55, height: 55, fit: BoxFit.cover),
                     ),
                     const SizedBox(width: 19),
                     Column(

@@ -24,6 +24,7 @@ dependencies:
   image_picker: ^1.1.2
   sqflite: ^2.3.3+1
   path: ^1.9.0
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +38,27 @@ flutter:
       - assets/workout/skipping.png
       - assets/workout/fullBody-navs.png
       - assets/workout/warm-up.png
+      - assets/workout/burpees.png
+      - assets/workout/mountainClimber.png
+      - assets/workout/bicycleCrunches.png
+      - assets/workout/plank.png
+      - assets/workout/skipping_workout.png
+      - assets/workout/squats.png
+      - assets/workout/lunges.png
+      - assets/workout/pushup.png
+      - assets/workout/stepups.png
+      - assets/workout/gluteBridges.png
+      - assets/workout/wallSit.png
+      - assets/workout/jumpSquates.png
+      - assets/workout/sideLunges.png
+      - assets/workout/calfRaises.png
+      - assets/workout/planlToPushUp.png
+      - assets/workout/renegadeRows.png
+      - assets/workout/shoulderPress.png
+      - assets/workout/tricepDips.png
+      - assets/workout/bicepCurl.png
+      - assets/workout/latePullDown.png
+      - assets/workout/chestPullDown.png
      
       - assets/workout/fullbody.svg
       - assets/workout/finishWorkout.svg
