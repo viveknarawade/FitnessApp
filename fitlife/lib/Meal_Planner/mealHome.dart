@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Meal_Planner/mealLineChart.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
@@ -60,6 +63,12 @@ class _MealhomeState extends State<Mealhome> {
     // TODO: implement initState
     super.initState();
     getLocalData(category: selectedCategoryValue);
+    reload();
+  }
+
+  reload() {
+    WeeklyCaloriesChart();
+    setState(() {});
   }
 
   List CatergoryImages(String categoriyName) {
@@ -91,7 +100,7 @@ class _MealhomeState extends State<Mealhome> {
                     fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 40),
-              Meallinechart(),
+              WeeklyCaloriesChart(),
               const SizedBox(height: 10),
 
               // Daily Meal Schedule

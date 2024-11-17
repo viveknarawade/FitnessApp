@@ -1,49 +1,99 @@
-import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Meallinechart extends StatefulWidget {
-  const Meallinechart({super.key});
+class WeeklyCaloriesChart extends StatefulWidget {
+  const WeeklyCaloriesChart({super.key});
 
   @override
-  State<Meallinechart> createState() => _MeallinechartState();
+  State<WeeklyCaloriesChart> createState() => _WeeklyCaloriesChartState();
 }
 
-class _MeallinechartState extends State<Meallinechart> {
+class _WeeklyCaloriesChartState extends State<WeeklyCaloriesChart> {
+  Map<String, String> weeklyCalories = {};
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    try {
+      final data = await CaloriesIntake().getWeeklyCaloriesData();
+      setState(() {
+        weeklyCalories = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      debugPrint('Error loading weekly calories: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   TextStyle textStyle() {
     return GoogleFonts.poppins(
-        fontSize: 14,
-        fontWeight: FontWeight.w500); // Make sure to return the TextStyle
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  List<FlSpot> _getSpots() {
+    final dayOrder = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
+    List<FlSpot> spots = [];
+
+    for (int i = 0; i < dayOrder.length; i++) {
+      final calories = double.tryParse(weeklyCalories[dayOrder[i]] ?? '0') ?? 0;
+      // Assuming 2000 calories is 100% for visualization
+      final percentage = (calories / 2000) * 100;
+      spots.add(FlSpot(i.toDouble(), percentage.clamp(0, 100)));
+    }
+
+    return spots;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 0),
+      padding: const EdgeInsets.only(left: 0.0, right: 0),
       child: AspectRatio(
         aspectRatio: 2.0,
         child: LineChart(
           LineChartData(
+            minY: 0, // Set minimum Y value to 0
+            maxY: 100, // Set maximum Y value to 100
             lineBarsData: [
               LineChartBarData(
-                spots: [
-                  FlSpot(0, 50),
-                  FlSpot(1, 1),
-                  FlSpot(2, 31),
-                  FlSpot(3, 50),
-                  FlSpot(4, 0),
-                  FlSpot(5, 30),
-                  FlSpot(6, 0),
-                ],
+                spots: _getSpots(),
                 color: Colors.blue,
                 isCurved: true,
                 curveSmoothness: 0.35,
                 preventCurveOverShooting: true,
                 dotData: FlDotData(
                   show: true,
-                  checkToShowDot: (spot, barData) {
-                    return false;
+                  getDotPainter: (spot, percent, barData, index) {
+                    return FlDotCirclePainter(
+                      radius: 4,
+                      color: Colors.blue,
+                      strokeWidth: 2,
+                      strokeColor: Colors.white,
+                    );
                   },
                 ),
               )
@@ -51,126 +101,32 @@ class _MeallinechartState extends State<Meallinechart> {
             titlesData: FlTitlesData(
               rightTitles: AxisTitles(
                 sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    switch (value.toInt()) {
-                      case 0:
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0, left: 8),
-                          child: Text(
-                            '0%',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 10:
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            '20%',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 20:
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            '40%',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 30:
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            '60%',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 40:
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            '80%',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 50:
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 3.0),
-                          child: Text(
-                            '100%',
-                            style: textStyle(),
-                          ),
-                        );
-                      default:
-                        return const SizedBox.shrink();
-                    }
-                  },
-                  interval: 10,
-                  reservedSize: 40,
+                  showTitles: false, // Hiding right titles
                 ),
               ),
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
-                    switch (value.toInt()) {
-                      case 0:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Sun', style: textStyle()),
-                        );
-                      case 1:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Mon',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 2:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Tue',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 3:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Wed',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 4:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Thu',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 5:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Fri',
-                            style: textStyle(),
-                          ),
-                        );
-                      case 6:
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Sat',
-                            style: textStyle(),
-                          ),
-                        );
-                      default:
-                        return const SizedBox.shrink();
+                    final days = [
+                      'Sun',
+                      'Mon',
+                      'Tue',
+                      'Wed',
+                      'Thu',
+                      'Fri',
+                      'Sat'
+                    ];
+                    if (value >= 0 && value < days.length) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          days[value.toInt()],
+                          style: textStyle(),
+                        ),
+                      );
                     }
+                    return const SizedBox.shrink();
                   },
                   interval: 1,
                   reservedSize: 40,
@@ -180,25 +136,34 @@ class _MeallinechartState extends State<Meallinechart> {
                 sideTitles: SideTitles(showTitles: false),
               ),
               leftTitles: AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: (value, meta) {
+                    if (value % 20 == 0) {
+                      return Text(
+                        '${value.toInt()}%',
+                        style: textStyle(),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                  interval: 20, // Show percentage scale at 20% intervals
+                  reservedSize: 40,
+                ),
               ),
             ),
-            borderData: FlBorderData(
-              show: false, // This hides the border
-            ),
+            borderData: FlBorderData(show: false),
             gridData: FlGridData(
-              show: true, // Set to true to show grid lines
-              drawHorizontalLine:
-                  true, // Set to true to show horizontal grid lines
-              drawVerticalLine:
-                  false, // Set to false to hide vertical grid lines
+              show: true,
+              drawHorizontalLine: true,
+              drawVerticalLine: false,
               getDrawingHorizontalLine: (value) {
                 return FlLine(
                   color: Colors.black.withOpacity(0.5),
-                  // Set color for horizontal grid lines
-                  strokeWidth: 1, // Set stroke width for horizontal grid lines
+                  strokeWidth: 1,
                 );
               },
+              horizontalInterval: 20, // Set grid lines at 20% intervals
             ),
           ),
         ),

@@ -59,9 +59,8 @@ class _LoginState extends State<Login> {
                       fontSize: 17, fontWeight: FontWeight.w300),
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset(
-                      "assets/icon/profile.svg",color: const Color.fromRGBO(123, 111, 114, 1)
-                    ),
+                    child: SvgPicture.asset("assets/icon/profile.svg",
+                        color: const Color.fromRGBO(123, 111, 114, 1)),
                   ),
                 ),
               ),
@@ -84,7 +83,8 @@ class _LoginState extends State<Login> {
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(11),
                       child: SvgPicture.asset(
-                        "assets/icon/Lock.svg", color: const Color.fromRGBO(123, 111, 114, 1),
+                        "assets/icon/Lock.svg",
+                        color: const Color.fromRGBO(123, 111, 114, 1),
                       ),
                     ),
                   ),
@@ -113,24 +113,15 @@ class _LoginState extends State<Login> {
                       );
                       if (isAuthenticated) {
                         Navigator.of(context).push(
-<<<<<<< HEAD
-                            MaterialPageRoute(
-                              builder: (context) =>  HomeUi(),
-                            ),
-                          );
-                      
-                      } else {
-                        CustomSnackBar.customSnackBar(
-                            context:context,message:  "Invalid Username and Password",color:Colors.red);
-=======
                           MaterialPageRoute(
                             builder: (context) => HomeUi(),
                           ),
                         );
                       } else {
-                        CustomSnackBar.customSnackBar(context,
-                            "Invalid Username and Password", Colors.red);
->>>>>>> 9465de5408a43a113052deec9bf34f6e6311747f
+                        CustomSnackBar.customSnackBar(
+                            context: context,
+                            message: "Invalid Username and Password",
+                            color: Colors.red);
                       }
                     }
                     setState(() {});
