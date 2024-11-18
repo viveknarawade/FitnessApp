@@ -171,7 +171,17 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Mytimeline(),
+                  // Mytimeline(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                   Text(
+                    "Custom Repetitions",
+                    style: GoogleFonts.poppins(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                    SizedBox(
                     height: 10,
                   ),
