@@ -5,6 +5,7 @@ import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/workout/myTimeLine.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
 class WorkoutDetail extends StatefulWidget {
   String exerciseName;
@@ -30,11 +31,26 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
   final FixedExtentScrollController _controller = FixedExtentScrollController();
 
   int selectedIndex = 0;
+  VideoPlayerController? _videoController;
 
   // Function to calculate calories burned based on time.
   int calculateCaloriesBurned(int time) {
     // Assuming 7 calories burned per minute for demonstration purposes.
     return time * 7;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeVideo();
+  }
+
+  void _initializeVideo() async {
+    _videoController = VideoPlayerController.asset('assets/video/push_up.mp4')
+      ..initialize().then((_) {
+        setState(() {});
+        _videoController!.setLooping(false); // Disable infinite looping
+      });
   }
 
   @override
@@ -48,21 +64,22 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
             elevation: 0.0,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 100),
-                    alignment: Alignment.center,
-                    height: 270,
-                    width: 280,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromRGBO(183, 206, 254, 0.5),
-                    ),
-                  ),
-                ],
-              ),
+              background: _videoController != null &&
+                      _videoController!.value.isInitialized
+                  ? GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _videoController!.value.isPlaying
+                              ? _videoController!.pause()
+                              : _videoController!.play();
+                        });
+                      },
+                      child: AspectRatio(
+                        aspectRatio: _videoController!.value.aspectRatio,
+                        child: VideoPlayer(_videoController!),
+                      ),
+                    )
+                  : const Center(child: CircularProgressIndicator()),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0.0),
@@ -139,7 +156,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  // Mytimeline(),
                   SizedBox(
                     height: 10,
                   ),
@@ -207,7 +223,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        log("caloris burn = $selectedIndex");
+                        log("calories burn = $selectedIndex");
                         CaloriesBurn()
                             .addDayBurnCaloriesData(selectedIndex.toString());
                         WorkoutCalories().addWorkoutData(
@@ -215,7 +231,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                           "WorkoutName": widget.exerciseName,
                           "burn": selectedIndex
                         });
-                        
                       },
                       child: Container(
                         padding:
@@ -244,5 +259,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _videoController?.dispose();
+    super.dispose();
   }
 }

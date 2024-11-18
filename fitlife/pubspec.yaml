@@ -36,6 +36,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+      - assets/video/push_up.mp4
+
+
       - assets/workout/skipping.png
       - assets/workout/fullBody-navs.png
       - assets/workout/warm-up.png
