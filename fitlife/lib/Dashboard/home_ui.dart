@@ -32,7 +32,7 @@ class _HomeUiState extends State<HomeUi> {
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
   double Goal = userData[0].coloriesGoal.toDouble();
-  int Food = 0;
+  int Food = CaloriesIntake.dayCalories;
   double Exercise = 100;
 
   @override
@@ -237,7 +237,7 @@ class _HomeUiState extends State<HomeUi> {
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500)),
-                                  Text(Food.toString()),
+                                  Text("$Food"),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -365,7 +365,13 @@ class _HomeUiState extends State<HomeUi> {
                                   width: 6,
                                 ),
                                 GestureDetector(
-                                    onTap: () {}, child: Icon(Icons.add)),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CustomWaterBottomSheet()));
+                                    },
+                                    child: Icon(Icons.add)),
                               ],
                             ),
                             SizedBox(

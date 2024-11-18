@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/SqfLite/intializeSqfLite.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
-
+  Login({super.key});
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
@@ -111,8 +114,13 @@ class _LoginState extends State<Login> {
                         userNameController.text.trim(),
                         passwordController.text.trim(),
                       );
+                      
+                       log("Calling insertData with map: ${Authservice().toMap()}");
+                      
+                      MainApp().sqfliteObj?.insertData(Authservice().toMap());
+
                       if (isAuthenticated) {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => HomeUi(),
                           ),

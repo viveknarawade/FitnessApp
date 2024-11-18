@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Model/user.dart';
+import 'package:fitlife/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +16,21 @@ class ProfileUi extends StatefulWidget {
 }
 
 class _ProfileUiState extends State<ProfileUi> {
+  List displayData = [];
+
+  addDataToList() async {
+    displayData = await MainApp().sqfliteObj?.getData();
+    log("DISPLAY : $displayData");
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addDataToList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +65,14 @@ class _ProfileUiState extends State<ProfileUi> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${userData[0].userName}",
+                        "${displayData[0]['USERNAME']}",
                         style: TextStyle(
                             fontSize: 23, fontWeight: FontWeight.w500),
                       ),
                       Row(
                         children: [
                           Text(
-                            userData[0].goal,
+                            "${displayData[0]['GOAL']}",
                             style: TextStyle(
                                 color: Color.fromRGBO(123, 111, 114, 1),
                                 fontSize: 15),
@@ -104,7 +123,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${userData[0].height}"+" Cm",
+                            "${displayData[0]["HEIGHT"]} Cm",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -134,7 +153,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${userData[0].weight}"+" Kg",
+                            "${displayData[0]['WEIGHT']} Kg",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -164,7 +183,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${userData[0].age}",
+                            "${displayData[0]['AGE']}",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -291,21 +310,36 @@ class _ProfileUiState extends State<ProfileUi> {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Log Out",
-                          style: GoogleFonts.poppins(
-                              color: Color.fromRGBO(123, 111, 114, 1),
-                              fontSize: 19,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Color.fromRGBO(123, 111, 114, 1),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        MainApp().sqfliteObj?.deleteData(displayData[0]["ID"]);
+
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return Login();
+                            },
+                          ),
+                          (route) =>
+                              false, // This removes all previous routes
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Log Out",
+                            style: GoogleFonts.poppins(
+                                color: Color.fromRGBO(123, 111, 114, 1),
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Color.fromRGBO(123, 111, 114, 1),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

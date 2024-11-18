@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 config() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
         apiKey: "AIzaSyDz0jTJP_7pOA2VqTpKuK_R1zTOpVQajJI",

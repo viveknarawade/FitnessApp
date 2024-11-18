@@ -113,29 +113,31 @@ class _FullbodyState extends State<workoutType> {
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    margin: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                    margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(233, 237, 255, 1)
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(233, 237, 255, 1)),
                     child: GestureDetector(
-                      
-
-                      onTap: (){
-                          //Schedule a Meal
-                        Navigator.push(
-                          context,MaterialPageRoute(builder: (context){
-                          return  Workoutschedule();
-
-                          })
-                        );
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Workoutschedule();
+                        }));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset("assets/icon/Calendar.svg",width: 18,height: 27,),
-                          Text("Schedule Workout     5/27, 9:00 AM",style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w400),),
-                          Icon(Icons.arrow_forward_ios,color: Colors.grey)
+                          SvgPicture.asset(
+                            "assets/icon/Calendar.svg",
+                            width: 18,
+                            height: 27,
+                          ),
+                          Text(
+                            "Schedule Workout     5/27, 9:00 AM",
+                            style: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
+                          Icon(Icons.arrow_forward_ios, color: Colors.grey)
                         ],
                       ),
                     ),
@@ -170,7 +172,7 @@ class _FullbodyState extends State<workoutType> {
               MaterialPageRoute(
                 builder: (context) {
                   return StartExercise(
-                    exerciseCardData: widget.exerciseCardData,
+                    exerciseCardData: tempexerciseData,
                     workoutTypeName: widget.workoutTypeName,
                   );
                 },

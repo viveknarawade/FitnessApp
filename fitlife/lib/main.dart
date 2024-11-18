@@ -1,26 +1,23 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitlife/Authentication/login.dart';
-import 'package:fitlife/Authentication/onboarding.dart';
-import 'package:fitlife/Authentication/signUp.dart';
-import 'package:fitlife/Dashboard/home_ui.dart';
-import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
-import 'package:fitlife/Firebase/Storage/fooddata.dart';
-import 'package:fitlife/Meal_Planner/mealHome.dart';
-import 'package:fitlife/Meal_Planner/mealSchedule.dart';
-import 'package:fitlife/Onboarding/splashScreen.dart';
+import 'package:fitlife/SqfLite/intializeSqfLite.dart';
 import 'package:flutter/material.dart';
 
+SqfLite? sqflite;
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await config();
-  runApp(const MainApp());
+  sqflite = SqfLite();
+  await sqflite!.configSqfLite();
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+  MainApp({super.key});
+  SqfLite? sqfliteObj= sqflite;
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
