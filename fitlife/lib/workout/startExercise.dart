@@ -112,9 +112,10 @@ class _StartExerciseState extends State<StartExercise> {
               ),
             ),
             Expanded(
-                child: Workoutset(
-              exerciseCardData: widget.exerciseCardData,
-            )),
+              child: Workoutset(
+                exerciseCardData: widget.exerciseCardData,
+              ),
+            ),
             Center(
               child: GestureDetector(
                 onTap: () {

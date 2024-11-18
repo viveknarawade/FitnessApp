@@ -156,39 +156,7 @@ class _FullbodyState extends State<workoutType> {
           ),
         ],
       ),
-      floatingActionButton: Container(
-        width: 280, // Adjust width to fit the text comfortably
-        height: 50, // Adjust height as needed
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(
-                148, 171, 253, 1.0), // Customize the background color
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24), // Customize shape
-            ),
-          ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return StartExercise(
-                    exerciseCardData: tempexerciseData,
-                    workoutTypeName: widget.workoutTypeName,
-                  );
-                },
-              ),
-            );
-          },
-          child: Text("Start Workout",
-              style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700) // Customize text style
-              ),
-        ),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat, // Position as needed
+      // Position as needed
     );
   }
 }
