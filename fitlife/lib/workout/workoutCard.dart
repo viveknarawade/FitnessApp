@@ -1,16 +1,30 @@
+import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fitlife/workout/workoutType.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Workoutcard extends StatefulWidget {
   List<Map<String, dynamic>> exerciseCardData = [];
-  Workoutcard({super.key, required this.exerciseCardData});
+  Workoutcard({
+    super.key,
+    required this.exerciseCardData,
+  });
 
   @override
   State<Workoutcard> createState() => _WorkoutcardState();
 }
 
 class _WorkoutcardState extends State<Workoutcard> {
+  workoutCategoryImages(int index) {
+    if (widget.exerciseCardData[index]["title"] == "FullBody") {
+      return WorkoutTracker().fullBodyImages;
+    } else if (widget.exerciseCardData[index]["title"] == "LowerBody") {
+      return WorkoutTracker().lowerbodyImages;
+    } else {
+      return WorkoutTracker().upperbodyImages;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
@@ -55,10 +69,10 @@ class _WorkoutcardState extends State<Workoutcard> {
                             MaterialPageRoute(
                               builder: (context) {
                                 return workoutType(
-                                  exerciseCardData: widget.exerciseCardData,
-                                  workoutTypeName:
-                                      widget.exerciseCardData[index]["title"],
-                                );
+                                    exerciseCardData: widget.exerciseCardData,
+                                    workoutTypeName:
+                                        widget.exerciseCardData[index]["title"],
+                                    workoutImags: workoutCategoryImages(index));
                               },
                             ),
                           );

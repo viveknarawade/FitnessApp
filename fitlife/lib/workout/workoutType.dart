@@ -11,10 +11,13 @@ import 'package:google_fonts/google_fonts.dart';
 class workoutType extends StatefulWidget {
   List<Map<String, dynamic>> exerciseCardData = [];
   String workoutTypeName;
-  workoutType(
-      {super.key,
-      required this.exerciseCardData,
-      required this.workoutTypeName});
+  List workoutImags=[];
+  workoutType({
+    super.key,
+    required this.exerciseCardData,
+    required this.workoutTypeName,
+    required this.workoutImags
+  });
 
   @override
   State<workoutType> createState() => _FullbodyState();
@@ -153,6 +156,7 @@ class _FullbodyState extends State<workoutType> {
           ),
           Exercisecard(
             tempexerciseData: tempexerciseData,
+            workoutImags: widget.workoutImags,
           ),
         ],
       ),

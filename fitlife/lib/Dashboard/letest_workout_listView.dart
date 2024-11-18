@@ -4,6 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 class LetestWorkoutListview extends StatefulWidget {
+    final List<Map<String, dynamic>> exerciseCardData;
+  final String workoutTypeName;
+
+  const LetestWorkoutListview({super.key,  required this.exerciseCardData,
+    required this.workoutTypeName,});
+ 
   @override
   State<StatefulWidget> createState() {
     return _LetestWorkoutListviewState();
@@ -16,7 +22,7 @@ class _LetestWorkoutListviewState extends State {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 5,
+      itemCount: 1,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -50,10 +56,10 @@ class _LetestWorkoutListviewState extends State {
               const SizedBox(
                 width: 15,
               ),
-              const Column(
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("FullBodyWorkout"),
+                  Text(  " Workout"),
                   SizedBox(
                     height: 2,
                   ),
@@ -80,8 +86,11 @@ class _LetestWorkoutListviewState extends State {
               const Spacer(),
               Container(
                 child: GestureDetector(
-                  onTap: (){
-
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return Text("");
+                    }));
                   },
                   child: SvgPicture.asset(
                     "assets/icon/next-btn.svg",

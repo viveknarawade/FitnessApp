@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fitlife/Dashboard/home_ui.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,10 +15,20 @@ class _CustomWaterBottomSheetState extends State<CustomWaterBottomSheet> {
   int liter = 0; // Initialize water intake to 0
   TextEditingController _increaseWaterIntakeContriller =
       TextEditingController();
+  initState() {
+    super.initState();
+    getTodayWaterIntake();
+  }
+  getTodayWaterIntake() async {
+    liter = await MainApp().sqfliteObj?.getTodayWaterIntake();
+    setState(() {});
+  }
+
   void _increaseWaterIntake(int amount) {
     setState(() {
       liter += amount;
       log("$liter");
+      MainApp().sqfliteObj?.insertOrUpdateWaterIntake(liter);
     });
   }
 

@@ -161,8 +161,12 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 10,
                   ),
+                  Text("How  To Do It", style: GoogleFonts.poppins(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w700,
+                    ),),
                   Center(
                     child: GestureDetector(
                       onTap: () async {

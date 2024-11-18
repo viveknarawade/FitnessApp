@@ -115,7 +115,6 @@ class _LoginState extends State<Login> {
                         passwordController.text.trim(),
                       );
                       
-                       log("Calling insertData with map: ${Authservice().toMap()}");
                       
                       MainApp().sqfliteObj?.insertData(Authservice().toMap());
 

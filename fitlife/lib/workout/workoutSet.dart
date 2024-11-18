@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +14,7 @@ class Workoutset extends StatefulWidget {
 }
 
 class _WorkoutsetState extends State<Workoutset> {
+  bool doneButtonIsClicked = false;
   TextEditingController setController = TextEditingController();
   List<int> sets = [1, 2, 3];
   addSet() {
