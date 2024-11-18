@@ -195,7 +195,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                           color: const Color.fromRGBO(148, 171, 253, 1.0),
                         ),
                         child: Text(
-                          "Add to  Meal",
+                          "Save",
                           style: GoogleFonts.poppins(
                               fontSize: 17,
                               color: Colors.white,

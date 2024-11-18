@@ -196,8 +196,8 @@ class _FooddataState extends State<Fooddata> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Food().addFoodData();
-            // ExerciseStorage().addFoodData();
+          //  Food().addFoodData();
+            ExerciseStorage().addExerciseData();
           },
           child: Text("add data"),
         ),

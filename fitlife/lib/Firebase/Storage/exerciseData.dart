@@ -678,52 +678,70 @@ List upperBodyStorageList = [
 ];
 
 class ExerciseStorage {
-  addFoodData() async {
-    for (int i = 0; i < fullBodyStorageList.length; i++) {
-      await db
-          .collection("Exercise")
-          .doc("FullBody")
-          .collection("ExerciseItems")
-          .add(fullBodyStorageList[i]);
+  // Add exercise data to Firestore
+  Future<void> addExerciseData() async {
+    try {
+      // Add Full Body exercises
+      for (int i = 0; i < fullBodyStorageList.length; i++) {
+        await db
+            .collection("Exercise")
+            .doc("FullBody")
+            .collection("ExerciseItems")
+            .add(fullBodyStorageList[i]);
+      }
+
+      // Add Upper Body exercises
+      for (int i = 0; i < upperBodyStorageList.length; i++) {
+        await db
+            .collection("Exercise")
+            .doc("UpperBody")
+            .collection("ExerciseItems")
+            .add(upperBodyStorageList[i]);
+      }
+
+      // Add Lower Body exercises
+      for (int i = 0; i < lowerBodyStorageList.length; i++) {
+        await db
+            .collection("Exercise")
+            .doc("LowerBody")
+            .collection("ExerciseItems")
+            .add(lowerBodyStorageList[i]);
+      }
+
+      log("Exercise data added successfully");
+    } catch (e) {
+      log("Error adding exercise data: $e");
     }
-    for (int i = 0; i < upperBodyStorageList.length; i++) {
-      await db
-          .collection("Exercise")
-          .doc("UpperBody")
-          .collection("ExerciseItems")
-          .add(upperBodyStorageList[i]);
-    }
-    for (int i = 0; i < lowerBodyStorageList.length; i++) {
-      await db
-          .collection("Exercise")
-          .doc("LowerBody")
-          .collection("ExerciseItems")
-          .add(lowerBodyStorageList[i]);
-    }
-    log("Exercise data added ");
   }
 
+  // Get exercise data from Firestore based on category
   Future<List<Map<String, dynamic>>> getExerciseData(String category) async {
     List<Map<String, dynamic>> exerciseStorageData = [];
 
-    exerciseStorageData.clear();
+    try {
+      QuerySnapshot exerciseResponse = await db
+          .collection("Exercise")
+          .doc(category)
+          .collection("ExerciseItems")
+          .get();
 
-    QuerySnapshot foodResponse = await db
-        .collection("Exercise")
-        .doc(category)
-        .collection("ExerciseItems")
-        .get();
+      // Map the response to a list of exercises
+      for (int i = 0; i < exerciseResponse.docs.length; i++) {
+        Map<String, dynamic> exerciseItem = {
+          "exerciseName": exerciseResponse.docs[i]["name"], // Corrected typo
+          "reps": exerciseResponse.docs[i]["reps"],
+          "description": exerciseResponse.docs[i]
+              ["description"], // Add description if necessary
+          "steps": List<Map<String, String>>.from(
+              exerciseResponse.docs[i]["steps"] ?? []), // Steps
+        };
 
-    // Map the response to a list of food items
-    for (int i = 0; i < foodResponse.docs.length; i++) {
-      Map<String, dynamic> foodItem = {
-        "exersiceName": foodResponse.docs[i]["name"],
-        "reps": foodResponse.docs[i]["reps"],
-      };
-
-      // Add to the foodCategoryData list
-      exerciseStorageData.add(foodItem);
+        exerciseStorageData.add(exerciseItem);
+      }
+    } catch (e) {
+      log("Error fetching exercise data: $e");
     }
+
     return exerciseStorageData;
   }
 }
