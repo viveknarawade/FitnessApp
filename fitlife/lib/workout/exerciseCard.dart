@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:fitlife/Firebase/Storage/exerciseData.dart';
 import 'package:fitlife/workout/startExercise.dart';
-import 'package:fitlife/workout/workoutVedio.dart';
+import 'package:fitlife/workout/workout_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +34,9 @@ class _ExerciseState extends State<Exercisecard> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return Workoutvedio();
+                    return WorkoutDetail(
+                      tempexerciseData: widget.tempexerciseData,
+                    );
                   },
                 ),
               );

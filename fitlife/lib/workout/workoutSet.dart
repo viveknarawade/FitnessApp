@@ -59,63 +59,7 @@ class _WorkoutsetState extends State<Workoutset> {
                   Text("Reps", style: GoogleFonts.poppins(fontSize: 18)),
                 ],
               ),
-              for (int i = 1; i <= sets.length; i++)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("$i", style: GoogleFonts.poppins(fontSize: 20)),
-                        for (int j = 0; j < 2; j++)
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0),
-                            child: SizedBox(
-                              height: 33,
-                              width: 75,
-                              child: TextField(
-                                controller: setController,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 8),
-                                ),
-                              ),
-                            ),
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: doneButtonIsClicked
-                                      ? Colors.green
-                                      : Colors.grey,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: SvgPicture.asset(
-                                  "assets/icon/correct.svg",
-                                  height: 20,
-                                  width: 20,
-                                ),
-                             ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              
               Center(
                 child: GestureDetector(
                   onTap: () {
