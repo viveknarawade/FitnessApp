@@ -13,35 +13,34 @@ class WorkoutTracker extends StatefulWidget {
   ];
 
   List fullBodyImages = [
-    "assets/workout/burpees.png",
-    "assets/workout/mountainClimber.png",
     "assets/workout/bicycleCrunches.png",
+    "assets/workout/mountainClimber.png",
     "assets/workout/pushup.png",
-    "assets/workout/plank.png",
     "assets/workout/skipping_workout.png",
-    "assets/workout/squats.png",
     "assets/workout/lunges.png",
-    "assets/workout/pushup.png",
+    "assets/workout/plank.png",
+    "assets/workout/burpees.png",
+    "assets/workout/squats.png",
   ];
   List lowerbodyImages = [
-    "assets/workout/stepups.png",
-    "assets/workout/squats.png",
     "assets/workout/gluteBridges.png",
+    "assets/workout/squats.png",
     "assets/workout/lunges.png",
     "assets/workout/wallSit.png",
     "assets/workout/jumpSquates.png",
-    "assets/workout/sideLunges.png",
+    "assets/workout/stepups.png",
     "assets/workout/calfRaises.png",
+    "assets/workout/sideLunges.png",
   ];
   List upperbodyImages = [
+    "assets/workout/bicepCurl.png",
     "assets/workout/planlToPushUp.png",
+    "assets/workout/chestPullDown.png",
     "assets/workout/renegadeRows.png",
+    "assets/workout/tricepDips.png",
     "assets/workout/pushup.png",
     "assets/workout/shoulderPress.png",
-    "assets/workout/tricepDips.png",
-    "assets/workout/bicepCurl.png",
     "assets/workout/latePullDown.png",
-    "assets/workout/chestPullDown.png",
   ];
   @override
   State<WorkoutTracker> createState() => _WorkoutTrackerState();
