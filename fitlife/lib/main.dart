@@ -1,5 +1,6 @@
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
+import 'package:fitlife/Firebase/Storage/fooddata.dart';
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,9 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
-  SqfLite? sqfliteObj= sqflite;
+  SqfLite? sqfliteObj = sqflite;
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

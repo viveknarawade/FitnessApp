@@ -1,3 +1,4 @@
+import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/workout/workoutCard.dart';
 import 'package:fitlife/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,8 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
-                padding:
-                    const EdgeInsets.only(top: 120.0, left: 30, bottom: 40),
+                padding: const EdgeInsets.only(
+                    top: 120.0, left: 10, right: 30, bottom: 40),
                 child: Workoutlinechart(),
               ),
             ),

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:intl/intl.dart';
 
@@ -14,15 +17,16 @@ class WorkoutCalories {
       fullbody.add(tempMealData);
       for (int i = 0; i < fullbody.length; i++) {
         await db
-            .collection("Workout") // Meal collection
-            .doc(userData[0].id) // Use the actual user ID dynamically
+            .collection("Workout")
+            .doc(userData[0].id)
             .collection("dayDate")
-            .doc(dayAndDateId) // Day document (e.g., "Sunday_2024-11-14")
-            .collection("Category") // Category subcollection
-            .doc("FullBody") // Document for Breakfast category
-            .collection("Workout_items") // items subcollection for meal items
-            .add(fullbody[i]); // Add the meal data
+            .doc(dayAndDateId)
+            .collection("Category")
+            .doc("FullBody")
+            .collection("Workout_items")
+            .add(fullbody[i]);
       }
+      log("FullBody data added");
     }
     if (category == "LowerBody") {
       lowerbody.clear();
@@ -32,12 +36,13 @@ class WorkoutCalories {
             .collection("Workout")
             .doc(userData[0].id)
             .collection("dayDate")
-            .doc(dayAndDateId) // Use the actual user ID dynamically
+            .doc(dayAndDateId)
             .collection("Category")
-            .doc("LowerBody") // Document for Lunch category
+            .doc("LowerBody")
             .collection("Workout_items")
-            .add(lowerbody[i]); // Correct reference to mealLunch
+            .add(lowerbody[i]);
       }
+      log("lowerbody data added");
     }
     if (category == "UpperBody") {
       upperbody.clear();
@@ -49,24 +54,75 @@ class WorkoutCalories {
             .collection("dayDate")
             .doc(dayAndDateId)
             .collection("Category")
-            .doc("UpperBody") // Document for Dinner category
+            .doc("UpperBody")
             .collection("Workout_items")
-            .add(upperbody[i]); // Correct reference to
+            .add(upperbody[i]);
       }
+      log("upperbody data added");
     }
   }
 
-    String generateDayDateDocumentId() {
+  String generateDayDateDocumentId() {
     DateTime date = DateTime.now(); // Get the current date
-
-    // Format the date as YYYY-MM-DD
-    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-
-    // Get the weekday (e.g., "Sunday")
+    String formattedDate =
+        DateFormat('yyyy-MM-dd').format(date); // Format the date as YYYY-MM-DD
     String weekday = DateFormat('EEEE')
         .format(date); // Full weekday name (Sunday, Monday, etc.)
-
-    // Combine the weekday and formatted date (e.g., "Sunday_2024-11-14")
     return '$weekday-$formattedDate';
+  }
+
+  // Function to fetch data for a specific category from Firestore
+  Future<List<Map<String, dynamic>>> fetchWorkoutDataForCategory(
+      String category) async {
+    String dayAndDateId = generateDayDateDocumentId();
+    List<Map<String, dynamic>> workoutDataList = [];
+    try {
+      QuerySnapshot mealResponse = await db
+          .collection("Workout")
+          .doc(userData[0].id)
+          .collection("dayDate")
+          .doc(dayAndDateId)
+          .collection("Category")
+          .doc(category)
+          .collection("Workout_items")
+          .get();
+
+      for (var doc in mealResponse.docs) {
+        Map<String, dynamic> tempFoodItem = {
+          "WorkoutName": doc["WorkoutName"],
+          "burn": doc["burn"],
+        };
+        workoutDataList.add(tempFoodItem);
+      }
+      log("${workoutDataList}");
+    } catch (e) {
+      print("Error fetching $category data: $e");
+    }
+    return workoutDataList;
+  }
+
+  Future<num> getTotalCalories(String category) async {
+    String dayAndDateId = generateDayDateDocumentId();
+    num TotalCalories = 0; // Corrected to int type
+    try {
+      QuerySnapshot mealResponse = await db
+          .collection("Workout")
+          .doc(userData[0].id)
+          .collection("dayDate")
+          .doc(dayAndDateId)
+          .collection("Category")
+          .doc(category)
+          .collection("Workout_items")
+          .get();
+
+      for (var doc in mealResponse.docs) {
+        TotalCalories += doc["burn"]; // Accumulate calories as integers
+      }
+
+      log("Total calories burned: $TotalCalories");
+    } catch (e) {
+      print("Error fetching $category data: $e");
+    }
+    return TotalCalories;
   }
 }

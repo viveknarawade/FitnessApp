@@ -1,73 +1,42 @@
-// import 'dart:io';
+import 'dart:developer';
 
-// import 'package:flutter/material.dart';
-// import 'package:video_player/video_player.dart';
-
-// class Workoutvedio extends StatefulWidget {
-//   const Workoutvedio({super.key});
-
-//   @override
-//   State<Workoutvedio> createState() => _WorkoutvedioState();
-// }
-
-// class _WorkoutvedioState extends State<Workoutvedio> {
-//   late VideoPlayerController _controller;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadVideo();
-//   }
-
-//   // Function to load the downloaded video from local storage
-//   Future<void> _loadVideo() async {
-//     // Replace with the actual path where the video is stored
-//     final videoPath = 'assets/tricep.mp4';
-
-//     // Create a video controller with the local file
-//     _controller = VideoPlayerController.asset(videoPath)
-//       ..initialize().then((_) {
-//         setState(() {});
-//       });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: CustomScrollView(
-//         slivers: [
-//           SliverAppBar(
-//             title: const Text("Fullbody Workout"),
-//             expandedHeight: 350,
-//             backgroundColor: Colors.purpleAccent,
-//             flexibleSpace: FlexibleSpaceBar(
-//               background: _controller.value.isInitialized
-//                   ? AspectRatio(
-//                       aspectRatio: _controller.value.aspectRatio,
-//                       child: VideoPlayer(_controller), // Display the video
-//                     )
-//                   : CircularProgressIndicator(), // Loading indicator
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
+import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
+import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/workout/myTimeLine.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutDetail extends StatefulWidget {
-  List<Map<String, dynamic>> tempexerciseData = [];
-  WorkoutDetail({super.key, required this.tempexerciseData});
+  String exerciseName;
+  String rep;
+  String description;
+  String workoutTypeName;
+  WorkoutDetail(
+      {super.key,
+      required this.exerciseName,
+      required this.rep,
+      required this.description,
+      required this.workoutTypeName});
 
   @override
   State<WorkoutDetail> createState() => _WorkoutDetailState();
 }
 
 class _WorkoutDetailState extends State<WorkoutDetail> {
+  // List of times from 0 to 60 minutes.
+  final List<int> times = List.generate(61, (index) => index);
+
+  // Scroll controller to track the selected index.
+  final FixedExtentScrollController _controller = FixedExtentScrollController();
+
+  int selectedIndex = 0;
+
+  // Function to calculate calories burned based on time.
+  int calculateCaloriesBurned(int time) {
+    // Assuming 7 calories burned per minute for demonstration purposes.
+    return time * 7;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,14 +61,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       color: Color.fromRGBO(183, 206, 254, 0.5),
                     ),
                   ),
-                  // Positioned(
-                  //   top: 140,
-                  //   child: Image.asset(
-                  //     widget.specificImage,
-                  //     height: 220,
-                  //     width: 220,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -133,13 +94,20 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "food_item",
+                    widget.exerciseName,
                     style: GoogleFonts.poppins(
                       fontSize: 23,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 20),
+                  Text(
+                    widget.rep,
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   SizedBox(
                     height: 20,
@@ -156,7 +124,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   ),
                   Container(
                     child: Text(
-                      "description",
+                      widget.description,
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.poppins(),
                     ),
@@ -175,39 +143,79 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                   Text(
-                    "Custom Repetitions",
-                    style: GoogleFonts.poppins(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 150,
+                          child: ListWheelScrollView.useDelegate(
+                            controller: _controller,
+                            itemExtent: 60, // Reduced space between items.
+                            physics: FixedExtentScrollPhysics(),
+                            perspective: 0.002,
+                            onSelectedItemChanged: (index) {
+                              setState(() {
+                                selectedIndex = calculateCaloriesBurned(
+                                    times[index]); // Update selected index.
+                              });
+                            },
+                            childDelegate: ListWheelChildBuilderDelegate(
+                              builder: (context, index) {
+                                return Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.local_fire_department,
+                                        color: Colors.red,
+                                        size: 30,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        '${calculateCaloriesBurned(times[index])} Calories Burn',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        '${times[index]} min',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              childCount: times.length,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Center(
                     child: GestureDetector(
-                      onTap: () async {
-                        // // Print the formatted time, date, and day
-                        // log("Current Time: ${DateTimeDay().formattedTime}");
-                        // log("Current Date: ${DateTimeDay().formattedDate}");
-                        // log("Day of the Week: ${DateTimeDay().dayOfWeek}");
-                        // widget.itemData.addAll(
-                        //   {
-                        //     "Time": "${DateTimeDay().formattedTime}",
-                        //     "Date": " ${DateTimeDay().formattedDate}",
-                        //     "Day": "${DateTimeDay().dayOfWeek}"
-                        //   },
-                        // );
-                        // Map<String, String> weeklyCalories =
-                        //     await CaloriesIntake().getWeeklyCaloriesData();
-
-                        // print(widget.itemData);
-                        // MealIntake()
-                        //     .addMealData(widget.category, widget.itemData);
-
-                        // CaloriesIntake()
-                        //     .addDayCaloriesData(widget.itemData["calories"]);
+                      onTap: () {
+                        log("caloris burn = $selectedIndex");
+                        CaloriesBurn()
+                            .addDayBurnCaloriesData(selectedIndex.toString());
+                        WorkoutCalories().addWorkoutData(
+                            widget.workoutTypeName, {
+                          "WorkoutName": widget.exerciseName,
+                          "burn": selectedIndex
+                        });
+                        
                       },
                       child: Container(
                         padding:
@@ -217,7 +225,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                           color: const Color.fromRGBO(148, 171, 253, 1.0),
                         ),
                         child: Text(
-                          "Add to  Meal",
+                          "Save",
                           style: GoogleFonts.poppins(
                               fontSize: 17,
                               color: Colors.white,
@@ -225,6 +233,9 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),

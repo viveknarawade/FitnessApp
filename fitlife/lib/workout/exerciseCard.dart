@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:fitlife/Firebase/Storage/exerciseData.dart';
-import 'package:fitlife/workout/startExercise.dart';
+
 import 'package:fitlife/workout/workout_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,13 +9,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Exercisecard extends StatefulWidget {
   List<Map<String, dynamic>> tempexerciseData = [];
-  List workoutImags =[];
-  Exercisecard({
-    super.key,
-    required this.tempexerciseData,
-    required this.workoutImags
-    
-  });
+  List workoutImags = [];
+  String workoutTypeName;
+  Exercisecard(
+      {super.key,
+      required this.tempexerciseData,
+      required this.workoutImags,
+      required this.workoutTypeName});
 
   @override
   State<Exercisecard> createState() => _ExerciseState();
@@ -31,11 +31,16 @@ class _ExerciseState extends State<Exercisecard> {
           margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) {
                     return WorkoutDetail(
-                      tempexerciseData: widget.tempexerciseData,
+                      exerciseName: widget.tempexerciseData[index]
+                          ["exersiceName"],
+                      rep: widget.tempexerciseData[index]["reps"],
+                      description: widget.tempexerciseData[index]
+                          ["description"],
+                      workoutTypeName: widget.workoutTypeName,
                     );
                   },
                 ),

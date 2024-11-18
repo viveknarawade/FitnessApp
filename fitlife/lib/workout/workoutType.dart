@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:fitlife/Firebase/Storage/exerciseData.dart';
 import 'package:fitlife/workout/exerciseCard.dart';
-import 'package:fitlife/workout/startExercise.dart';
+
 import 'package:fitlife/workout/workoutSchedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,13 +11,12 @@ import 'package:google_fonts/google_fonts.dart';
 class workoutType extends StatefulWidget {
   List<Map<String, dynamic>> exerciseCardData = [];
   String workoutTypeName;
-  List workoutImags=[];
-  workoutType({
-    super.key,
-    required this.exerciseCardData,
-    required this.workoutTypeName,
-    required this.workoutImags
-  });
+  List workoutImags = [];
+  workoutType(
+      {super.key,
+      required this.exerciseCardData,
+      required this.workoutTypeName,
+      required this.workoutImags});
 
   @override
   State<workoutType> createState() => _FullbodyState();
@@ -157,6 +156,7 @@ class _FullbodyState extends State<workoutType> {
           Exercisecard(
             tempexerciseData: tempexerciseData,
             workoutImags: widget.workoutImags,
+            workoutTypeName: widget.workoutTypeName,
           ),
         ],
       ),
