@@ -46,7 +46,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
   }
 
   void _initializeVideo() async {
-    _videoController = VideoPlayerController.asset('assets/video/push_up.mp4')
+    _videoController = VideoPlayerController.asset('assets/video/squats.mp4')
       ..initialize().then((_) {
         setState(() {});
         _videoController!.setLooping(false); // Disable infinite looping

@@ -37,6 +37,7 @@ flutter:
   uses-material-design: true
   assets:
       - assets/video/push_up.mp4
+      - assets/video/squats.mp4
 
 
       - assets/workout/skipping.png
