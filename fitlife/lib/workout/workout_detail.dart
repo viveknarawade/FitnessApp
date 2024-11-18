@@ -55,12 +55,19 @@
 //   }
 // }
 
+import 'package:fitlife/workout/myTimeLine.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkoutDetail extends StatefulWidget {
-  List<Map<String, dynamic>> tempexerciseData = [];
-  WorkoutDetail({super.key, required this.tempexerciseData});
+  String exerciseName;
+  String rep;
+  String description;
+  WorkoutDetail(
+      {super.key,
+      required this.exerciseName,
+      required this.rep,
+      required this.description});
 
   @override
   State<WorkoutDetail> createState() => _WorkoutDetailState();
@@ -132,13 +139,20 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "food_item",
+                    widget.exerciseName,
                     style: GoogleFonts.poppins(
                       fontSize: 23,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 20),
+                  Text(
+                    widget.rep,
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   SizedBox(
                     height: 20,
@@ -155,7 +169,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   ),
                   Container(
                     child: Text(
-                      "description",
+                      widget.description,
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.poppins(),
                     ),
@@ -163,10 +177,17 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("How  To Do It", style: GoogleFonts.poppins(
+                  Text(
+                    "How  To Do It",
+                    style: GoogleFonts.poppins(
                       fontSize: 23,
                       fontWeight: FontWeight.w700,
-                    ),),
+                    ),
+                  ),
+                  Mytimeline(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Center(
                     child: GestureDetector(
                       onTap: () async {

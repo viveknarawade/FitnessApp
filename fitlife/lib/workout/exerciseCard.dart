@@ -9,13 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Exercisecard extends StatefulWidget {
   List<Map<String, dynamic>> tempexerciseData = [];
-  List workoutImags =[];
-  Exercisecard({
-    super.key,
-    required this.tempexerciseData,
-    required this.workoutImags
-    
-  });
+  List workoutImags = [];
+  Exercisecard(
+      {super.key, required this.tempexerciseData, required this.workoutImags});
 
   @override
   State<Exercisecard> createState() => _ExerciseState();
@@ -35,7 +31,11 @@ class _ExerciseState extends State<Exercisecard> {
                 MaterialPageRoute(
                   builder: (context) {
                     return WorkoutDetail(
-                      tempexerciseData: widget.tempexerciseData,
+                      exerciseName: widget.tempexerciseData[index]
+                          ["exersiceName"],
+                      rep: widget.tempexerciseData[index]["reps"],
+                      description: widget.tempexerciseData[index]
+                          ["description"],
                     );
                   },
                 ),
