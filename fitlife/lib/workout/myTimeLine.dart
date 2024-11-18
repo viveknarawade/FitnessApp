@@ -14,14 +14,25 @@ class _MytimelineState extends State<Mytimeline> {
     return ListView(
       shrinkWrap: true,
       children: [
-        
         TimelineTile(
           isFirst: true,
-
+          indicatorStyle: IndicatorStyle(width: 40),
+          beforeLineStyle: LineStyle(
+            color: Color.fromRGBO(209, 146, 231, 1),
+          ),
         ),
-        TimelineTile(),
+        TimelineTile(
+          indicatorStyle: IndicatorStyle(width: 40),
+          beforeLineStyle: LineStyle(
+            color: Color.fromRGBO(209, 146, 231, 1),
+          ),
+        ),
         TimelineTile(
           isLast: true,
+          indicatorStyle: IndicatorStyle(width: 40),
+          beforeLineStyle: LineStyle(
+            color: Color.fromRGBO(209, 146, 231, 1),
+          ),
         ),
       ],
     );

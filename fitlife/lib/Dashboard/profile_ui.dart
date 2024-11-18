@@ -88,18 +88,21 @@ class _ProfileUiState extends State<ProfileUi> {
                     ],
                   ),
                   const Spacer(),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 28, vertical: 5),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: const Text(
-                      "Edit",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400),
+                  GestureDetector(
+                    
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 28, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Text(
+                        "Edit",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400),
+                      ),
                     ),
                   )
                 ],
@@ -224,7 +227,6 @@ class _ProfileUiState extends State<ProfileUi> {
                     SizedBox(
                       height: 20,
                     ),
-                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -292,8 +294,7 @@ class _ProfileUiState extends State<ProfileUi> {
                               return Login();
                             },
                           ),
-                          (route) =>
-                              false, // This removes all previous routes
+                          (route) => false, // This removes all previous routes
                         );
                       },
                       child: Row(

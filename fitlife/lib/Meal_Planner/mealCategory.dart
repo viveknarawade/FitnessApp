@@ -72,11 +72,19 @@ class _CategoryState extends State<Category> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(
-                          foodItem["img"],
-                          width: 60,
-                          height: 60,
-                        ),
+                       Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colorslist().colorList[
+                                    index % Colorslist().colorList.length],
+                              ),
+                              child: Image.asset(
+                                foodItem["img"],
+                                width: 60,
+                                height: 60,
+                              ),
+                            ),
                         const SizedBox(height: 9),
                         Text(
                           foodItem["food_item"],
@@ -84,7 +92,7 @@ class _CategoryState extends State<Category> {
                               fontSize: 15, fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
-                          height: 9,
+                          height: 20,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -161,17 +169,18 @@ class _CategoryState extends State<Category> {
                         Row(
                           children: [
                             Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colorslist().colorList[
-                                      index % Colorslist().colorList.length],
-                                ),
-                                child: Image.asset(
-                                  foodItem["img"],
-                                  width: 60,
-                                  height: 60,
-                                )),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colorslist().colorList[
+                                    index % Colorslist().colorList.length],
+                              ),
+                              child: Image.asset(
+                                foodItem["img"],
+                                width: 60,
+                                height: 60,
+                              ),
+                            ),
                             const SizedBox(width: 19),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
