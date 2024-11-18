@@ -12,7 +12,8 @@ List lunch = [
     "fat": "0.6",
     "carbs": "11.0",
     "description":
-        "Broccoli is a green vegetable rich in vitamins and fiber. It's low in calories and provides a good source of antioxidants. Ideal for boosting immunity. Often used in salads or stir-fry dishes. Great for supporting digestive health."
+        "Broccoli is a green vegetable rich in vitamins and fiber. It's low in calories and provides a good source of antioxidants. Ideal for boosting immunity. Often used in salads or stir-fry dishes. Great for supporting digestive health.",
+    "img": "assets/meal/broccoli.png"
   },
   {
     "food_item": "Avocado",
@@ -21,7 +22,8 @@ List lunch = [
     "fat": "22.0",
     "carbs": "12.0",
     "description":
-        "Avocado is a creamy fruit high in healthy fats, particularly monounsaturated fat. It's packed with vitamins, including Vitamin K and E. Known for promoting heart health. Excellent source of fiber and potassium. Perfect for salads or toast."
+        "Avocado is a creamy fruit high in healthy fats, particularly monounsaturated fat. It's packed with vitamins, including Vitamin K and E. Known for promoting heart health. Excellent source of fiber and potassium. Perfect for salads or toast.",
+    "img": "assets/meal/avocado.png"
   },
 ];
 
@@ -33,7 +35,8 @@ List breakfast = [
     "fat": "0.3",
     "carbs": "25.0",
     "description":
-        "Apples are sweet and crunchy fruits rich in dietary fiber. They help improve digestion and promote heart health. High in antioxidants like Vitamin C. Low in calories, making them a great snack option. Ideal for maintaining healthy blood sugar levels."
+        "Apples are sweet and crunchy fruits rich in dietary fiber. They help improve digestion and promote heart health. High in antioxidants like Vitamin C. Low in calories, making them a great snack option. Ideal for maintaining healthy blood sugar levels.",
+    "img": "assets/meal/apple.png" // Image for Apple
   },
   {
     "food_item": "Banana",
@@ -42,7 +45,8 @@ List breakfast = [
     "fat": "0.3",
     "carbs": "27.0",
     "description":
-        "Bananas are a great source of potassium, which helps regulate blood pressure. They're high in carbohydrates, providing energy throughout the day. Great for improving digestion. Rich in Vitamin B6 and Vitamin C. Easily portable for a quick snack."
+        "Bananas are a great source of potassium, which helps regulate blood pressure. They're high in carbohydrates, providing energy throughout the day. Great for improving digestion. Rich in Vitamin B6 and Vitamin C. Easily portable for a quick snack.",
+    "img": "assets/meal/banana.png" // Image for Banana
   },
   {
     "food_item": "Eggs",
@@ -51,7 +55,8 @@ List breakfast = [
     "fat": "4.8",
     "carbs": "0.4",
     "description":
-        "Eggs are a highly nutritious food, providing a complete source of protein. Rich in vitamins, including Vitamin A and B12. They support muscle growth and repair. Contain healthy fats and antioxidants. Versatile for various recipes like scrambled, boiled, or poached."
+        "Eggs are a highly nutritious food, providing a complete source of protein. Rich in vitamins, including Vitamin A and B12. They support muscle growth and repair. Contain healthy fats and antioxidants. Versatile for various recipes like scrambled, boiled, or poached.",
+    "img": "assets/meal/egg.png" // Image for Eggs
   },
   {
     "food_item": "Almonds",
@@ -60,7 +65,8 @@ List breakfast = [
     "fat": "14.0",
     "carbs": "6.0",
     "description":
-        "Almonds are a nutrient-dense snack that provides healthy fats, protein, and fiber. Rich in Vitamin E, they help improve skin health. Known for supporting heart health. Low in carbs, making them suitable for low-carb diets. Great for on-the-go energy."
+        "Almonds are a nutrient-dense snack that provides healthy fats, protein, and fiber. Rich in Vitamin E, they help improve skin health. Known for supporting heart health. Low in carbs, making them suitable for low-carb diets. Great for on-the-go energy.",
+    "img": "assets/meal/almonds.png" // Image for Almonds
   },
   {
     "food_item": "Oats",
@@ -69,7 +75,8 @@ List breakfast = [
     "fat": "2.5",
     "carbs": "27.0",
     "description":
-        "Oats are a wholesome whole grain that provides complex carbohydrates and fiber. They help in maintaining stable blood sugar levels. Rich in beta-glucan, which supports cholesterol reduction. Full of antioxidants to combat inflammation. A great breakfast option, often enjoyed as oatmeal or overnight oats."
+        "Oats are a wholesome whole grain that provides complex carbohydrates and fiber. They help in maintaining stable blood sugar levels. Rich in beta-glucan, which supports cholesterol reduction. Full of antioxidants to combat inflammation. A great breakfast option, often enjoyed as oatmeal or overnight oats.",
+    "img": "assets/meal/oats.png" // Image for Oats
   },
   {
     "food_item": "Yogurt",
@@ -78,8 +85,9 @@ List breakfast = [
     "fat": "0.0",
     "carbs": "6.0",
     "description":
-        "Yogurt is a probiotic-rich dairy product that supports gut health. It's high in protein, helping with muscle repair. Contains calcium for bone health. Often consumed as a snack or added to smoothies. Ideal for those looking for a light, low-fat dairy option."
-  },
+        "Yogurt is a probiotic-rich dairy product that supports gut health. It's high in protein, helping with muscle repair. Contains calcium for bone health. Often consumed as a snack or added to smoothies. Ideal for those looking for a light, low-fat dairy option.",
+    "img": "assets/meal/yogurt.png" // Image for Yogurt
+  }
 ];
 
 List dinner = [
@@ -90,7 +98,8 @@ List dinner = [
     "fat": "0.2",
     "carbs": "24.0",
     "description":
-        "Sweet potatoes are a rich source of vitamins, particularly Vitamin A. They are high in fiber, supporting digestive health. Known for their antioxidant properties, they help combat inflammation. Great for improving vision and immune function. Can be roasted, mashed, or added to soups."
+        "Sweet potatoes are a rich source of vitamins, particularly Vitamin A. They are high in fiber, supporting digestive health. Known for their antioxidant properties, they help combat inflammation. Great for improving vision and immune function. Can be roasted, mashed, or added to soups.",
+    "img": "assets/meal/sweetPatato.png" // Image for Sweet Potato
   },
   {
     "food_item": "Mixed Salad",
@@ -99,7 +108,8 @@ List dinner = [
     "fat": "0.2",
     "carbs": "9.0",
     "description":
-        "A mixed salad is a combination of various vegetables like lettuce, tomatoes, and cucumbers. It's low in calories and high in fiber. Great for weight management and digestion. Packed with vitamins and minerals to support overall health. Can be served with a variety of dressings and toppings."
+        "A mixed salad is a combination of various vegetables like lettuce, tomatoes, and cucumbers. It's low in calories and high in fiber. Great for weight management and digestion. Packed with vitamins and minerals to support overall health. Can be served with a variety of dressings and toppings.",
+    "img": "assets/meal/mixSalad.png" // Image for Mixed Salad
   },
   {
     "food_item": "Tofu",
@@ -108,7 +118,8 @@ List dinner = [
     "fat": "5.9",
     "carbs": "2.3",
     "description":
-        "Tofu is a plant-based protein made from soybeans. It's rich in essential amino acids and supports muscle growth. Low in carbs and fat, making it a healthy protein source. Ideal for vegetarians and vegans. Can be grilled, stir-fried, or added to soups."
+        "Tofu is a plant-based protein made from soybeans. It's rich in essential amino acids and supports muscle growth. Low in carbs and fat, making it a healthy protein source. Ideal for vegetarians and vegans. Can be grilled, stir-fried, or added to soups.",
+    "img": "assets/meal/tofu.png" // Image for Tofu
   },
   {
     "food_item": "Brown Rice",
@@ -117,8 +128,9 @@ List dinner = [
     "fat": "1.6",
     "carbs": "45.0",
     "description":
-        "Brown rice is a whole grain that's rich in fiber and antioxidants. It helps stabilize blood sugar levels and aids in digestion. High in magnesium, supporting muscle and nerve function. Provides long-lasting energy due to its complex carbohydrates. Can be used in various dishes like stir-fries or as a side."
-  },
+        "Brown rice is a whole grain that's rich in fiber and antioxidants. It helps stabilize blood sugar levels and aids in digestion. High in magnesium, supporting muscle and nerve function. Provides long-lasting energy due to its complex carbohydrates. Can be used in various dishes like stir-fries or as a side.",
+    "img": "assets/meal/rice.png" // Image for Brown Rice
+  }
 ];
 
 class Food {
@@ -165,6 +177,7 @@ class Food {
         "fat": foodResponse.docs[i]["fat"],
         "carbs": foodResponse.docs[i]["carbs"],
         "description": foodResponse.docs[i]["description"],
+        "img": foodResponse.docs[i]["img"],
       };
 
       // Add to the foodCategoryData list
@@ -196,8 +209,8 @@ class _FooddataState extends State<Fooddata> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-          //  Food().addFoodData();
-            ExerciseStorage().addExerciseData();
+            Food().addFoodData();
+            // ExerciseStorage().addExerciseData();
           },
           child: Text("add data"),
         ),

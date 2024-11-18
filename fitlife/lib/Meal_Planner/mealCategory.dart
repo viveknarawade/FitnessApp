@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitlife/Firebase/Storage/foodData.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
@@ -9,13 +11,13 @@ import 'package:google_fonts/google_fonts.dart';
 class Category extends StatefulWidget {
   String category;
   List<Map<String, dynamic>> itemsData;
-  List foodImages;
+
   // Constructor to accept the selected category and item data
-  Category(
-      {super.key,
-      required this.category,
-      required this.itemsData,
-      required this.foodImages});
+  Category({
+    super.key,
+    required this.category,
+    required this.itemsData,
+  });
 
   @override
   State<Category> createState() => _CategoryState();
@@ -23,9 +25,13 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   @override
-  Widget build(BuildContext context) {
-    print("${widget.itemsData.length}");
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,10 +72,10 @@ class _CategoryState extends State<Category> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SvgPicture.asset(
-                          "assets/meal/pancakes.svg",
-                          height: 100,
-                          width: 100,
+                        Image.asset(
+                          foodItem["img"],
+                          width: 60,
+                          height: 60,
                         ),
                         const SizedBox(height: 9),
                         Text(
@@ -87,7 +93,7 @@ class _CategoryState extends State<Category> {
                                 builder: (context) => Detail(
                                   itemData: foodItem,
                                   category: widget.category,
-                                   specificImage:widget.foodImages[index] ,
+                                  img: foodItem["img"],
                                 ),
                               ),
                             );
@@ -158,10 +164,11 @@ class _CategoryState extends State<Category> {
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colorslist().colorList[ index%Colorslist().colorList.length],
+                                  color: Colorslist().colorList[
+                                      index % Colorslist().colorList.length],
                                 ),
                                 child: Image.asset(
-                                  widget.foodImages[index],
+                                  foodItem["img"],
                                   width: 60,
                                   height: 60,
                                 )),
@@ -189,25 +196,26 @@ class _CategoryState extends State<Category> {
                         ),
                         const Spacer(),
                         GestureDetector(
-                            onTap: () {
-                              print(foodItem);
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return Detail(
-                                      itemData: foodItem,
-                                      category: widget.category,
-                                      specificImage:widget.foodImages[index] ,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: SvgPicture.asset(
-                              "assets/icon/Button-Next.svg",
-                              height: 30,
-                              width: 30,
-                            )),
+                          onTap: () {
+                            print(foodItem);
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return Detail(
+                                    itemData: foodItem,
+                                    category: widget.category,
+                                    img: foodItem["img"],
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            "assets/icon/Button-Next.svg",
+                            height: 30,
+                            width: 30,
+                          ),
+                        ),
                         const SizedBox(width: 10),
                       ],
                     ),

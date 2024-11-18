@@ -22,7 +22,7 @@ class _CustomListviewState extends State<CustomListview> {
     // TODO: implement initState
     super.initState();
 
-    log("CustomListview = ${widget.data}");
+  
   }
 
   @override
@@ -48,7 +48,7 @@ class _CustomListviewState extends State<CustomListview> {
                     return Detail(
                       itemData: widget.data[0],
                       category: widget.categories!,
-                      specificImage:"assets/meal/lunch.png",
+                      img: "img",
                     );
                   },
                 ),
@@ -60,8 +60,8 @@ class _CustomListviewState extends State<CustomListview> {
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    SvgPicture.asset(
-                      "assets/meal/meal1.svg",
+                    Image.asset(
+                      meal["img"],
                       width: 40,
                       height: 40,
                     ),

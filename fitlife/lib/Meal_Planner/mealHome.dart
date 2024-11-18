@@ -33,24 +33,6 @@ List foodCategory = [
     'image': "assets/meal/dinner.png",
   }
 ]; // Food categories list
-List BreakfastImages = [
-  "assets/meal/apple.png",
-  "assets/meal/egg.png",
-  "assets/meal/oats.png",
-  "assets/meal/yogurt.png",
-  "assets/meal/banana.png",
-  "assets/meal/almonds.png"
-];
-List lunchImages = [
-  "assets/meal/broccoli.png",
-  "assets/meal/avocado.png",
-];
-List dinnerImages = [
-  "assets/meal/rice.png",
-  "assets/meal/mixSalad.png",
-  "assets/meal/tofu.png",
-  "assets/meal/sweetPatato.png"
-];
 
 class _MealhomeState extends State<Mealhome> {
   String? selectedCategoryValue = "Breakfast"; // Default value is "Breakfast"
@@ -81,16 +63,6 @@ class _MealhomeState extends State<Mealhome> {
   reload() {
     WeeklyCaloriesChart();
     setState(() {});
-  }
-
-  List CatergoryImages(String categoriyName) {
-    if (categoriyName == "Breakfast") {
-      return BreakfastImages;
-    } else if (categoriyName == "Lunch") {
-      return lunchImages;
-    } else {
-      return dinnerImages;
-    }
   }
 
   @override
@@ -280,8 +252,8 @@ class _MealhomeState extends State<Mealhome> {
                                 onPressed: () async {
                                   // Wait for the data to load from getFoodData
                                   List<Map<String, dynamic>> tempFoodData =
-                                      await Food()
-                                          .getFoodData(foodCategory[index]['name']);
+                                      await Food().getFoodData(
+                                          foodCategory[index]['name']);
 
                                   // Navigate to the Category screen and pass the data
                                   Navigator.of(context).push(
@@ -289,11 +261,10 @@ class _MealhomeState extends State<Mealhome> {
                                       builder: (context) {
                                         log("SELECT BUTTON CLICKED");
                                         return Category(
-                                          category: foodCategory[index]['name'], // Pass the category name
+                                          category: foodCategory[index][
+                                              'name'], // Pass the category name
                                           itemsData: tempFoodData,
-                                          foodImages: CatergoryImages(
-                                            foodCategory[index]['name'],
-                                          ), // Pass the fetched food data
+                                          // Pass the fetched food data
                                         );
                                       },
                                     ),

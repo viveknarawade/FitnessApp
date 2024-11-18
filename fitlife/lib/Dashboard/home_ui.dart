@@ -550,22 +550,6 @@ class _HomeUiState extends State<HomeUi> {
           ),
         ),
       ),
-      Positioned(
-        bottom: 40,
-        left: MediaQuery.of(context).size.width / 2 - 35,
-        child: Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.pinkAccent),
-          child: const Icon(
-            Icons.music_note,
-            size: 43,
-            color: Colors.white,
-          ),
-        ),
-      )
     ]);
   }
 }
