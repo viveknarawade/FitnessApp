@@ -38,6 +38,10 @@ flutter:
   assets:
       - assets/video/push_up.mp4
       - assets/video/squats.mp4
+      - assets/video/lunges.mp4
+      - assets/video/bicep_curl.mp4
+      - assets/video/tricep.mp4
+      - assets/video/mountain_climbers.mp4
 
 
       - assets/workout/skipping.png

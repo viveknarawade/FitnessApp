@@ -8,9 +8,11 @@ import 'package:fitlife/Dashboard/reminder_ui.dart';
 
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
 import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/main.dart';
+import 'package:fitlife/widget/custom_navbar.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
+import 'package:path/path.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
@@ -35,8 +38,8 @@ class _HomeUiState extends State<HomeUi> {
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
   double Goal = userData[0].coloriesGoal.toDouble();
-  int Food = CaloriesIntake.dayCalories;
-  double Exercise = 100;
+  int Food = 0;
+  int Exercise = 0;
   double waterIntakeVal = 0;
   num? upperbodyBurn;
   num? lowerbodyBurn;
@@ -44,7 +47,7 @@ class _HomeUiState extends State<HomeUi> {
   @override
   void initState() {
     super.initState();
-    getCalories();
+
     requestPermission();
     fetchWaterIntake();
     loadWorkoutData();
@@ -121,13 +124,14 @@ class _HomeUiState extends State<HomeUi> {
 
   getCalories() async {
     Food = await CaloriesIntake().getCaloriesIntakeData();
+    Exercise = await CaloriesBurn().getCaloriesBurnData();
     setState(() {});
   }
 
   @override
   Widget build(context) {
     double progressVal = step / stepsGoal;
-
+    getCalories();
     // Calculate the total to derive percentage values
     double total = Goal + Food + Exercise;
     double goalPercentage = (Goal / total) * 100;
@@ -474,81 +478,7 @@ class _HomeUiState extends State<HomeUi> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  SvgPicture.asset(
-                    "assets/icon/home.svg",
-                    width: 30,
-                    height: 33,
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return WorkoutTracker();
-                            },
-                          ),
-                        );
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.dumbbell,
-                        color: Colors.grey,
-                      )),
-                ],
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return Mealhome();
-                      }));
-                    },
-                    child: Image.asset(
-                      "assets/icon/meal.png",
-                      width: 34,
-                      height: 36,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProfileUi();
-                            },
-                          ),
-                        );
-                      },
-                      child: SvgPicture.asset(
-                        "assets/icon/profile.svg",
-                        width: 30,
-                        height: 33,
-                      )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: CustomNavbar.showCustomAppbar(context),
       ),
     ]);
   }

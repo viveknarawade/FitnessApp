@@ -5,6 +5,7 @@ import 'package:fitlife/Meal_Planner/mealLineChart.dart';
 import 'package:fitlife/Meal_Planner/mealSchedule.dart';
 import 'package:fitlife/Meal_Planner/mealCategory.dart';
 import 'package:fitlife/Firebase/Storage/foodData.dart';
+import 'package:fitlife/widget/custom_navbar.dart';
 import 'package:fitlife/widget/custom_listview.dart';
 
 import 'package:flutter/material.dart';
@@ -294,6 +295,7 @@ class _MealhomeState extends State<Mealhome> {
           ),
         ),
       ),
+      bottomNavigationBar: CustomNavbar.showCustomAppbar(context),
     );
   }
 }

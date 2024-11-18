@@ -1,4 +1,5 @@
 import 'package:fitlife/Dashboard/home_ui.dart';
+import 'package:fitlife/widget/custom_navbar.dart';
 import 'package:fitlife/workout/workoutCard.dart';
 import 'package:fitlife/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +116,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
           ),
         ],
       ),
+      bottomNavigationBar: CustomNavbar.showCustomAppbar(context),
     );
   }
 }
