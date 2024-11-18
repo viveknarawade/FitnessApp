@@ -183,7 +183,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${displayData[0]['AGE']}",
+                            "${displayData[0]['AGE'].toInt()}",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
