@@ -13,6 +13,7 @@ class SqfLite {
       join(await getDatabasesPath(), "FitnessApp"),
       version: 1,
       onCreate: (db, version) async {
+        //  USER DATA TABLE
         await db.execute("""
         CREATE TABLE USERDATA(
           USERNAME TEXT,
@@ -27,7 +28,7 @@ class SqfLite {
           WEIGHT TEXT
         )
 """);
-
+        // WATER INTAKE TABLE
         db.execute("""
     
     CREATE TABLE WATERINTAKE(
@@ -36,11 +37,31 @@ class SqfLite {
 
     )
    """);
+
         log("WATERDATA Table Created");
+
+        //  WORKOUTSCHEDULE  TABLE
+
+        await db.execute("""
+          CREATE TABLE WORKOUTSCHEDULE(
+          DATE TEXT PRIMARY KEY,
+          TIME TEXT,
+          WORKOUTTYPE TEXT
+          )
+""");
+        log("WORKOUTSCHEDULE Table Created");
       },
     );
 
     log("DATABASE CREATED HERE:$database");
+  }
+
+// WORKOUTSCHEDULE
+
+  insertOrUpdateWorkoutSchedule(String date, String time, String workoutType) async {
+    Database localdb =await database;
+    
+    
   }
 
 // getToday Date

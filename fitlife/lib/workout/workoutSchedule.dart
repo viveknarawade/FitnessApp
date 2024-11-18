@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:fitlife/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -462,6 +463,14 @@ class _WorkoutState extends State {
                             }
 
                             log("Scheduled new workout: $scheduleDate for $selectedCategoryValue");
+
+                            MainApp().sqfliteObj?.insertOrUpdateWorkoutSchedule(
+                                '${DateFormat('EEE, d MMM y').format(selectedDate)}',
+                                '$scheduleDate',
+                                '$selectedCategoryValue');
+                            log("Current month  ${DateFormat('EEE, d MMM y').format(selectedDate)}");
+                            log("Current month  $scheduleDate");
+                            log("Current month  $selectedCategoryValue");
 
                             Navigator.of(context)
                                 .pop(); // Close the BottomSheet

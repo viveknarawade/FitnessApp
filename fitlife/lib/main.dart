@@ -2,6 +2,7 @@ import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';
+import 'package:fitlife/widget/video_player.dart';
 import 'package:flutter/material.dart';
 
 SqfLite? sqflite;
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Login(),
+        body: Login()
       ),
     );
   }

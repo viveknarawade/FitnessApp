@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:fitlife/Meal_Planner/mealCategory.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
+import 'package:fitlife/widget/colorsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,7 +35,6 @@ class _CustomListviewState extends State<CustomListview> {
       itemBuilder: (context, index) {
         final meal = widget.data[index];
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
           padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -60,11 +60,19 @@ class _CustomListviewState extends State<CustomListview> {
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    Image.asset(
-                      meal["img"],
-                      width: 40,
-                      height: 40,
-                    ),
+                    Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colorslist().colorList[
+                                    index % Colorslist().colorList.length],
+                              ),
+                              child: Image.asset(
+                                meal["img"],
+                                width:40,
+                                height:40,
+                              ),
+                            ),
                     const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
