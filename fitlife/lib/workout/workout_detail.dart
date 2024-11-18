@@ -55,6 +55,7 @@
 //   }
 // }
 
+import 'package:fitlife/workout/myTimeLine.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -163,10 +164,17 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("How  To Do It", style: GoogleFonts.poppins(
+                  Text(
+                    "How  To Do It",
+                    style: GoogleFonts.poppins(
                       fontSize: 23,
                       fontWeight: FontWeight.w700,
-                    ),),
+                    ),
+                  ),
+                  Mytimeline(),
+                   SizedBox(
+                    height: 10,
+                  ),
                   Center(
                     child: GestureDetector(
                       onTap: () async {
