@@ -47,21 +47,16 @@ class _WorkoutsetState extends State<Workoutset> {
               Row(
                 children: [
                   const SizedBox(
-                    width: 8,
+                    width: 88,
                   ),
                   Text(
                     "Set",
                     style: GoogleFonts.poppins(fontSize: 18),
                   ),
                   const SizedBox(
-                    width: 60,
-                  ),
-                  Text("Kg", style: GoogleFonts.poppins(fontSize: 18)),
-                  const SizedBox(
-                    width: 83,
+                    width: 80,
                   ),
                   Text("Reps", style: GoogleFonts.poppins(fontSize: 18)),
-                  //  Spacer(),
                 ],
               ),
               for (int i = 1; i <= sets.length; i++)
@@ -107,12 +102,16 @@ class _WorkoutsetState extends State<Workoutset> {
                                 ),
                               ),
                               GestureDetector(
+<<<<<<< HEAD
                                 onTap: () {
                                   doneButtonIsClicked=true;
                                   setState(() {
                                     
                                   });
                                 },
+=======
+                                onTap: () {},
+>>>>>>> 8f35ad8cef31fa574d99de148ecf8a095e56b5c8
                                 child: SvgPicture.asset(
                                   "assets/icon/correct.svg",
                                   height: 20,

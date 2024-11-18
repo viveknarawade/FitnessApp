@@ -75,6 +75,12 @@ class _MealhomeState extends State<Mealhome> {
     // TODO: implement initState
     super.initState();
     getLocalData(category: selectedCategoryValue);
+    reload();
+  }
+
+  reload() {
+    WeeklyCaloriesChart();
+    setState(() {});
   }
 
   List CatergoryImages(String categoriyName) {
@@ -106,7 +112,7 @@ class _MealhomeState extends State<Mealhome> {
                     fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 40),
-              Meallinechart(),
+              WeeklyCaloriesChart(),
               const SizedBox(height: 10),
 
               // Daily Meal Schedule
