@@ -102,16 +102,7 @@ class _WorkoutsetState extends State<Workoutset> {
                                 ),
                               ),
                               GestureDetector(
-<<<<<<< HEAD
-                                onTap: () {
-                                  doneButtonIsClicked=true;
-                                  setState(() {
-                                    
-                                  });
-                                },
-=======
                                 onTap: () {},
->>>>>>> 8f35ad8cef31fa574d99de148ecf8a095e56b5c8
                                 child: SvgPicture.asset(
                                   "assets/icon/correct.svg",
                                   height: 20,
