@@ -12,9 +12,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Detail extends StatefulWidget {
   final Map<String, dynamic> itemData;
-  String specificImage;
+
   String category;
-  Detail({Key? key, required this.itemData, required this.category,required this.specificImage})
+  String img;
+  Detail(
+      {Key? key,
+      required this.itemData,
+      required this.category,
+      required this.img})
       : super(key: key);
 
   @override
@@ -22,13 +27,9 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
-
   @override
-  
   @override
   Widget build(BuildContext context) {
-    log("SPecific Image:${widget.specificImage}");
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -52,10 +53,9 @@ class _DetailState extends State<Detail> {
                     ),
                   ),
                   Positioned(
-                    
                     top: 140,
                     child: Image.asset(
-                    widget.specificImage,
+                      widget.itemData["img"],
                       height: 220,
                       width: 220,
                     ),
@@ -323,7 +323,6 @@ class _DetailState extends State<Detail> {
 
                         CaloriesIntake()
                             .addDayCaloriesData(widget.itemData["calories"]);
-
                       },
                       child: Container(
                         padding:

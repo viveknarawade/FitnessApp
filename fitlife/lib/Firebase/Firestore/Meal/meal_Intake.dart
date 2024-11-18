@@ -124,6 +124,7 @@ class MealIntake {
           "Day": doc["Day"],
           "Date": doc["Date"],
           "description": doc["description"],
+          "img": doc["img"],
         };
         mealDataList.add(tempFoodItem);
       }
