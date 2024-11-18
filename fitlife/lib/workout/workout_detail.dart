@@ -37,6 +37,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
     return time * 7;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +98,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                     widget.exerciseName,
                     style: GoogleFonts.poppins(
                       fontSize: 23,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -106,6 +107,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
+                      color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -115,28 +117,32 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   Text(
                     "Descriptions",
                     style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Container(
                     child: Text(
                       widget.description,
                       textAlign: TextAlign.justify,
-                      style: GoogleFonts.poppins(),
+                      style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Text(
-                    "How  To Do It",
+                    "Custom Repetition",
                     style: GoogleFonts.poppins(
                       fontSize: 23,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   // Mytimeline(),
@@ -177,16 +183,18 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                         '${calculateCaloriesBurned(times[index])} Calories Burn',
                                         style: TextStyle(
                                           fontSize: 20,
-                                          color: Colors.black,
+                                          color: Colors.grey,
                                           fontWeight: FontWeight.bold,
+                                          
                                         ),
+                                        
                                       ),
                                       const SizedBox(width: 10),
                                       Text(
                                         '${times[index]} min',
                                         style: TextStyle(
                                           fontSize: 20,
-                                          color: Colors.black,
+                                          color: Colors.grey,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -202,7 +210,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 25,
                   ),
                   Center(
                     child: GestureDetector(
@@ -218,8 +226,9 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         
                       },
                       child: Container(
+                        alignment: Alignment.center,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                            EdgeInsets.symmetric(horizontal:130, vertical: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                           color: const Color.fromRGBO(148, 171, 253, 1.0),
@@ -227,7 +236,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         child: Text(
                           "Save",
                           style: GoogleFonts.poppins(
-                              fontSize: 17,
+                              fontSize: 25,
                               color: Colors.white,
                               fontWeight: FontWeight.w700),
                         ),
