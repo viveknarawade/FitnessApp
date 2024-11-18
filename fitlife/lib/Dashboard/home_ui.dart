@@ -8,6 +8,7 @@ import 'package:fitlife/Dashboard/reminder_ui.dart';
 
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/main.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
@@ -36,15 +37,53 @@ class _HomeUiState extends State<HomeUi> {
   double Goal = userData[0].coloriesGoal.toDouble();
   int Food = CaloriesIntake.dayCalories;
   double Exercise = 100;
-double waterIntakeVal=0;
+  double waterIntakeVal = 0;
+  num? upperbodyBurn;
+  num? lowerbodyBurn;
+  num? fullbodyBurn;
   @override
   void initState() {
     super.initState();
     getCalories();
     requestPermission();
-    // Fetch today's water intake and update state
     fetchWaterIntake();
+    loadWorkoutData();
 
+    // Add post frame callback to refresh data on screen rebuild
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Refresh the workout data when returning to this screen
+      loadWorkoutData();
+    });
+  }
+
+  Future<void> loadWorkoutData() async {
+    var upperBurn = await upperbodyBurnData();
+    var lowerBurn = await lowerbodyBurnData();
+    var fullBurn = await fullbodyBurnData();
+
+    setState(() {
+      upperbodyBurn = upperBurn;
+      lowerbodyBurn = lowerBurn;
+      fullbodyBurn = fullBurn;
+    });
+  }
+
+  Future<num> upperbodyBurnData() async {
+    var burn = await WorkoutCalories().getTotalCalories("UpperBody");
+    log("UpperBody Calories: $burn");
+    return burn;
+  }
+
+  Future<num> lowerbodyBurnData() async {
+    var burn = await WorkoutCalories().getTotalCalories("LowerBody");
+    log("LowerBody Calories: $burn");
+    return burn;
+  }
+
+  Future<num> fullbodyBurnData() async {
+    var burn = await WorkoutCalories().getTotalCalories("FullBody");
+    log("FullBody Calories: $burn");
+    return burn;
   }
 
   fetchWaterIntake() async {
@@ -52,10 +91,10 @@ double waterIntakeVal=0;
         await MainApp().sqfliteObj?.getTodayWaterIntake() ?? 0;
     setState(() {
       // Calculate water intake percentage
-       waterIntakeVal = todayWaterIntake / waterIntakeGoal;
-        if (waterIntakeVal > 1.0) {
-      waterIntakeVal = 1.0; // Ensure it doesn't exceed 100%
-    }
+      waterIntakeVal = todayWaterIntake / waterIntakeGoal;
+      if (waterIntakeVal > 1.0) {
+        waterIntakeVal = 1.0; // Ensure it doesn't exceed 100%
+      }
     });
   }
 
@@ -404,8 +443,7 @@ double waterIntakeVal=0;
                                 borderColor: Colors.blueAccent,
                                 borderWidth: 3.0,
                                 direction: Axis.vertical,
-                                center: Text(
-                                    "${(waterIntakeVal * 100)}%",
+                                center: Text("${(waterIntakeVal * 100)}%",
                                     style: GoogleFonts.poppins(
                                         fontSize: 16,
                                         fontWeight: FontWeight
@@ -424,7 +462,14 @@ double waterIntakeVal=0;
                 Text("Latest workout",
                     style: GoogleFonts.poppins(
                         fontSize: 16, fontWeight: FontWeight.w400)),
-                //LetestWorkoutListview(),
+                if (upperbodyBurn != null &&
+                    lowerbodyBurn != null &&
+                    fullbodyBurn != null)
+                  LetestWorkoutListview(
+                    upperbodyBurn: upperbodyBurn!,
+                    lowerbodyBurn: lowerbodyBurn!,
+                    fullbodyBurn: fullbodyBurn!,
+                  )
               ],
             ),
           ),

@@ -1,28 +1,66 @@
-import 'package:fitlife/workout/workoutType.dart';
+import 'dart:developer';
+
+import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 
 class LetestWorkoutListview extends StatefulWidget {
-    final List<Map<String, dynamic>> exerciseCardData;
-  final String workoutTypeName;
+  var upperbodyBurn;
+  var lowerbodyBurn;
+  var fullbodyBurn;
+  LetestWorkoutListview(
+      {super.key,
+      required this.fullbodyBurn,
+      required this.lowerbodyBurn,
+      required this.upperbodyBurn});
 
-  const LetestWorkoutListview({super.key,  required this.exerciseCardData,
-    required this.workoutTypeName,});
- 
   @override
   State<StatefulWidget> createState() {
     return _LetestWorkoutListviewState();
   }
 }
 
-class _LetestWorkoutListviewState extends State {
+class _LetestWorkoutListviewState extends State<LetestWorkoutListview> {
+  @override
+  void initState() {
+    super.initState();
+    get();
+  }
+
+  List<Map> letestBurnMap = [];
+
+  get() async {
+    log("Call from letest");
+
+    setState(() {
+      if (widget.upperbodyBurn > 0) {
+        letestBurnMap.add({
+          "WorkoutName": "UpperBody Workout",
+          "burn": widget.upperbodyBurn,
+        });
+      }
+      if (widget.lowerbodyBurn > 0) {
+        letestBurnMap.add({
+          "WorkoutName": "LowerBody Workout",
+          "burn": widget.lowerbodyBurn,
+        });
+      }
+      if (widget.fullbodyBurn > 0) {
+        letestBurnMap.add({
+          "WorkoutName": "FullBody Workout",
+          "burn": widget.fullbodyBurn,
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 1,
+      itemCount: letestBurnMap.length,
       itemBuilder: (context, index) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -53,50 +91,34 @@ class _LetestWorkoutListviewState extends State {
                   "assets/workout/fullbody.svg",
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
-               Column(
+              const SizedBox(width: 15),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(  " Workout"),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text("180 Calories burn | 20 min"),
-                  SizedBox(
-                    height: 7,
-                  ),
+                  Text(letestBurnMap[index]["WorkoutName"]),
+                  const SizedBox(height: 2),
+                  Text("${letestBurnMap[index]["burn"]} calories burned"),
+                  const SizedBox(height: 7),
                   SimpleAnimationProgressBar(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ratio: .5,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    ratio: letestBurnMap[index]["burn"] / 1000, // Example ratio
                     width: 170,
                     height: 13,
                     direction: Axis.horizontal,
-                    backgroundColor: Color.fromRGBO(247, 248, 248, 1),
-                    foregrondColor: Color.fromRGBO(159, 158, 251, 1),
-                    duration: Duration(seconds: 3),
+                    backgroundColor: const Color.fromRGBO(247, 248, 248, 1),
+                    foregrondColor: const Color.fromRGBO(159, 158, 251, 1),
+                    duration: const Duration(seconds: 3),
                     curve: Curves.fastLinearToSlowEaseIn,
                   ),
-                  SizedBox(
-                    height: 17,
-                  ),
+                  const SizedBox(height: 17),
                 ],
               ),
               const Spacer(),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return Text("");
-                    }));
-                  },
-                  child: SvgPicture.asset(
-                    "assets/icon/next-btn.svg",
-                    width: 40,
-                    height: 35,
-                  ),
+              GestureDetector(
+                child: SvgPicture.asset(
+                  "assets/icon/next-btn.svg",
+                  width: 40,
+                  height: 35,
                 ),
               ),
             ],
