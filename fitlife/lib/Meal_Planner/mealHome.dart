@@ -303,8 +303,8 @@ class _MealhomeState extends State<Mealhome> {
                           ),
                         ),
                         Positioned(
-                          left: 52,
-                          top: 5,
+                          left: 70,
+                          bottom: 130,
                           child: Image.asset(
                             foodCategory[index]['image'],
                             width: 130,

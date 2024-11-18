@@ -9,6 +9,7 @@ import 'package:fitlife/Dashboard/reminder_ui.dart';
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +36,27 @@ class _HomeUiState extends State<HomeUi> {
   double Goal = userData[0].coloriesGoal.toDouble();
   int Food = CaloriesIntake.dayCalories;
   double Exercise = 100;
-
+double waterIntakeVal=0;
   @override
   void initState() {
     super.initState();
     getCalories();
     requestPermission();
+    // Fetch today's water intake and update state
+    fetchWaterIntake();
+
+  }
+
+  fetchWaterIntake() async {
+    int todayWaterIntake =
+        await MainApp().sqfliteObj?.getTodayWaterIntake() ?? 0;
+    setState(() {
+      // Calculate water intake percentage
+       waterIntakeVal = todayWaterIntake / waterIntakeGoal;
+        if (waterIntakeVal > 1.0) {
+      waterIntakeVal = 1.0; // Ensure it doesn't exceed 100%
+    }
+    });
   }
 
   // Request the permisson for pedometer
@@ -72,7 +88,6 @@ class _HomeUiState extends State<HomeUi> {
   @override
   Widget build(context) {
     double progressVal = step / stepsGoal;
-    double waterIntakeVal = (widget.liter ?? 0) / waterIntakeGoal;
 
     // Calculate the total to derive percentage values
     double total = Goal + Food + Exercise;
@@ -390,7 +405,7 @@ class _HomeUiState extends State<HomeUi> {
                                 borderWidth: 3.0,
                                 direction: Axis.vertical,
                                 center: Text(
-                                    "${(waterIntakeVal * 100).toInt()}%",
+                                    "${(waterIntakeVal * 100)}%",
                                     style: GoogleFonts.poppins(
                                         fontSize: 16,
                                         fontWeight: FontWeight
@@ -433,17 +448,19 @@ class _HomeUiState extends State<HomeUi> {
                     width: 50,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return  WorkoutTracker();
-                          },
-                        ),
-                      );
-                    },
-                    child:Icon(FontAwesomeIcons.dumbbell,color: Colors.grey,)
-                  ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return WorkoutTracker();
+                            },
+                          ),
+                        );
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.dumbbell,
+                        color: Colors.grey,
+                      )),
                 ],
               ),
               Row(

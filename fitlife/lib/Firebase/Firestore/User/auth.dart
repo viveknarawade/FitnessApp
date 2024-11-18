@@ -54,6 +54,7 @@ class Authservice {
       'GOAL': userData[0].goal,
       'HEIGHT': userData[0].height,
       'WEIGHT': userData[0].weight,
+      
     };
   }
 }
