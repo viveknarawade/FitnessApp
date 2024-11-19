@@ -13,8 +13,6 @@ class Splashscreen extends StatelessWidget {
     Future.delayed(
       const Duration(seconds: 3),
       () async {
-        bool state = false;
-
         await SessionData.getSessionData();
         log("IS LOGING :${SessionData.isLogin}");
         if (SessionData.isLogin!) {
@@ -45,10 +43,22 @@ class Splashscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     navigateToLogin(context);
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(60),
-          child: Text(",njvdba.v.ajvajvdfvnda fvknd vk"),
+      body: Padding(
+        padding: const EdgeInsets.all(60),
+        child: Column(
+          children: [
+            Spacer(),
+            Image.asset("assets/authentication/logo.png"),
+            Spacer(),
+            Text("Please wait"),
+            SizedBox(
+              height: 20,
+            ),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+              backgroundColor: Colors.white24,
+            ),
+          ],
         ),
       ),
     );
