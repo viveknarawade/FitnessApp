@@ -11,6 +11,7 @@ import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
 import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/custom_navbar.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
@@ -37,7 +38,7 @@ class _HomeUiState extends State<HomeUi> {
   int step = 0;
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
-  double Goal = userData[0].coloriesGoal.toDouble();
+  double Goal = SessionData.coloriesGoal!;
   int Food = 0;
   int Exercise = 0;
   double waterIntakeVal = 0;
@@ -173,7 +174,7 @@ class _HomeUiState extends State<HomeUi> {
                         )),
                   ],
                 ),
-                Text(userData[0].userName,
+                Text(SessionData.userName!,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600, fontSize: 20)),
                 const SizedBox(

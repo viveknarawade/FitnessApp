@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:intl/intl.dart';
 
 class WorkoutCalories {
@@ -18,7 +19,7 @@ class WorkoutCalories {
       for (int i = 0; i < fullbody.length; i++) {
         await db
             .collection("Workout")
-            .doc(userData[0].id)
+            .doc(SessionData.id)
             .collection("dayDate")
             .doc(dayAndDateId)
             .collection("Category")
@@ -34,7 +35,7 @@ class WorkoutCalories {
       for (int i = 0; i < lowerbody.length; i++) {
         await db
             .collection("Workout")
-            .doc(userData[0].id)
+            .doc(SessionData.id)
             .collection("dayDate")
             .doc(dayAndDateId)
             .collection("Category")
@@ -50,7 +51,7 @@ class WorkoutCalories {
       for (int i = 0; i < upperbody.length; i++) {
         await db
             .collection("Workout")
-            .doc(userData[0].id)
+            .doc(SessionData.id)
             .collection("dayDate")
             .doc(dayAndDateId)
             .collection("Category")
@@ -79,7 +80,7 @@ class WorkoutCalories {
     try {
       QuerySnapshot mealResponse = await db
           .collection("Workout")
-          .doc(userData[0].id)
+          .doc(SessionData.id)
           .collection("dayDate")
           .doc(dayAndDateId)
           .collection("Category")
@@ -107,7 +108,7 @@ class WorkoutCalories {
     try {
       QuerySnapshot mealResponse = await db
           .collection("Workout")
-          .doc(userData[0].id)
+          .doc(SessionData.id)
           .collection("dayDate")
           .doc(dayAndDateId)
           .collection("Category")

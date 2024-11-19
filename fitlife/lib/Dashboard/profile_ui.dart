@@ -89,7 +89,6 @@ class _ProfileUiState extends State<ProfileUi> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 28, vertical: 5),

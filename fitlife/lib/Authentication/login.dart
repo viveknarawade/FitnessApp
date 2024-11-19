@@ -8,7 +8,9 @@ import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fitlife/Model/session_data.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -114,11 +116,23 @@ class _LoginState extends State<Login> {
                         userNameController.text.trim(),
                         passwordController.text.trim(),
                       );
-                      
-                      
+
                       MainApp().sqfliteObj?.insertData(Authservice().toMap());
 
                       if (isAuthenticated) {
+                        await SessionData.setSessionData(
+                          loginData: true,
+                          userName: tempUserData[0]["userName"],
+                          email: tempUserData[0]["email"],
+                          password: tempUserData[0]["password"],
+                          gender: tempUserData[0]["gender"],
+                          goal: tempUserData[0]["goal"],
+                          id: tempUserData[0]["id"],
+                          age: tempUserData[0]["age"],
+                          height: tempUserData[0]["height"],
+                          weight: tempUserData[0]["weight"],
+                          coloriesGoal: tempUserData[0]["coloriesGoal"],
+                        );
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => HomeUi(),

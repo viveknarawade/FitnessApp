@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fitlife/Firebase/Firestore/Meal/meal_Intake.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Model/session_data.dart';
 
 class CaloriesBurn {
   static int dayBurnCalories = 0;
@@ -47,7 +48,7 @@ class CaloriesBurn {
     try {
       await db
           .collection("Calories")
-          .doc(userData[0].id)
+          .doc(SessionData.id)
           .collection("dayDate")
           .doc(dayAndDateId)
           .collection("Burn")
@@ -84,7 +85,7 @@ class CaloriesBurn {
 
       var docSnapshot = await db
           .collection("Calories")
-          .doc(userData[0].id)
+          .doc(SessionData.id)
           .collection("dayDate")
           .doc(dayAndDateId)
           .collection("Burn")
@@ -136,7 +137,7 @@ class CaloriesBurn {
         try {
           var docSnapshot = await db
               .collection("Calories")
-              .doc(userData[0].id)
+              .doc(SessionData.id)
               .collection("dayDate")
               .doc(docId)
               .collection("Burn")

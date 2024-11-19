@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:intl/intl.dart';
 
 List mealBreakfast = [];
@@ -26,7 +27,7 @@ class MealIntake {
       for (int i = 0; i < mealBreakfast.length; i++) {
         await db
             .collection("Meal") // Meal collection
-            .doc(userData[0].id) // Use the actual user ID dynamically
+            .doc(SessionData.id) // Use the actual user ID dynamically
             .collection("dayDate")
             .doc(dayAndDateId) // Day document (e.g., "Sunday_2024-11-14")
             .collection("Category") // Category subcollection
@@ -42,7 +43,7 @@ class MealIntake {
       for (int i = 0; i < mealLunch.length; i++) {
         await db
             .collection("Meal")
-            .doc(userData[0].id)
+            .doc(SessionData.id)
             .collection("dayDate")
             .doc(dayAndDateId) // Use the actual user ID dynamically
             .collection("Category")
@@ -58,7 +59,7 @@ class MealIntake {
       for (int i = 0; i < mealDinner.length; i++) {
         await db
             .collection("Meal")
-            .doc(userData[0].id)
+            .doc(SessionData.id)
             .collection("dayDate")
             .doc(dayAndDateId)
             .collection("Category")
@@ -105,7 +106,7 @@ class MealIntake {
     try {
       QuerySnapshot mealResponse = await db
           .collection("Meal")
-          .doc(userData[0].id) // Fetch data for the specific user
+          .doc(SessionData.id) // Fetch data for the specific user
           .collection("dayDate")
           .doc(dayAndDateId)
           .collection("Category")

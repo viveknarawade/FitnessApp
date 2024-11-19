@@ -1,10 +1,13 @@
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
+import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
-import 'package:fitlife/Forum/forum_main.dart';
+import 'package:fitlife/Onboarding/splashScreen.dart';
+
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';
 import 'package:fitlife/widget/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:fitlife/Dashboard/home_ui.dart';
 
 SqfLite? sqflite;
 void main() async {
@@ -22,7 +25,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Login()),
+      home: Scaffold(body: Splashscreen()),
     );
   }
 }

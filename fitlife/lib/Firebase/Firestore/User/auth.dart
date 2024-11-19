@@ -6,6 +6,7 @@ import 'package:fitlife/main.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 List<User> userData = [];
+List<Map> tempUserData = [];
 
 class Authservice {
   addData() {
@@ -18,6 +19,20 @@ class Authservice {
     for (int i = 0; i < response.docs.length; i++) {
       if (response.docs[i]["userName"] == userName &&
           response.docs[i]["password"] == password) {
+        tempUserData.add(
+          {
+            "userName": response.docs[i]["userName"],
+            "email": response.docs[i]["email"],
+            "id": response.docs[i].id,
+            "password": response.docs[i]["password"],
+            "age": response.docs[i]["age"],
+            "coloriesGoal": response.docs[i]["caloriesGoal"],
+            "goal": response.docs[i]["goal"],
+            "height": response.docs[i]["height"],
+            "weight": response.docs[i]["weight"],
+            "gender": response.docs[i]["gender"],
+          },
+        );
         userData.add(
           User(
             userName: response.docs[i]["userName"],
@@ -54,7 +69,6 @@ class Authservice {
       'GOAL': userData[0].goal,
       'HEIGHT': userData[0].height,
       'WEIGHT': userData[0].weight,
-      
     };
   }
 }
