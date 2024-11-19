@@ -41,6 +41,9 @@ class CustomNavbar {
                     FontAwesomeIcons.dumbbell,
                     color: Colors.grey,
                   )),
+              SizedBox(
+                width: 150,
+              ),
               Row(
                 children: [
                   GestureDetector(

@@ -90,10 +90,6 @@ class _ProfileUiState extends State<ProfileUi> {
                       ),
                     ],
                   ),
-<<<<<<< HEAD
-                  const Spacer(),
-                  GestureDetector(
-=======
                     const Spacer(),
                    GestureDetector(
                     onTap: (){
@@ -101,7 +97,6 @@ class _ProfileUiState extends State<ProfileUi> {
                         return Editprofile();
                       }));
                     },
->>>>>>> e10e2f6a4309068c2b2eb79d5bd4ccd9c32fbc10
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 28, vertical: 5),

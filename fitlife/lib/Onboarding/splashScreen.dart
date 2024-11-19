@@ -8,10 +8,6 @@ import 'package:fitlife/Dashboard/home_ui.dart';
 
 class Splashscreen extends StatelessWidget {
   const Splashscreen({super.key});
-<<<<<<< HEAD
-
-=======
->>>>>>> e10e2f6a4309068c2b2eb79d5bd4ccd9c32fbc10
   navigateToLogin(BuildContext context) {
     Future.delayed(
       const Duration(seconds: 3),
