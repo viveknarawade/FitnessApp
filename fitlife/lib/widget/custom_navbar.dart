@@ -1,5 +1,6 @@
 import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Forum/forum_home.dart';
 
 import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
@@ -28,21 +29,40 @@ class CustomNavbar {
                 width: 50,
               ),
               GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return WorkoutTracker();
-                        },
-                      ),
-                    );
-                  },
-                  child: Icon(
-                    FontAwesomeIcons.dumbbell,
-                    color: Colors.grey,
-                  )),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return WorkoutTracker();
+                      },
+                    ),
+                  );
+                },
+                child: Icon(
+                  FontAwesomeIcons.dumbbell,
+                  color: Colors.grey,
+                ),
+              ),
               SizedBox(
-                width: 150,
+                width: 30,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FitnessNutritionForum();
+                      },
+                    ),
+                  );
+                },
+                child: Icon(
+                  FontAwesomeIcons.comment,
+                  color: Colors.grey,
+                ),
+              ),
+              SizedBox(
+                width: 30,
               ),
               Row(
                 children: [

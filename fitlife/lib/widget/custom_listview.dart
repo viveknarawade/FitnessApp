@@ -22,8 +22,6 @@ class _CustomListviewState extends State<CustomListview> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-  
   }
 
   @override
@@ -46,7 +44,7 @@ class _CustomListviewState extends State<CustomListview> {
                 MaterialPageRoute(
                   builder: (context) {
                     return Detail(
-                      itemData: widget.data[0],
+                      itemData: widget.data[index],
                       category: widget.categories!,
                       img: "img",
                     );
@@ -61,18 +59,18 @@ class _CustomListviewState extends State<CustomListview> {
                   children: [
                     const SizedBox(width: 10),
                     Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colorslist().colorList[
-                                    index % Colorslist().colorList.length],
-                              ),
-                              child: Image.asset(
-                                meal["img"],
-                                width:40,
-                                height:40,
-                              ),
-                            ),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colorslist()
+                            .colorList[index % Colorslist().colorList.length],
+                      ),
+                      child: Image.asset(
+                        widget.data[index]["img"],
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
                     const SizedBox(width: 30),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
