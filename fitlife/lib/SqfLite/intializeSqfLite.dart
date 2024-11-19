@@ -44,8 +44,8 @@ class SqfLite {
 
         await db.execute("""
           CREATE TABLE WORKOUTSCHEDULE(
-          DATE TEXT PRIMARY KEY,
-          TIME TEXT,
+          DATE TEXT ,
+          TIME TEXT PRIMARY KEY,
           WORKOUTTYPE TEXT
           )
 """);
@@ -54,14 +54,6 @@ class SqfLite {
     );
 
     log("DATABASE CREATED HERE:$database");
-  }
-
-// WORKOUTSCHEDULE
-
-  insertOrUpdateWorkoutSchedule(String date, String time, String workoutType) async {
-    Database localdb =await database;
-    
-    
   }
 
 // getToday Date
@@ -135,5 +127,26 @@ class SqfLite {
     Database localdb = await database;
     await localdb.delete("USERDATA", where: "ID=?", whereArgs: [id]);
     log("DATA DELETED WITH ID :$id");
+  }
+
+  // WORKOUTSCHEDULE
+
+  insertWorkout(String date, String time, String workout) async {
+    Database localdb = await database;
+
+    await localdb.insert("WORKOUTSCHEDULE",
+        {"DATE": date, "TIME": time, "WORKOUTTYPE": workout});
+
+    List<Map<String, dynamic>> workoutData = await localdb
+        .query("WORKOUTSCHEDULE");
+    log("WORKOUT INSERTED $workoutData");
+  }
+
+ getWorkoutData()async{
+    Database localdb = await database;
+
+    List<Map<String, dynamic>> workoutData = await localdb
+        .query("WORKOUTSCHEDULE");
+    return workoutData;
   }
 }

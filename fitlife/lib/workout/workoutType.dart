@@ -12,11 +12,13 @@ class workoutType extends StatefulWidget {
   List<Map<String, dynamic>> exerciseCardData = [];
   String workoutTypeName;
   List workoutImags = [];
+  String? workoutTypeImage;
   workoutType(
       {super.key,
       required this.exerciseCardData,
       required this.workoutTypeName,
-      required this.workoutImags});
+      required this.workoutImags,
+      required this.workoutTypeImage});
 
   @override
   State<workoutType> createState() => _FullbodyState();
@@ -36,6 +38,7 @@ class _FullbodyState extends State<workoutType> {
   void initState() {
     super.initState();
     log("in initState ");
+    log("${widget.workoutTypeImage}");
     storeData();
   }
 
@@ -65,11 +68,11 @@ class _FullbodyState extends State<workoutType> {
                   ),
                   Positioned(
                     top: 60,
-                    left: 10,
-                    child: Image.asset(
-                      "assets/workout/fullBody-navs.png",
-                      height: 400,
-                      width: 400,
+                    left: 100,
+                    child: SvgPicture.asset(
+                      "${widget.workoutTypeImage}",
+                      height: 250,
+                      width: 250,
                     ),
                   ),
                 ],

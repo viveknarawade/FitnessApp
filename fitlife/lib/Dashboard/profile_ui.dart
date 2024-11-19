@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/signUp.dart';
+import 'package:fitlife/Dashboard/editProfile.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Model/user.dart';
 import 'package:fitlife/main.dart';
+import 'package:fitlife/widget/customAlertDemo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,8 +61,9 @@ class _ProfileUiState extends State<ProfileUi> {
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 30,
                   ),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -87,8 +90,18 @@ class _ProfileUiState extends State<ProfileUi> {
                       ),
                     ],
                   ),
+<<<<<<< HEAD
                   const Spacer(),
                   GestureDetector(
+=======
+                    const Spacer(),
+                   GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                        return Editprofile();
+                      }));
+                    },
+>>>>>>> e10e2f6a4309068c2b2eb79d5bd4ccd9c32fbc10
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 28, vertical: 5),
@@ -104,6 +117,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       ),
                     ),
                   )
+          
                 ],
               ),
               SizedBox(
@@ -236,9 +250,12 @@ class _ProfileUiState extends State<ProfileUi> {
                               fontSize: 19,
                               fontWeight: FontWeight.w500),
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Color.fromRGBO(123, 111, 114, 1),
+                        Text(
+                          "${displayData[0]["COLORISGOAL"]}",
+                          style: GoogleFonts.poppins(
+                              color: Color.fromRGBO(123, 111, 114, 1),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
@@ -264,21 +281,41 @@ class _ProfileUiState extends State<ProfileUi> {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Appearace",
-                          style: GoogleFonts.poppins(
-                              color: Color.fromRGBO(123, 111, 114, 1),
-                              fontSize: 19,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: Color.fromRGBO(123, 111, 114, 1),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        MainApp().sqfliteObj?.deleteData(displayData[0]["ID"]);
+                        db.collection("User").doc(userData[0].id).delete();
+                        CustomAlertBoxDemo()
+                            .showMyDialog(context, "Account Deleted");
+                        Future.delayed(Duration(seconds: 3), () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return Login();
+                              },
+                            ),
+                            (route) =>
+                                false, // This removes all previous routes
+                          );
+                        });
+                        setState(() {});
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Delete Account",
+                            style: GoogleFonts.poppins(
+                                color: Color.fromRGBO(123, 111, 114, 1),
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Color.fromRGBO(123, 111, 114, 1),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 20,

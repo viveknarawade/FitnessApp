@@ -1,9 +1,15 @@
 import 'package:fitlife/Authentication/login.dart';
+import 'package:fitlife/Dashboard/editProfile.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
+<<<<<<< HEAD
 import 'package:fitlife/Onboarding/splashScreen.dart';
 
+=======
+import 'package:fitlife/Forum/forum_main.dart';
+import 'package:fitlife/Onboarding/splashScreen.dart';
+>>>>>>> e10e2f6a4309068c2b2eb79d5bd4ccd9c32fbc10
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';
 import 'package:fitlife/widget/video_player.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +31,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home: Scaffold(body: Splashscreen()),
+=======
+      home: Scaffold(
+        body: Splashscreen(),
+      ),
+>>>>>>> e10e2f6a4309068c2b2eb79d5bd4ccd9c32fbc10
     );
   }
 }

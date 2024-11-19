@@ -138,7 +138,6 @@ class _HomeUiState extends State<HomeUi> {
     double goalPercentage = (Goal / total) * 100;
     double foodPercentage = (Food / total) * 100;
     double exercisePercentage = (Exercise / total) * 100;
-    log("GOAL:$Goal, FOOD:$Food,EXERCISE:$Exercise");
     return Stack(children: [
       Scaffold(
         body: SingleChildScrollView(

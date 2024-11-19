@@ -23,7 +23,8 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   static File? image;
-
+  bool _passwordVisible = false;
+  bool confirmpasswordVisible = false;
   // Controllers to capture user input
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -146,8 +147,7 @@ class _SignupState extends State<Signup> {
               // Password TextField
               TextField(
                 controller: passwordController,
-                obscureText:
-                    true, // Hide the text to show it as a password field
+                obscureText: !_passwordVisible,// Hide the text to show it as a password field
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(13),
@@ -161,29 +161,53 @@ class _SignupState extends State<Signup> {
                     padding: const EdgeInsets.all(11),
                     child: SvgPicture.asset("assets/icon/Lock.svg"),
                   ),
+                   suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    )
                 ),
               ),
               const SizedBox(height: 30),
               // Confirm Password TextField
               TextField(
+                 obscureText: !confirmpasswordVisible,
                 controller: confirmPasswordController,
-                obscureText: true,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  hintText: "Confirm Password",
-                  filled: true,
-                  fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                  hintStyle: GoogleFonts.poppins(
-                      fontSize: 17, fontWeight: FontWeight.w300),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/Lock.svg"),
-                  ),
-                ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    hintText: "Confirm Password",
+                    filled: true,
+                    fillColor: const Color.fromRGBO(247, 248, 248, 1),
+                    hintStyle: GoogleFonts.poppins(
+                        fontSize: 17, fontWeight: FontWeight.w300),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(11),
+                      child: SvgPicture.asset("assets/icon/Lock.svg"),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        confirmpasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          confirmpasswordVisible = !confirmpasswordVisible;
+                        });
+                      },
+                    )),
               ),
-
               const SizedBox(height: 60),
               SizedBox(
                 width: double.infinity,
@@ -207,7 +231,7 @@ class _SignupState extends State<Signup> {
                         },
                       );
                       print(signupData);
-                     
+
                       CustomSnackBar.customSnackBar(
                           context: context,
                           message: "Register Sucsseful",
@@ -260,8 +284,7 @@ class _SignupState extends State<Signup> {
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) =>  Login()),
+                          MaterialPageRoute(builder: (context) => Login()),
                         );
                       },
                       child: Text(

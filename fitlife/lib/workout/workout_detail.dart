@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
 import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
+import 'package:fitlife/widget/customAlertDemo.dart';
 import 'package:fitlife/workout/myTimeLine.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,12 +13,13 @@ class WorkoutDetail extends StatefulWidget {
   String rep;
   String description;
   String workoutTypeName;
-  WorkoutDetail(
-      {super.key,
-      required this.exerciseName,
-      required this.rep,
-      required this.description,
-      required this.workoutTypeName});
+  WorkoutDetail({
+    super.key,
+    required this.exerciseName,
+    required this.rep,
+    required this.description,
+    required this.workoutTypeName,
+  });
 
   @override
   State<WorkoutDetail> createState() => _WorkoutDetailState();
@@ -38,7 +40,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
     // Assuming 7 calories burned per minute for demonstration purposes.
     return time * 7;
   }
-
 
   @override
   void initState() {
@@ -106,6 +107,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
             ),
           ),
           SliverToBoxAdapter(
+            
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
@@ -146,10 +148,10 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       widget.description,
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -201,9 +203,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                                           fontSize: 20,
                                           color: Colors.grey,
                                           fontWeight: FontWeight.bold,
-                                          
                                         ),
-                                        
                                       ),
                                       const SizedBox(width: 10),
                                       Text(
@@ -240,20 +240,26 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                           "burn": selectedIndex
                         });
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal:130, vertical: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: const Color.fromRGBO(148, 171, 253, 1.0),
-                        ),
-                        child: Text(
-                          "Save",
-                          style: GoogleFonts.poppins(
-                              fontSize: 25,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
+                      child: GestureDetector(
+                        onTap: () {
+                          CustomAlertBoxDemo().showMyDialog(
+                              context, "${widget.exerciseName} Completed");
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 130, vertical: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: const Color.fromRGBO(148, 171, 253, 1.0),
+                          ),
+                          child: Text(
+                            "Save",
+                            style: GoogleFonts.poppins(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ),
                     ),

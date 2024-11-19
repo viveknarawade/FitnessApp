@@ -71,6 +71,8 @@ flutter:
       - assets/workout/chestPullDown.png
      
       - assets/workout/fullbody.svg
+      - assets/workout/lowerbody.svg
+      - assets/workout/upperbody.svg
       - assets/workout/finishWorkout.svg
       
 
