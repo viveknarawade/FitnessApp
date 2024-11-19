@@ -3,8 +3,7 @@ import 'package:fitlife/SqfLite/intializeSqfLite.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreen extends StatelessWidget {
-  final SqfLite sqfliteObj;
-  const Splashscreen({required this.sqfliteObj,super.key});
+  const Splashscreen({super.key});
   navigateToLogin(BuildContext context) {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).push(

@@ -80,7 +80,7 @@ class CaloriesIntake {
   Future<int> getCaloriesIntakeData() async {
     try {
       String dayAndDateId = MealIntake().generateDayDateDocumentId();
-      log("Fetching calories for docId: $dayAndDateId");
+ 
 
       var docSnapshot = await db
           .collection("Calories")
@@ -98,7 +98,6 @@ class CaloriesIntake {
         dayCalories = int.tryParse(dailyIntake.toString()) ?? 0;
       }
 
-      log("Total calories fetched from Firestore: $dayCalories");
     } catch (e) {
       log("Error fetching calorie intake data: $e");
     }
@@ -131,7 +130,7 @@ class CaloriesIntake {
         String docId = _generateDocIdForDate(currentDate);
         String dayName = _getDayName(currentDate);
 
-        log("Checking day: $dayName with docId: $docId");
+       
 
         try {
           var docSnapshot = await db
@@ -146,7 +145,7 @@ class CaloriesIntake {
           if (docSnapshot.exists) {
             var dailyIntake = docSnapshot.data()?["DailyIntake"] ?? "0";
             weeklyCalories[dayName] = dailyIntake;
-            log("Found calories for $dayName: $dailyIntake (docId: $docId)");
+       
           } else {
             log("No data found for $dayName with docId: $docId");
           }
@@ -155,7 +154,6 @@ class CaloriesIntake {
         }
       }
 
-      log("Weekly calories data fetched successfully: $weeklyCalories");
     } catch (e) {
       log("Error in getWeeklyCaloriesData: $e");
     }

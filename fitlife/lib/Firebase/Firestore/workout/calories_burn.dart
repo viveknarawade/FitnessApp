@@ -42,7 +42,7 @@ class CaloriesBurn {
     calculateCalories(caloriesString);
 
     String dayAndDateId = MealIntake().generateDayDateDocumentId();
-    log("Adding calories with docId: $dayAndDateId");
+    
 
     try {
       await db
@@ -56,8 +56,7 @@ class CaloriesBurn {
         "DailyBurn": dayBurnCalories.toString(),
       });
 
-      log("Calories data added successfully for docId: $dayAndDateId");
-      log("Calories data : $dayBurnCalories");
+
     } catch (e) {
       log("Error adding calorie data: $e");
     }
@@ -68,7 +67,7 @@ class CaloriesBurn {
     double? caloriesDouble = double.tryParse(caloriesString);
     if (caloriesDouble != null) {
       int calories = caloriesDouble.toInt();
-      log("Calories added: $calories");
+     
       dayBurnCalories += calories;
     } else {
       log("Failed to parse calories string: '$caloriesString'");
@@ -80,7 +79,7 @@ class CaloriesBurn {
   Future<int> getCaloriesBurnData() async {
     try {
       String dayAndDateId = MealIntake().generateDayDateDocumentId();
-      log("Fetching calories for docId: $dayAndDateId");
+
 
       var docSnapshot = await db
           .collection("Calories")
@@ -98,7 +97,6 @@ class CaloriesBurn {
         dayBurnCalories = int.tryParse(dailyIntake.toString()) ?? 0;
       }
 
-      log("Total calories fetched from Firestore: $dayBurnCalories");
     } catch (e) {
       log("Error fetching calorie intake data: $e");
     }
@@ -131,7 +129,7 @@ class CaloriesBurn {
         String docId = _generateDocIdForDate(currentDate);
         String dayName = _getDayName(currentDate);
 
-        log("Checking day: $dayName with docId: $docId");
+  
 
         try {
           var docSnapshot = await db
@@ -146,7 +144,7 @@ class CaloriesBurn {
           if (docSnapshot.exists) {
             var dailyIntake = docSnapshot.data()?["DailyBurn"] ?? "0";
             weeklyCalories[dayName] = dailyIntake;
-            log("Found calories for $dayName: $dailyIntake (docId: $docId)");
+      
           } else {
             log("No data found for $dayName with docId: $docId");
           }
@@ -155,7 +153,7 @@ class CaloriesBurn {
         }
       }
 
-      log("Weekly calories data fetched successfully: $weeklyCalories");
+
     } catch (e) {
       log("Error in getWeeklyCaloriesData: $e");
     }

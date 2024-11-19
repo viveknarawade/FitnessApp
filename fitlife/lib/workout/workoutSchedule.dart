@@ -23,11 +23,20 @@ class _WorkoutState extends State {
   String? selectedMinute;
   String? selectedAmPm;
   String? scheduleDate;
+
+  List scheduleData = [];
+  getWorkoutscheduleData() async {
+    scheduleData.add(await MainApp().sqfliteObj?.getWorkoutData());
+    setState(() {});
+    log("GET WOROUT SCHEDULE$scheduleData");
+  }
+
   @override
   void initState() {
     super.initState();
     _generateDateList();
     _generateTimeSlots();
+    getWorkoutscheduleData();
   }
 
   void _generateDateList() {
@@ -39,27 +48,35 @@ class _WorkoutState extends State {
     }
   }
 
-  void _generateTimeSlots() {
-    timeSlots.clear();
-    DateTime startTime =
-        DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 6, 0);
-    DateTime endTime = DateTime(
-        selectedDate.year, selectedDate.month, selectedDate.day, 20, 0);
+ void _generateTimeSlots() {
+  timeSlots.clear();
 
-    while (startTime.isBefore(endTime)) {
-      String formattedTime = DateFormat('hh:mm a').format(startTime);
-      String workout = "";
-      if (formattedTime == "07:00 AM") {
-        workout = "Ab Workoutschedule";
-      } else if (formattedTime == "09:00 AM") {
-        workout = "Upperbody Workoutschedule";
-      } else if (formattedTime == "03:00 PM") {
-        workout = "Lowerbody Workoutschedule";
-      }
-      timeSlots.add({"time": formattedTime, "workout": workout});
-      startTime = startTime.add(const Duration(hours: 1));
-    }
+  // Define the start and end time for workout slots (6:00 AM to 8:00 PM)
+  DateTime startTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 6, 0);
+  DateTime endTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 20, 0);
+
+  // Loop through every hour between 6:00 AM and 8:00 PM
+  while (startTime.isBefore(endTime)) {
+    String formattedTime = DateFormat('hh:mm a').format(startTime);
+
+    // Check if a workout is scheduled for this time
+    String workout = "";
+   for (var schedule in scheduleData) {
+  if (schedule["DATE"] == DateFormat('EEE, d MMM y').format(selectedDate) &&
+      schedule["TIME"] == formattedTime) {
+    workout = schedule["WORKOUTTYPE"]!;
+    break;
   }
+}
+
+
+    // Add the time slot with any workout found
+    timeSlots.add({"time": formattedTime, "workout": workout});
+    startTime = startTime.add(const Duration(hours: 1));  // Increment by 1 hour
+  }
+}
+
+
 
   void _previousMonth() {
     setState(() {
@@ -76,6 +93,7 @@ class _WorkoutState extends State {
   }
 
   Widget buildTimeSlot(String time, String workout, int index) {
+    log("INDEX:$index");
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 13),
       child: Row(
@@ -86,8 +104,9 @@ class _WorkoutState extends State {
           ),
           const SizedBox(width: 15),
           Expanded(
-            child: scheduleDate == timeSlots[index]["time"]!
-                ? Container(
+            child: workout.isNotEmpty
+                ?
+                Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
@@ -271,6 +290,7 @@ class _WorkoutState extends State {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  Divider(thickness: 2,color: Colors.grey,),
                                   // Hours Scroll
                                   SizedBox(
                                     width: 50,
@@ -375,7 +395,7 @@ class _WorkoutState extends State {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 40,
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),
@@ -464,7 +484,7 @@ class _WorkoutState extends State {
 
                             log("Scheduled new workout: $scheduleDate for $selectedCategoryValue");
 
-                            MainApp().sqfliteObj?.insertOrUpdateWorkoutSchedule(
+                            MainApp().sqfliteObj?.insertWorkout(
                                 '${DateFormat('EEE, d MMM y').format(selectedDate)}',
                                 '$scheduleDate',
                                 '$selectedCategoryValue');

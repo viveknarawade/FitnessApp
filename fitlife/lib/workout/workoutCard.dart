@@ -1,6 +1,7 @@
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fitlife/workout/workoutType.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Workoutcard extends StatefulWidget {
@@ -25,6 +26,11 @@ class _WorkoutcardState extends State<Workoutcard> {
     }
   }
 
+  List workoutImages = [
+    "assets/workout/fullbody.svg",
+    "assets/workout/lowerbody.svg",
+    "assets/workout/upperbody.svg"
+  ];
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
@@ -72,7 +78,8 @@ class _WorkoutcardState extends State<Workoutcard> {
                                     exerciseCardData: widget.exerciseCardData,
                                     workoutTypeName:
                                         widget.exerciseCardData[index]["title"],
-                                    workoutImags: workoutCategoryImages(index));
+                                    workoutImags: workoutCategoryImages(index),
+                                   workoutTypeImage: workoutImages[index],);
                               },
                             ),
                           );
@@ -95,24 +102,26 @@ class _WorkoutcardState extends State<Workoutcard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: Stack(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 30, left: 30),
+                        margin: EdgeInsets.only(right: 35),
                         alignment: Alignment.center,
-                        height: 80,
-                        width: 80,
+                        height: 90,
+                        width: 90,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color.fromRGBO(247, 248, 248, 1.0),
                         ),
                       ),
                       Positioned(
-                        child: Image.asset(
-                          "assets/workout/skipping.png",
-                          height: 140,
-                          width: 140,
+                        left: 13,
+                        top: 12,
+                        child: SvgPicture.asset(
+                          workoutImages[index],
+                          height: 70,
+                          width: 70,
                         ),
                       ),
                     ],

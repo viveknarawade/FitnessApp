@@ -19,6 +19,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,25 +75,39 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: TextField(
+                  obscureText: !_passwordVisible,
                   controller: passwordController,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13)),
-                    hintText: "Password",
-                    filled: true,
-                    fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                    hintStyle: GoogleFonts.poppins(
-                        fontSize: 17, fontWeight: FontWeight.w300),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(11),
-                      child: SvgPicture.asset(
-                        "assets/icon/Lock.svg",
-                        color: const Color.fromRGBO(123, 111, 114, 1),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13)),
+                      hintText: "Password",
+                      filled: true,
+                      fillColor: const Color.fromRGBO(247, 248, 248, 1),
+                      hintStyle: GoogleFonts.poppins(
+                          fontSize: 17, fontWeight: FontWeight.w300),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(11),
+                        child: SvgPicture.asset(
+                          "assets/icon/Lock.svg",
+                          color: const Color.fromRGBO(123, 111, 114, 1),
+                        ),
                       ),
-                    ),
-                  ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      )),
                 ),
               ),
+
               const SizedBox(
                 height: 30,
               ),
@@ -114,8 +129,7 @@ class _LoginState extends State<Login> {
                         userNameController.text.trim(),
                         passwordController.text.trim(),
                       );
-                      
-                      
+
                       MainApp().sqfliteObj?.insertData(Authservice().toMap());
 
                       if (isAuthenticated) {
