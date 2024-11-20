@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:fitlife/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -176,6 +177,24 @@ class _EditprofileState extends State {
                     'WEIGHT': weightController.text.trim(),
                     'AGE': ageController.text.trim(),
                   });
+
+                  bool isLogin = await Authservice().authenticate(
+                      profileNameController.text.trim(), SessionData.password!);
+                  if (isLogin) {
+                    SessionData.setSessionData(
+                        loginData: true,
+                        userName: profileNameController.text,
+                        email: SessionData.email!,
+                        password: SessionData.password!,
+                        gender: SessionData.gender!,
+                        goal: goalController.text.trim(),
+                        id: SessionData.id!,
+                        age: double.parse(ageController.text.trim()),
+                        height: double.parse(heightController.text.trim()),
+                        weight: double.parse(weightController.text.trim()),
+                        coloriesGoal: SessionData.coloriesGoal!);
+                  }
+
                   setState(() {});
                 },
                 child: Container(

@@ -111,7 +111,7 @@ class _UserinfoState extends State<Userinfo> {
         isExpanded: true,
         value: selectedValue,
         hint: const Text("Choose Goal"),
-        items: <String>["gain", "loss", "maintain"]
+        items: <String>["Gain", "Loss", "Maintain"]
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

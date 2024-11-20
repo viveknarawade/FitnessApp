@@ -26,10 +26,12 @@ class _WorkoutState extends State {
 
   List scheduleData = [];
   getWorkoutscheduleData() async {
-    scheduleData.add(await MainApp().sqfliteObj?.getWorkoutData());
-    setState(() {});
-    log("GET WOROUT SCHEDULE$scheduleData");
-  }
+  scheduleData = await MainApp().sqfliteObj?.getWorkoutData() ?? [];
+  _generateTimeSlots(); // Regenerate time slots after updating scheduleData
+  setState(() {});
+  log("GET WORKOUT SCHEDULE $scheduleData");
+}
+
 
   @override
   void initState() {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitlife/Authentication/signUp.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:fitlife/Model/user.dart';
 import 'package:fitlife/main.dart';
 
@@ -59,16 +60,16 @@ class Authservice {
 
   Map<String, dynamic> toMap() {
     return {
-      'USERNAME': userData[0].userName,
-      'PASSWOARD': userData[0].password,
-      'EMAIL': userData[0].email,
-      'GENDER': userData[0].gender,
-      'ID': userData[0].id,
-      'COLORISGOAL': userData[0].coloriesGoal,
-      'AGE': userData[0].age,
-      'GOAL': userData[0].goal,
-      'HEIGHT': userData[0].height,
-      'WEIGHT': userData[0].weight,
+      'USERNAME': SessionData.userName,
+      'PASSWOARD': SessionData.password,
+      'EMAIL': SessionData.email,
+      'GENDER': SessionData.gender,
+      'ID': SessionData.id,
+      'COLORISGOAL': SessionData.coloriesGoal,
+      'AGE': SessionData.age,
+      'GOAL': SessionData.goal,
+      'HEIGHT': SessionData.height,
+      'WEIGHT': SessionData.weight,
     };
   }
 }

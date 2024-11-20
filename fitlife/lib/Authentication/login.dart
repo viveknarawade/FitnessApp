@@ -132,7 +132,6 @@ class _LoginState extends State<Login> {
                         passwordController.text.trim(),
                       );
 
-                      MainApp().sqfliteObj?.insertData(Authservice().toMap());
 
                       if (isAuthenticated) {
                         await SessionData.setSessionData(
@@ -148,6 +147,8 @@ class _LoginState extends State<Login> {
                           weight: tempUserData[0]["weight"],
                           coloriesGoal: tempUserData[0]["coloriesGoal"],
                         );
+                      MainApp().sqfliteObj?.insertData(Authservice().toMap());
+log("SESSIONDATA ADDED :${Authservice().toMap()}");
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => HomeUi(),

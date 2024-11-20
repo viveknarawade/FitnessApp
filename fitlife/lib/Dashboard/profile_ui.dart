@@ -4,6 +4,7 @@ import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/editProfile.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/Model/session_data.dart';
 import 'package:fitlife/Model/user.dart';
 import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customAlertDemo.dart';
@@ -93,6 +94,7 @@ class _ProfileUiState extends State<ProfileUi> {
                     const Spacer(),
                    GestureDetector(
                     onTap: (){
+                   
                       Navigator.of(context).push(MaterialPageRoute(builder: (context){
                         return Editprofile();
                       }));
@@ -318,6 +320,8 @@ class _ProfileUiState extends State<ProfileUi> {
                     GestureDetector(
                       onTap: () {
                         MainApp().sqfliteObj?.deleteData(displayData[0]["ID"]);
+                        SessionData.clearSessionData();
+log("SESSIONDATA CLEARED :${Authservice().toMap()}");
 
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
