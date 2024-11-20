@@ -13,12 +13,12 @@ class ForumPostCard extends StatefulWidget {
   _ForumPostCardState createState() => _ForumPostCardState();
 }
 class _ForumPostCardState extends State<ForumPostCard> {
-  late bool _isLiked; // Define _isLiked variable
+  late bool _isLiked; // Variable to store like status
 
   @override
   void initState() {
     super.initState();
-    _isLiked = false; // Initialize _isLiked with the current post's like state
+    _isLiked = widget.post.isLike; // Initialize _isLiked with the post's current like status
   }
 
   @override
@@ -66,25 +66,32 @@ class _ForumPostCardState extends State<ForumPostCard> {
                     IconButton(
                       icon: Icon(
                         _isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: _isLiked ? Colors.red : Colors.grey, // Change color based on _isLiked
+                        color: _isLiked
+                            ? Colors.red
+                            : Colors.grey, // Change color based on _isLiked
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           _isLiked = !_isLiked;
-
                           if (_isLiked) {
-                            widget.post.likes++;
-                            NewPostdb().incrementLike(widget.post.id);
-                            NewPostdb().addIsLike(true, widget.post.id);
+                            widget.post.likes++; // Increment like count locally
                           } else {
-                            widget.post.likes--;
-                            NewPostdb().decrementLike(widget.post.id);
-                            NewPostdb().addUnLike(false, widget.post.id);
+                            widget.post.likes--; // Decrement like count locally
                           }
+                        });
+
+                        // Update the like status in Firestore
+                        await NewPostdb().likePost(widget.post.id);
+
+                        // After updating the like in Firestore, reload the post data
+                        List<ForumPost> posts = await NewPostdb().getNewPostData();
+                        ForumPost updatedPost = posts.firstWhere((post) => post.id == widget.post.id);
+                        setState(() {
+                          _isLiked = updatedPost.isLike; // Sync local state with Firestore
                         });
                       },
                     ),
-                    Text('${widget.post.likes} Likes'),
+                    Text('${widget.post.likes} likes'),
                   ],
                 ),
                 Row(
@@ -95,7 +102,8 @@ class _ForumPostCardState extends State<ForumPostCard> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CommentScreen(post: widget.post),
+                            builder: (context) =>
+                                CommentScreen(post: widget.post),
                           ),
                         );
                       },

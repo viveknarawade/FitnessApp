@@ -63,7 +63,7 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
                 if (_titleController.text.isNotEmpty &&
                     _contentController.text.isNotEmpty) {
                   NewPostdb().addNewPost(
-                      _titleController.text, _contentController.text,false);
+                      _titleController.text, _contentController.text);
 
                   _titleController.clear();
                   _contentController.clear();
