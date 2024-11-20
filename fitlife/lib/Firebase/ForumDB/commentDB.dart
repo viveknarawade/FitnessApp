@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Model/comment.dart';
 import 'package:fitlife/Model/session_data.dart';
 import 'package:intl/intl.dart';
-
 class Commentdb {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // Method to add a comment (no changes here)
   Future<void> addComment(String postId, String commentContent) async {
     DocumentReference postRef = db.collection("Forum").doc(postId);
 
@@ -35,32 +35,16 @@ class Commentdb {
     }
   }
 
-  Future<List<Comment>> getComment(String postId) async {
+  // Method to fetch comments in real-time
+  Stream<List<Comment>> getComment(String postId) {
     DocumentReference postRef = db.collection("Forum").doc(postId);
 
-    // List to store the fetched comments
-    List<Comment> tempCommentData = [];
-
-    // Check if the post document exists
-    DocumentSnapshot postSnapshot = await postRef.get();
-
-    if (postSnapshot.exists) {
-      // If the post exists, proceed to fetch the comments
-      QuerySnapshot commentResponse =
-          await postRef.collection("Comments").get();
-
-      for (var doc in commentResponse.docs) {
-        // Create Comment object from Firestore document
-        Comment comment = Comment.fromFirestore(doc);
-        tempCommentData.add(comment); // Add comment to the list
-      }
-
-      log("Comments fetched: ${tempCommentData.length} comments found.");
-    } else {
-      log("Post does not exist.");
-    }
-
-    // Return the list of comments
-    return tempCommentData;
+    // Stream to listen to the comments collection in real-time
+    return postRef.collection("Comments").orderBy("timestamp").snapshots().map(
+      (querySnapshot) {
+        // Convert Firestore documents into Comment objects
+        return querySnapshot.docs.map((doc) => Comment.fromFirestore(doc)).toList();
+      },
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/ForumDB/new_postDB.dart';
 import 'package:fitlife/Forum/comment_screen.dart';
 import 'package:fitlife/Forum/forum_home.dart';
@@ -11,8 +12,7 @@ class ForumPostCard extends StatefulWidget {
 
   @override
   _ForumPostCardState createState() => _ForumPostCardState();
-}
-class _ForumPostCardState extends State<ForumPostCard> {
+}class _ForumPostCardState extends State<ForumPostCard> {
   late bool _isLiked; // Variable to store like status
 
   @override
@@ -94,22 +94,45 @@ class _ForumPostCardState extends State<ForumPostCard> {
                     Text('${widget.post.likes} likes'),
                   ],
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.comment, color: Colors.deepOrange[400]),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CommentScreen(post: widget.post),
-                          ),
-                        );
-                      },
-                    ),
-                    Text('${widget.post.comments} Comments'),
-                  ],
+
+                // Real-time Comment Count using StreamBuilder
+                StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Forum")
+                      .doc(widget.post.id)
+                      .snapshots(), // Listen to the post document
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('0 Comments');
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    if (!snapshot.hasData || !snapshot.data!.exists) {
+                      return Text('0 Comments');
+                    }
+
+                    var postData = snapshot.data!.data() as Map<String, dynamic>;
+                    int commentCount = postData["comments"] ?? 0;
+
+                    return Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.comment, color: Colors.deepOrange[400]),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CommentScreen(post: widget.post),
+                              ),
+                            );
+                          },
+                        ),
+                        Text('$commentCount Comments'),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),

@@ -19,35 +19,20 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentScreen> {
   final TextEditingController _commentController = TextEditingController();
-  final List<Comment> _comments = [];
 
   void _addCommentData() async {
     if (_commentController.text.isNotEmpty) {
+      // Add the new comment to Firestore
+      Commentdb().addComment(widget.post.id, _commentController.text.trim());
+
+      // Clear the comment input field
+      _commentController.clear();
+
+      // Increment the comment count for the post locally
       setState(() {
-        // Add the new comment to Firestore
-        Commentdb().addComment(widget.post.id, _commentController.text.trim());
-
-        // Clear the comment input field
-        _commentController.clear();
-
-        // Increment the comment count for the post locally
         widget.post.comments++;
-
-        // Fetch the updated list of comments from Firestore
-        _fetchComments(); // Make sure this call successfully updates the UI
       });
     }
-  }
-
-// Method to fetch comments and update the UI
-  void _fetchComments() async {
-    List<Comment> fetchedComments =
-        await Commentdb().getComment(widget.post.id);
-    log("Fetched Comments: $fetchedComments"); // Debugging line
-    setState(() {
-      _comments.clear();
-      _comments.addAll(fetchedComments);
-    });
   }
 
   @override
@@ -81,12 +66,27 @@ class _CommentSectionState extends State<CommentScreen> {
             ),
           ),
 
-          // Comments List
+          // Comments List using StreamBuilder
           Expanded(
-            child: ListView.builder(
-              itemCount: _comments.length,
-              itemBuilder: (context, index) {
-                return CommentCard(comment: _comments[index]);
+            child: StreamBuilder<List<Comment>>(
+              stream: Commentdb().getComment(
+                  widget.post.id), // Listening to real-time comments
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No comments yet.'));
+                } else {
+                  List<Comment> comments = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: comments.length,
+                    itemBuilder: (context, index) {
+                      return CommentCard(comment: comments[index]);
+                    },
+                  );
+                }
               },
             ),
           ),
