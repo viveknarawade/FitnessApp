@@ -3,7 +3,7 @@
 import 'package:fitlife/Forum/forum_home.dart';
 import 'package:fitlife/Model/comment.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 class CommentCard extends StatelessWidget {
   final Comment comment;
 
@@ -27,7 +27,7 @@ class CommentCard extends StatelessWidget {
             Text(comment.content),
             SizedBox(height: 5),
             Text(
-              '${comment.timestamp.hour}:${comment.timestamp.minute}',
+              DateFormat('hh:mm a').format(comment.timestamp), // Format timestamp
               style: TextStyle(color: Colors.grey, fontSize: 12),
             ),
           ],

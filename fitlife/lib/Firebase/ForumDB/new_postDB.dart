@@ -58,6 +58,7 @@ class NewPostdb {
     }
   }
 
+// fetch post 
   Future<List<ForumPost>> getNewPostData() async {
     QuerySnapshot newPostResponse = await db.collection("Forum").get();
     List<ForumPost> tempPostData = [];
@@ -80,9 +81,5 @@ class NewPostdb {
     return tempPostData;
   }
 
-  _addComment(String postId) async {
-    DocumentReference postRef = db.collection("Forum").doc(postId);
-    DocumentReference commentRef =
-        db.collection("Comments").doc(SessionData.id);
-  }
+ 
 }

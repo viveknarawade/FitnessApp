@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:fitlife/Firebase/ForumDB/commentDB.dart';
 import 'package:fitlife/Forum/comment_card.dart';
 import 'package:fitlife/Forum/forum_home.dart';
 import 'package:fitlife/Model/comment.dart';
 import 'package:fitlife/Model/forum_post.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommentScreen extends StatefulWidget {
   final ForumPost post;
@@ -17,18 +21,33 @@ class _CommentSectionState extends State<CommentScreen> {
   final TextEditingController _commentController = TextEditingController();
   final List<Comment> _comments = [];
 
-  void _addComment() {
+  void _addCommentData() async {
     if (_commentController.text.isNotEmpty) {
       setState(() {
-        _comments.add(Comment(
-          username: 'CurrentUser',
-          content: _commentController.text,
-          timestamp: DateTime.now(),
-        ));
-        widget.post.comments++;
+        // Add the new comment to Firestore
+        Commentdb().addComment(widget.post.id, _commentController.text.trim());
+
+        // Clear the comment input field
         _commentController.clear();
+
+        // Increment the comment count for the post locally
+        widget.post.comments++;
+
+        // Fetch the updated list of comments from Firestore
+        _fetchComments(); // Make sure this call successfully updates the UI
       });
     }
+  }
+
+// Method to fetch comments and update the UI
+  void _fetchComments() async {
+    List<Comment> fetchedComments =
+        await Commentdb().getComment(widget.post.id);
+    log("Fetched Comments: $fetchedComments"); // Debugging line
+    setState(() {
+      _comments.clear();
+      _comments.addAll(fetchedComments);
+    });
   }
 
   @override
@@ -93,7 +112,7 @@ class _CommentSectionState extends State<CommentScreen> {
                   backgroundColor: Colors.deepOrange[400],
                   child: IconButton(
                     icon: Icon(Icons.send, color: Colors.white),
-                    onPressed: _addComment,
+                    onPressed: _addCommentData,
                   ),
                 ),
               ],
