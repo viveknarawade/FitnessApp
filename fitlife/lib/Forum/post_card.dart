@@ -1,25 +1,17 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitlife/Firebase/ForumDB/new_postDB.dart';
+import 'package:fitlife/Firebase/ForumDB/postDB.dart';
 import 'package:fitlife/Forum/comment_screen.dart';
 import 'package:fitlife/Forum/forum_home.dart';
 import 'package:fitlife/Model/forum_post.dart';
 import 'package:flutter/material.dart';
 
-class ForumPostCard extends StatefulWidget {
+
+class ForumPostCard extends StatelessWidget {
   final ForumPost post;
 
   const ForumPostCard({Key? key, required this.post}) : super(key: key);
-
-  @override
-  _ForumPostCardState createState() => _ForumPostCardState();
-}class _ForumPostCardState extends State<ForumPostCard> {
-  late bool _isLiked; // Variable to store like status
-
-  @override
-  void initState() {
-    super.initState();
-    _isLiked = widget.post.isLike; // Initialize _isLiked with the post's current like status
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,72 +27,61 @@ class ForumPostCard extends StatefulWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.post.username,
+                  post.username,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.deepOrange[700],
                   ),
                 ),
                 Text(
-                  DateTime.now().toString().substring(0, 10),
+                  post.timestamp, // Ensure the date is formatted properly
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
             SizedBox(height: 10),
             Text(
-              widget.post.title,
+              post.title,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: 10),
-            Text(widget.post.content),
+            Text(post.content),
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    IconButton(
-                      icon: Icon(
-                        _isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: _isLiked
-                            ? Colors.red
-                            : Colors.grey, // Change color based on _isLiked
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          _isLiked = !_isLiked;
-                          if (_isLiked) {
-                            widget.post.likes++; // Increment like count locally
-                          } else {
-                            widget.post.likes--; // Decrement like count locally
-                          }
-                        });
+                    // StreamBuilder for Like Status
+                    StreamBuilder<bool>(
+                      stream: Postdb().isPostLiked(post.id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Icon(Icons.favorite_border, color: Colors.grey); // Loading state
+                        }
+                        bool isLiked = snapshot.data ?? false;
 
-                        // Update the like status in Firestore
-                        await NewPostdb().likePost(widget.post.id);
-
-                        // After updating the like in Firestore, reload the post data
-                        List<ForumPost> posts = await NewPostdb().getNewPostData();
-                        ForumPost updatedPost = posts.firstWhere((post) => post.id == widget.post.id);
-                        setState(() {
-                          _isLiked = updatedPost.isLike; // Sync local state with Firestore
-                        });
+                        return IconButton(
+                          icon: Icon(
+                            isLiked ? Icons.favorite : Icons.favorite_border,
+                            color: isLiked ? Colors.red : Colors.grey,
+                          ),
+                          onPressed: () async {
+                            await Postdb().toggleLike(post.id);
+                          },
+                        );
                       },
                     ),
-                    Text('${widget.post.likes} likes'),
+                    Text('${post.likes} likes'),
                   ],
                 ),
 
-                // Real-time Comment Count using StreamBuilder
+                // Real-time comment count
                 StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("Forum")
-                      .doc(widget.post.id)
-                      .snapshots(), // Listen to the post document
+                  stream: FirebaseFirestore.instance.collection("Forum").doc(post.id).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Text('0 Comments');
@@ -123,8 +104,7 @@ class ForumPostCard extends StatefulWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    CommentScreen(post: widget.post),
+                                builder: (context) => CommentScreen(post: post),
                               ),
                             );
                           },

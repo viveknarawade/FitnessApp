@@ -295,7 +295,6 @@ class _MealhomeState extends State<Mealhome> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavbar.showCustomAppbar(context),
     );
   }
 }

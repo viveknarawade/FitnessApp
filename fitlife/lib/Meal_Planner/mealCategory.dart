@@ -207,7 +207,7 @@ class _CategoryState extends State<Category> {
                         GestureDetector(
                           onTap: () {
                             print(foodItem);
-                            Navigator.of(context).push(
+                            Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) {
                                   return Detail(

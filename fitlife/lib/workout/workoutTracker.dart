@@ -117,7 +117,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavbar.showCustomAppbar(context),
+      
     );
   }
 }

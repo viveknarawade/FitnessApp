@@ -1,13 +1,9 @@
 import 'dart:developer';
 
-import 'package:fitlife/Dashboard/bottelShape.dart';
-import 'package:fitlife/Dashboard/community.dart';
-import 'package:fitlife/Dashboard/letest_workout_listView.dart';
-import 'package:fitlife/Dashboard/profile_ui.dart';
 import 'package:fitlife/Dashboard/reminder_ui.dart';
 
 import 'package:fitlife/Firebase/Firestore/Meal/calories._intake.dart';
-import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+
 import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
 import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/Meal_Planner/mealHome.dart';
@@ -36,8 +32,6 @@ class HomeUi extends StatefulWidget {
 }
 
 class _HomeUiState extends State<HomeUi> {
-  //  final GlobalKey<_LetestWorkoutListviewState> workoutKey =
-  //     GlobalKey<_LetestWorkoutListviewState>();
   int step = 0;
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
@@ -156,9 +150,11 @@ class _HomeUiState extends State<HomeUi> {
                 ),
                 Row(
                   children: [
-                    Text("Hello ,",
-                        style: GoogleFonts.poppins(
-                            fontSize: 18, fontWeight: FontWeight.w400)),
+                    Text(
+                      "Hello ,",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
@@ -178,225 +174,256 @@ class _HomeUiState extends State<HomeUi> {
                     ),
                   ],
                 ),
-                Text(SessionData.userName!,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600, fontSize: 20)),
-                const SizedBox(
-                  height: 20,
+                Text(
+                  "${SessionData.userName!}",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600, fontSize: 30),
                 ),
-                Text("Activity Status",
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.w500)),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Activity Status",
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 9, left: 15, right: 19, bottom: 10),
-                  margin: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromRGBO(217, 217, 217, 1),
+                //CAOLRIES CARD
+                Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Calories",
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Calories",
                           style: GoogleFonts.poppins(
-                              fontSize: 16, fontWeight: FontWeight.w400)),
-                      Text("Remaining=goal+Exercise",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, fontWeight: FontWeight.w300)),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 21,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
                           ),
-                          SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: PieChart(
-                              swapAnimationDuration:
-                                  const Duration(milliseconds: 700),
-                              PieChartData(
-                                centerSpaceRadius: 30,
-                                sections: [
-                                  PieChartSectionData(
-                                    showTitle: false,
-                                    radius: 20,
-                                    value: goalPercentage,
-                                    color:
-                                        const Color.fromRGBO(249, 198, 52, 1),
-                                  ),
-                                  PieChartSectionData(
-                                    showTitle: false,
-                                    color:
-                                        const Color.fromRGBO(239, 152, 58, 1),
-                                    radius: 20,
-                                    value: foodPercentage,
-                                  ),
-                                  PieChartSectionData(
-                                    color:
-                                        const Color.fromRGBO(124, 117, 255, 1),
-                                    showTitle: false,
-                                    radius: 20,
-                                    value: exercisePercentage,
-                                  ),
-                                ],
-                              ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "Remaining = Goal + Exercise",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 20,
                             ),
-                          ),
-                          const Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 20, bottom: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    const Icon(
-                                      Icons.flag,
-                                      color: Color.fromRGBO(249, 198, 52, 1),
-                                      size: 30,
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: PieChart(
+                                swapAnimationDuration:
+                                    const Duration(milliseconds: 700),
+                                PieChartData(
+                                  centerSpaceRadius: 30,
+                                  sections: [
+                                    PieChartSectionData(
+                                      showTitle: false,
+                                      radius: 22,
+                                      value: goalPercentage,
+                                      color: const Color(0xFFF9C634),
                                     ),
-                                    const SizedBox(
-                                      height: 17,
+                                    PieChartSectionData(
+                                      showTitle: false,
+                                      radius: 22,
+                                      value: foodPercentage,
+                                      color: const Color(0xFFEF983A),
                                     ),
-                                    SvgPicture.asset(
-                                      "assets/icon/dinner.svg",
-                                      color:
-                                          const Color.fromRGBO(239, 152, 58, 1),
-                                      width: 20,
-                                      height: 30,
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    SvgPicture.asset(
-                                      "assets/icon/fire.svg",
-                                      color: const Color.fromRGBO(
-                                          124, 117, 255, 1),
-                                      width: 20,
-                                      height: 30,
+                                    PieChartSectionData(
+                                      showTitle: false,
+                                      radius: 22,
+                                      value: exercisePercentage,
+                                      color: const Color(0xFF7C75FF),
                                     ),
                                   ],
                                 ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            const SizedBox(width: 50),
+                            Expanded(
+                              child: Column(
                                 children: [
-                                  Text("Goal",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500)),
-                                  Text("$Goal",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                      )),
-                                  const SizedBox(
-                                    height: 10,
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.flag,
+                                          color: Color(0xFFF9C634), size: 28),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          "Goal: $Goal",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text("Food",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500)),
-                                  Text("$Food"),
-                                  const SizedBox(
-                                    height: 10,
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/icon/dinner.svg",
+                                        color: const Color(0xFFEF983A),
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          "Food: $Food",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text("Exercise",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500)),
-                                  Text("$Exercise",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                      ))
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/icon/fire.svg",
+                                        color: const Color(0xFF7C75FF),
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          "Exercise: $Exercise",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              const SizedBox(
-                                width: 21,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
                 const SizedBox(
                   height: 15,
                 ),
                 Row(
                   children: [
                     // Steps Tracker
-
-                    Container(
-                      width: 150,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(217, 217, 217, 1),
+                    Card(
+                      elevation: 7,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.only(
+                            left: 25, right: 25, bottom: 15, top: 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Steps",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 16, fontWeight: FontWeight.w400)),
-                            const SizedBox(
-                              height: 16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Daily Steps",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.deepPurple[800],
+                                  ),
+                                ),
+                              ],
                             ),
+                            const SizedBox(height: 16),
                             Stack(
                               alignment: Alignment.center,
                               children: [
                                 SizedBox(
-                                  width: 100,
-                                  height: 100,
+                                  width: 120,
+                                  height: 120,
                                   child: CircularProgressIndicator(
                                     value: progressVal,
-                                    backgroundColor: Colors.grey,
-                                    strokeWidth: 13,
+                                    backgroundColor: Colors.purple[100],
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.deepPurple),
+                                    strokeWidth: 15,
                                   ),
                                 ),
                                 Container(
-                                    alignment: Alignment.center,
-                                    width: 78,
-                                    height: 78,
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 3),
-                                        ),
+                                  alignment: Alignment.center,
+                                  width: 90,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.purple.withOpacity(0.3),
+                                        spreadRadius: 3,
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.deepPurple[300]!,
+                                        Colors.deepPurple[500]!,
                                       ],
-                                      shape: BoxShape.circle,
-                                      color: const Color.fromRGBO(
-                                          146, 163, 253, 1),
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/icon/walk.png",
-                                          width: 23,
-                                          height: 23,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/icon/walk.png",
+                                        width: 30,
+                                        height: 30,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        "$step",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        Text(
-                                          "$step",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                      ],
-                                    )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -404,59 +431,82 @@ class _HomeUiState extends State<HomeUi> {
                       ),
                     ),
                     const Spacer(),
-                    Container(
-                      width: 150,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(217, 217, 217, 1),
+
+                    // WATER INTAKE
+                    Card(
+                      elevation: 7,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 10, top: 10, left: 13, right: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   "Water Intake",
                                   style: GoogleFonts.poppins(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple[800],
+                                  ),
                                 ),
                                 SizedBox(
-                                  width: 6,
+                                  width: 10,
                                 ),
                                 GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CustomWaterBottomSheet()));
-                                    },
-                                    child: Icon(Icons.add)),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CustomWaterBottomSheet()),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.deepPurple[50],
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: EdgeInsets.all(6),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.deepPurple[800],
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
+                            SizedBox(height: 10),
                             SizedBox(
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: 100,
-                              height: 100,
+                              width: 110,
+                              height: 110,
                               child: LiquidCircularProgressIndicator(
-                                value: waterIntakeVal, // Half-filled indicator
+                                value: waterIntakeVal,
                                 valueColor:
-                                    AlwaysStoppedAnimation(Colors.blueAccent),
-                                backgroundColor: Colors.white,
-                                borderColor: Colors.blueAccent,
+                                    AlwaysStoppedAnimation(Colors.blue[400]!),
+                                backgroundColor: Colors.blue[50],
+                                borderColor: Colors.blue[300]!,
                                 borderWidth: 3.0,
                                 direction: Axis.vertical,
-                                center: Text("${(waterIntakeVal * 100)}%",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight
-                                            .w500)), // Change to horizontal or leave as default
+                                center: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${(waterIntakeVal * 100).toStringAsFixed(0)}%",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.deepPurple[800],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -469,80 +519,106 @@ class _HomeUiState extends State<HomeUi> {
                   height: 30,
                 ),
                 Text(
-                  "Latest workout",
+                  "Latest Workout",
                   style: GoogleFonts.poppins(
-                      fontSize: 16, fontWeight: FontWeight.w400),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
                 ),
-
-                /// letest workout
+                const SizedBox(height: 8), // Add consistent spacing explicitly
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: letestBurnMap.length,
                   itemBuilder: (context, index) {
+                    final workout = letestBurnMap[index];
                     return Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
-                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            offset: const Offset(0, 3),
+                            color: Colors.grey.withOpacity(0.4),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          // Workout Icon
                           Container(
                             width: 70,
                             height: 70,
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 102, 102, 1),
                               shape: BoxShape.circle,
                             ),
-                            child: SvgPicture.asset(
-                              "assets/workout/fullbody.svg",
+                            child: Center(
+                              child: SvgPicture.asset(
+                                "assets/workout/fullbody.svg",
+                                fit: BoxFit.contain,
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(letestBurnMap[index]["WorkoutName"]),
-                              const SizedBox(height: 2),
-                              Text(
-                                  "${letestBurnMap[index]["burn"]} calories burned"),
-                              const SizedBox(height: 7),
-                              SimpleAnimationProgressBar(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(20)),
-                                ratio: letestBurnMap[index]["burn"] /
-                                    1000, // Example ratio
-                                width: 170,
-                                height: 13,
-                                direction: Axis.horizontal,
-                                backgroundColor:
-                                    const Color.fromRGBO(247, 248, 248, 1),
-                                foregrondColor:
-                                    const Color.fromRGBO(159, 158, 251, 1),
-                                duration: const Duration(seconds: 3),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                              ),
-                              const SizedBox(height: 17),
-                            ],
+
+                          // Workout Details
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  workout["WorkoutName"],
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "${workout["burn"]} calories burned",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+
+                                // Progress Bar
+                                SimpleAnimationProgressBar(
+                                  borderRadius: BorderRadius.circular(20),
+                                  ratio:
+                                      workout["burn"] / 1000, // Example ratio
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.55,
+                                  height: 10,
+                                  direction: Axis.horizontal,
+                                  backgroundColor:
+                                      const Color.fromRGBO(247, 248, 248, 1),
+                                  foregrondColor:
+                                      const Color.fromRGBO(159, 158, 251, 1),
+                                  duration: const Duration(seconds: 2),
+                                  curve: Curves.easeInOut,
+                                ),
+                              ],
+                            ),
                           ),
-                          const Spacer(),
+
+                          // Next Button
                           GestureDetector(
                             child: SvgPicture.asset(
                               "assets/icon/next-btn.svg",
-                              width: 40,
-                              height: 35,
+                              width: 30,
+                              height: 30,
                             ),
                           ),
                         ],

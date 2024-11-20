@@ -1,4 +1,4 @@
-import 'package:fitlife/Firebase/ForumDB/new_postDB.dart';
+import 'package:fitlife/Firebase/ForumDB/postDB.dart';
 import 'package:fitlife/Forum/post_card.dart';
 import 'package:fitlife/Model/forum_post.dart';
 import 'package:flutter/material.dart';
@@ -9,24 +9,9 @@ class FitnessNutritionForum extends StatefulWidget {
 }
 
 class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
-  final List<ForumPost> _posts = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getNewPostData();
-  }
-
-  // Fetch new post data from the database
-  getNewPostData() async {
-    List<ForumPost> post = await NewPostdb().getNewPostData();
-    setState(() {
-      _posts.addAll(post); // Add the post to the list
-    });
-  }
-
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
+
   void _createNewPost() async {
     final result = await showModalBottomSheet<bool>(
       context: context,
@@ -62,14 +47,13 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
               onPressed: () {
                 if (_titleController.text.isNotEmpty &&
                     _contentController.text.isNotEmpty) {
-                  NewPostdb().addNewPost(
+                  Postdb().addNewPost(
                       _titleController.text, _contentController.text);
 
                   _titleController.clear();
                   _contentController.clear();
 
-                  // Return true to indicate a new post was added
-                  Navigator.pop(context, true);
+                  Navigator.pop(context, true); // Close the modal
                 }
               },
               child: Text('Post'),
@@ -78,12 +62,6 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
         ),
       ),
     );
-
-    // Check if a new post was added, and refresh the data
-    if (result == true) {
-      _posts.clear();
-      await getNewPostData();
-    }
   }
 
   @override
@@ -93,12 +71,24 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
         title: Text('Fitness & Nutrition Forum'),
         backgroundColor: Colors.deepOrange[400],
       ),
-      body: ListView.builder(
-        itemCount: _posts.length,
-        itemBuilder: (context, index) {
-          return ForumPostCard(
-            post: _posts[index],
-          );
+      body: StreamBuilder<List<ForumPost>>(
+        stream: Postdb().getPostData(), // Use getPostData stream here
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No posts available.'));
+          } else {
+            List<ForumPost> posts = snapshot.data!;
+            return ListView.builder(
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return ForumPostCard(post: posts[index]);
+              },
+            );
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(

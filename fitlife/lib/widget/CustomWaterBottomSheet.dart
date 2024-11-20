@@ -17,8 +17,9 @@ class _CustomWaterBottomSheetState extends State<CustomWaterBottomSheet> {
       TextEditingController();
   initState() {
     super.initState();
-    getTodayWaterIntake();
+    // getTodayWaterIntake();
   }
+
   getTodayWaterIntake() async {
     liter = await MainApp().sqfliteObj?.getTodayWaterIntake();
     setState(() {});

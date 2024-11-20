@@ -13,96 +13,75 @@ class CustomNavbar {
     return BottomAppBar(
       color: Colors.white,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              SvgPicture.asset(
-                "assets/icon/home.svg",
-                width: 30,
-                height: 33,
-              ),
-              const SizedBox(
-                width: 50,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return WorkoutTracker();
-                      },
-                    ),
-                  );
-                },
-                child: Icon(
-                  FontAwesomeIcons.dumbbell,
-                  color: Colors.grey,
+          SvgPicture.asset(
+            "assets/icon/home.svg",
+            width: 30,
+            height: 33,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return WorkoutTracker();
+                  },
                 ),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return FitnessNutritionForum();
-                      },
-                    ),
-                  );
-                },
-                child: Icon(
-                  FontAwesomeIcons.comment,
-                  color: Colors.grey,
+              );
+            },
+            child: Icon(
+              FontAwesomeIcons.dumbbell,
+              color: Colors.grey,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FitnessNutritionForum();
+                  },
                 ),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return Mealhome();
-                      }));
-                    },
-                    child: Image.asset(
-                      "assets/icon/meal.png",
-                      width: 34,
-                      height: 36,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProfileUi();
-                            },
-                          ),
-                        );
-                      },
-                      child: SvgPicture.asset(
-                        "assets/icon/profile.svg",
-                        width: 30,
-                        height: 33,
-                      )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                ],
-              ),
-            ],
+              );
+            },
+            child: Icon(
+              FontAwesomeIcons.comment,
+              color: Colors.grey,
+              size: 30,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Mealhome();
+                  },
+                ),
+              );
+            },
+            child: Icon(
+              Icons.restaurant_menu,
+              size: 30,
+              color: Colors.grey,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ProfileUi();
+                  },
+                ),
+              );
+            },
+            child: Icon(
+              FontAwesomeIcons.user,
+              color: Colors.grey,
+              size: 25,
+            ),
           ),
         ],
       ),
