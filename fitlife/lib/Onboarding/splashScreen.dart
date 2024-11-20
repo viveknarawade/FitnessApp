@@ -17,7 +17,7 @@ class Splashscreen extends StatelessWidget {
         if (SessionData.isLogin!) {
           log("NAVIGATE TO HOME");
 
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) {
                 return HomeUi();

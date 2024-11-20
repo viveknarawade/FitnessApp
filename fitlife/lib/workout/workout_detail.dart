@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/workout/calories_burn.dart';
 import 'package:fitlife/Firebase/Firestore/workout/workout_calories.dart';
 import 'package:fitlife/widget/customAlertDemo.dart';
@@ -107,7 +108,6 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
             ),
           ),
           SliverToBoxAdapter(
-            
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
@@ -230,35 +230,56 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   ),
                   Center(
                     child: GestureDetector(
-                      onTap: () {
-                        log("calories burn = $selectedIndex");
-                        CaloriesBurn()
-                            .addDayBurnCaloriesData(selectedIndex.toString());
-                        WorkoutCalories().addWorkoutData(
-                            widget.workoutTypeName, {
-                          "WorkoutName": widget.exerciseName,
-                          "burn": selectedIndex
-                        });
-                      },
-                      child: GestureDetector(
-                        onTap: () {
+                      onTap: () async {
+                        try {
+                          // Log the selected calories
+                          log("Calories burned = $selectedIndex");
+
+                          // Save daily burned calories to Firestore
+                          await CaloriesBurn()
+                              .addDayBurnCaloriesData(selectedIndex.toString());
+
+                          // Save workout data to Firestore
+                          await WorkoutCalories().addWorkoutData(
+                            widget.workoutTypeName,
+                            {
+                              "WorkoutName": widget.exerciseName,
+                              "burn": selectedIndex,
+                            },
+                          );
+
+                          // Show success alert box
                           CustomAlertBoxDemo().showMyDialog(
-                              context, "${widget.exerciseName} Completed");
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 130, vertical: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: const Color.fromRGBO(148, 171, 253, 1.0),
-                          ),
-                          child: Text(
-                            "Save",
-                            style: GoogleFonts.poppins(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
+                            context,
+                            "${widget.exerciseName} Completed",
+                          );
+
+                          setState(() {});
+                        } catch (e) {
+                          // Handle errors and display a message if needed
+                          log("Error saving workout data: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text("Error saving data. Please try again."),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 130, vertical: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                        ),
+                        child: Text(
+                          "Save",
+                          style: GoogleFonts.poppins(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),

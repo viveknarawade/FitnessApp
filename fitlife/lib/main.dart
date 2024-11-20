@@ -3,7 +3,7 @@ import 'package:fitlife/Dashboard/editProfile.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Storage/fooddata.dart';
-import 'package:fitlife/Forum/forum_home.dart';
+
 import 'package:fitlife/Onboarding/splashScreen.dart';
 
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';

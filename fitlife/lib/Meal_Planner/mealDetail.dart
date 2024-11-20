@@ -304,10 +304,6 @@ class _DetailState extends State<Detail> {
                   Center(
                     child: GestureDetector(
                       onTap: () async {
-                        // Print the formatted time, date, and day
-                        log("Current Time: ${DateTimeDay().formattedTime}");
-                        log("Current Date: ${DateTimeDay().formattedDate}");
-                        log("Day of the Week: ${DateTimeDay().dayOfWeek}");
                         widget.itemData.addAll(
                           {
                             "Time": "${DateTimeDay().formattedTime}",

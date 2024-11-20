@@ -30,11 +30,14 @@ import 'package:fitlife/widget/CustomWaterBottomSheet.dart';
 class HomeUi extends StatefulWidget {
   int? liter;
   HomeUi({this.liter, super.key});
+
   @override
   State createState() => _HomeUiState();
 }
 
 class _HomeUiState extends State<HomeUi> {
+  //  final GlobalKey<_LetestWorkoutListviewState> workoutKey =
+  //     GlobalKey<_LetestWorkoutListviewState>();
   int step = 0;
   int stepsGoal = 10000;
   double waterIntakeGoal = 2500.0;
@@ -42,52 +45,13 @@ class _HomeUiState extends State<HomeUi> {
   int Food = 0;
   int Exercise = 0;
   double waterIntakeVal = 0;
-  num? upperbodyBurn;
-  num? lowerbodyBurn;
-  num? fullbodyBurn;
+
   @override
   void initState() {
     super.initState();
-
     requestPermission();
     fetchWaterIntake();
-    loadWorkoutData();
-
-    // Add post frame callback to refresh data on screen rebuild
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Refresh the workout data when returning to this screen
-      loadWorkoutData();
-    });
-  }
-
-  Future<void> loadWorkoutData() async {
-    var upperBurn = await upperbodyBurnData();
-    var lowerBurn = await lowerbodyBurnData();
-    var fullBurn = await fullbodyBurnData();
-
-    setState(() {
-      upperbodyBurn = upperBurn;
-      lowerbodyBurn = lowerBurn;
-      fullbodyBurn = fullBurn;
-    });
-  }
-
-  Future<num> upperbodyBurnData() async {
-    var burn = await WorkoutCalories().getTotalCalories("UpperBody");
-    log("UpperBody Calories: $burn");
-    return burn;
-  }
-
-  Future<num> lowerbodyBurnData() async {
-    var burn = await WorkoutCalories().getTotalCalories("LowerBody");
-    log("LowerBody Calories: $burn");
-    return burn;
-  }
-
-  Future<num> fullbodyBurnData() async {
-    var burn = await WorkoutCalories().getTotalCalories("FullBody");
-    log("FullBody Calories: $burn");
-    return burn;
+    getLestestWorkoutData();
   }
 
   fetchWaterIntake() async {
@@ -123,10 +87,50 @@ class _HomeUiState extends State<HomeUi> {
     setState(() {});
   }
 
+  /// for getting  calories
   getCalories() async {
     Food = await CaloriesIntake().getCaloriesIntakeData();
     Exercise = await CaloriesBurn().getCaloriesBurnData();
     setState(() {});
+  }
+
+// letest card
+  List<Map> letestBurnMap = [];
+
+  /// for getting letest card data
+  Future<void> getLestestWorkoutData() async {
+    num upperBurn = await WorkoutCalories().getTotalCalories("UpperBody");
+    num lowerBurn = await WorkoutCalories().getTotalCalories("LowerBody");
+    num fullBurn = await WorkoutCalories().getTotalCalories("FullBody");
+
+    log("upperBurn : $upperBurn");
+    log("lowerBurn : $lowerBurn");
+    log("fullBurn : $fullBurn");
+
+    List<Map> tempBurnMap = [];
+
+    if (upperBurn > 0) {
+      tempBurnMap.add({
+        "WorkoutName": "UpperBody Workout",
+        "burn": upperBurn,
+      });
+    }
+    if (lowerBurn > 0) {
+      tempBurnMap.add({
+        "WorkoutName": "LowerBody Workout",
+        "burn": lowerBurn,
+      });
+    }
+    if (fullBurn > 0) {
+      tempBurnMap.add({
+        "WorkoutName": "FullBody Workout",
+        "burn": fullBurn,
+      });
+    }
+
+    setState(() {
+      letestBurnMap = tempBurnMap;
+    });
   }
 
   @override
@@ -157,20 +161,21 @@ class _HomeUiState extends State<HomeUi> {
                             fontSize: 18, fontWeight: FontWeight.w400)),
                     const Spacer(),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const ReminderUi();
-                              },
-                            ),
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          "assets/icon/bell-home.svg",
-                          height: 2,
-                          width: 20,
-                        )),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ReminderUi();
+                            },
+                          ),
+                        );
+                      },
+                      child: SvgPicture.asset(
+                        "assets/icon/bell-home.svg",
+                        height: 2,
+                        width: 20,
+                      ),
+                    ),
                   ],
                 ),
                 Text(SessionData.userName!,
@@ -463,17 +468,88 @@ class _HomeUiState extends State<HomeUi> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text("Latest workout",
-                    style: GoogleFonts.poppins(
-                        fontSize: 16, fontWeight: FontWeight.w400)),
-                if (upperbodyBurn != null &&
-                    lowerbodyBurn != null &&
-                    fullbodyBurn != null)
-                  LetestWorkoutListview(
-                    upperbodyBurn: upperbodyBurn!,
-                    lowerbodyBurn: lowerbodyBurn!,
-                    fullbodyBurn: fullbodyBurn!,
-                  )
+                Text(
+                  "Latest workout",
+                  style: GoogleFonts.poppins(
+                      fontSize: 16, fontWeight: FontWeight.w400),
+                ),
+
+                /// letest workout
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: letestBurnMap.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 10),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.7),
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 70,
+                            height: 70,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(
+                              "assets/workout/fullbody.svg",
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(letestBurnMap[index]["WorkoutName"]),
+                              const SizedBox(height: 2),
+                              Text(
+                                  "${letestBurnMap[index]["burn"]} calories burned"),
+                              const SizedBox(height: 7),
+                              SimpleAnimationProgressBar(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20)),
+                                ratio: letestBurnMap[index]["burn"] /
+                                    1000, // Example ratio
+                                width: 170,
+                                height: 13,
+                                direction: Axis.horizontal,
+                                backgroundColor:
+                                    const Color.fromRGBO(247, 248, 248, 1),
+                                foregrondColor:
+                                    const Color.fromRGBO(159, 158, 251, 1),
+                                duration: const Duration(seconds: 3),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                              ),
+                              const SizedBox(height: 17),
+                            ],
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            child: SvgPicture.asset(
+                              "assets/icon/next-btn.svg",
+                              width: 40,
+                              height: 35,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
