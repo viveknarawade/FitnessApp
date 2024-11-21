@@ -3,10 +3,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Firebase/ForumDB/postDB.dart';
 import 'package:fitlife/Forum/comment_screen.dart';
-import 'package:fitlife/Forum/forum_home.dart';
 import 'package:fitlife/Model/forum_post.dart';
 import 'package:flutter/material.dart';
-
 
 class ForumPostCard extends StatelessWidget {
   final ForumPost post;
@@ -16,40 +14,47 @@ class ForumPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Username with blue color
                 Text(
                   post.username,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.deepOrange[700],
+                    color: const Color(0xFF5D7AEA), // Changed to deep blue
                   ),
                 ),
                 Text(
                   post.timestamp, // Ensure the date is formatted properly
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+
+            // Title in a larger blue font
             Text(
               post.title,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
+                color: const Color(0xFF5D7AEA), // Changed to blue
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+
+            // Content text remains black or default
             Text(post.content),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,15 +64,19 @@ class ForumPostCard extends StatelessWidget {
                     StreamBuilder<bool>(
                       stream: Postdb().isPostLiked(post.id),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Icon(Icons.favorite_border, color: Colors.grey); // Loading state
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Icon(Icons.favorite_border,
+                              color: Colors.grey); // Loading state
                         }
                         bool isLiked = snapshot.data ?? false;
 
                         return IconButton(
                           icon: Icon(
                             isLiked ? Icons.favorite : Icons.favorite_border,
-                            color: isLiked ? Colors.red : Colors.grey,
+                            color: isLiked
+                                ? Colors.red
+                                : Colors.grey, // Like icon changed to blue
                           ),
                           onPressed: () async {
                             await Postdb().toggleLike(post.id);
@@ -75,31 +84,40 @@ class ForumPostCard extends StatelessWidget {
                         );
                       },
                     ),
-                    Text('${post.likes} likes'),
+                    Text(
+                      '${post.likes} likes',
+                      style: TextStyle(
+                          color: const Color(0xFF5D7AEA)), // Likes text in blue
+                    ),
                   ],
                 ),
 
                 // Real-time comment count
                 StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance.collection("Forum").doc(post.id).snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection("Forum")
+                      .doc(post.id)
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text('0 Comments');
+                      return const Text('0 Comments');
                     }
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     }
                     if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return Text('0 Comments');
+                      return const Text('0 Comments');
                     }
 
-                    var postData = snapshot.data!.data() as Map<String, dynamic>;
+                    var postData =
+                        snapshot.data!.data() as Map<String, dynamic>;
                     int commentCount = postData["comments"] ?? 0;
 
                     return Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.comment, color: Colors.deepOrange[400]),
+                          icon: Icon(Icons.comment,
+                              color: Colors.red), // Comment icon in light blue
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -109,7 +127,12 @@ class ForumPostCard extends StatelessWidget {
                             );
                           },
                         ),
-                        Text('$commentCount Comments'),
+                        Text(
+                          '$commentCount Comments',
+                          style: TextStyle(
+                              color: const Color(
+                                  0xFF5D7AEA)), // Comment count text in blue
+                        ),
                       ],
                     );
                   },

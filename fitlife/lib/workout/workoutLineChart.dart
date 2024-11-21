@@ -69,7 +69,11 @@ class _DemoState extends State<Workoutlinechart> {
   @override
   Widget build(BuildContext context) {
     if (widget.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      );
     }
 
     return Padding(
@@ -83,20 +87,31 @@ class _DemoState extends State<Workoutlinechart> {
             lineBarsData: [
               LineChartBarData(
                 spots: _getSpots(),
-                color: Colors.blue,
+                color: Colors.white, // Change to white for better visibility
                 isCurved: true,
-                curveSmoothness: 0.35,
+                curveSmoothness: 0.4,
                 preventCurveOverShooting: true,
                 dotData: FlDotData(
                   show: true,
                   getDotPainter: (spot, percent, barData, index) {
                     return FlDotCirclePainter(
-                      radius: 4,
-                      color: Colors.blue,
+                      radius: 5,
+                      color: Colors.white,
                       strokeWidth: 2,
-                      strokeColor: Colors.white,
+                      strokeColor: Colors.blue.shade200,
                     );
                   },
+                ),
+                belowBarData: BarAreaData(
+                  show: true,
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.4),
+                      Colors.white.withOpacity(0.1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
               )
             ],

@@ -44,7 +44,6 @@ class WorkoutTracker extends StatefulWidget {
     "assets/workout/latePullDown.png",
   ];
 
-  
   @override
   State<WorkoutTracker> createState() => _WorkoutTrackerState();
 }
@@ -53,6 +52,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF4F7FE), // Soft light blue background
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -66,15 +66,27 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
                     color: Colors.white),
               ),
             ),
-            backgroundColor: const Color.fromRGBO(148, 171, 253, 1.0),
+            backgroundColor: const Color(0xFF5D7AEA), // Deep periwinkle blue
             expandedHeight: MediaQuery.of(context).size.width * 0.9,
             elevation: 0.0,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Padding(
-                padding: const EdgeInsets.only(
-                    top: 120.0, left: 10, right: 30, bottom: 40),
-                child: Workoutlinechart(),
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xFF5D7AEA), // Deep periwinkle blue
+                      const Color(0xFF7189FF), // Lighter periwinkle blue
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 120.0, left: 10, right: 30, bottom: 40),
+                  child: Workoutlinechart(),
+                ),
               ),
             ),
             bottom: PreferredSize(
@@ -94,7 +106,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
                   height: 5.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: const Color.fromRGBO(233, 232, 232, 1.0),
+                    color: const Color(0xFFE0E0E0), // Soft gray
                   ),
                 ),
               ),
@@ -103,12 +115,16 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Text(
                 "What Do You Want To Train",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold), // Optional styling
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(
+                      0xFF333333), // Dark gray for better readability
+                ),
               ),
             ),
           ),
@@ -117,7 +133,6 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
           ),
         ],
       ),
-      
     );
   }
 }

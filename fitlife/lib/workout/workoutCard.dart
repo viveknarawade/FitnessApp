@@ -75,11 +75,12 @@ class _WorkoutcardState extends State<Workoutcard> {
                             MaterialPageRoute(
                               builder: (context) {
                                 return workoutType(
-                                    exerciseCardData: widget.exerciseCardData,
-                                    workoutTypeName:
-                                        widget.exerciseCardData[index]["title"],
-                                    workoutImags: workoutCategoryImages(index),
-                                   workoutTypeImage: workoutImages[index],);
+                                  exerciseCardData: widget.exerciseCardData,
+                                  workoutTypeName:
+                                      widget.exerciseCardData[index]["title"],
+                                  workoutImags: workoutCategoryImages(index),
+                                  workoutTypeImage: workoutImages[index],
+                                );
                               },
                             ),
                           );
@@ -94,7 +95,9 @@ class _WorkoutcardState extends State<Workoutcard> {
                           ),
                           child: Text(
                             "View more",
-                            style: GoogleFonts.poppins(color: Colors.blue),
+                            style: GoogleFonts.poppins(
+                              color: Color(0xFF5D7AEA),
+                            ),
                           ),
                         ),
                       ),

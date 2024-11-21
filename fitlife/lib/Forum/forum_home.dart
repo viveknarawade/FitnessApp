@@ -16,49 +16,95 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
     final result = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
           top: 20,
           left: 20,
           right: 20,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                labelText: 'Post Title',
-                border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Create New Post',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF5D7AEA),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _contentController,
-              maxLines: 4,
-              decoration: InputDecoration(
-                labelText: 'Post Content',
-                border: OutlineInputBorder(),
+              SizedBox(height: 15),
+              TextField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  labelText: 'Post Title',
+                  labelStyle: TextStyle(color: const Color(0xFF5D7AEA)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: const Color(0xFF5D7AEA)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        BorderSide(color: const Color(0xFF5D7AEA), width: 2),
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                if (_titleController.text.isNotEmpty &&
-                    _contentController.text.isNotEmpty) {
-                  Postdb().addNewPost(
-                      _titleController.text, _contentController.text);
-
-                  _titleController.clear();
-                  _contentController.clear();
-
-                  Navigator.pop(context, true); // Close the modal
-                }
-              },
-              child: Text('Post'),
-            ),
-          ],
+              SizedBox(height: 10),
+              TextField(
+                controller: _contentController,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  labelText: 'Post Content',
+                  labelStyle: TextStyle(color: const Color(0xFF5D7AEA)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: const Color(0xFF5D7AEA)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        BorderSide(color: const Color(0xFF5D7AEA), width: 2),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () {
+                  if (_titleController.text.isNotEmpty &&
+                      _contentController.text.isNotEmpty) {
+                    Postdb().addNewPost(
+                        _titleController.text, _contentController.text);
+                    _titleController.clear();
+                    _contentController.clear();
+                    Navigator.pop(context, true); // Close the modal
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF5D7AEA),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                ),
+                child: Text(
+                  'Post',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
@@ -68,18 +114,50 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fitness & Nutrition Forum'),
-        backgroundColor: Colors.deepOrange[400],
+        title: Text(
+          'Fitness & Nutrition Forum',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF5D7AEA),
+        elevation: 0,
       ),
       body: StreamBuilder<List<ForumPost>>(
-        stream: Postdb().getPostData(), // Use getPostData stream here
+        stream: Postdb().getPostData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(
+                color: const Color(0xFF5D7AEA),
+              ),
+            );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(color: Color(0xFF5D7AEA)),
+              ),
+            );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No posts available.'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.forum_outlined,
+                    size: 80,
+                    color: const Color(0xFF5D7AEA).withOpacity(0.5),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'No posts available.',
+                    style: TextStyle(
+                      color: const Color(0xFF5D7AEA),
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else {
             List<ForumPost> posts = snapshot.data!;
             return ListView.builder(
@@ -93,8 +171,11 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewPost,
-        backgroundColor: Colors.deepOrange[400],
-        child: Icon(Icons.add),
+        backgroundColor: const Color(0xFF5D7AEA),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

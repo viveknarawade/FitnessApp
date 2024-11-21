@@ -29,7 +29,6 @@ class _FullbodyState extends State<workoutType> {
   storeData() async {
     tempexerciseData =
         await ExerciseStorage().getExerciseData(widget.workoutTypeName);
-    // Print the result for debugging purposes
     log("tempexerciseData = $tempexerciseData");
     setState(() {});
   }
@@ -45,11 +44,11 @@ class _FullbodyState extends State<workoutType> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF4F7FE), // Soft light blue background
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: const Color.fromRGBO(148, 171, 253, 1.0),
+            backgroundColor: const Color(0xFF5D7AEA), // Deep periwinkle blue
             expandedHeight: MediaQuery.of(context).size.width * 0.8,
             elevation: 0.0,
             pinned: true,
@@ -61,9 +60,10 @@ class _FullbodyState extends State<workoutType> {
                     alignment: Alignment.center,
                     height: 270,
                     width: 280,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color.fromRGBO(183, 206, 254, 0.5),
+                      color: const Color(0xFFAEC6FF)
+                          .withOpacity(0.5), // Soft blue with transparency
                     ),
                   ),
                   Positioned(
@@ -84,7 +84,7 @@ class _FullbodyState extends State<workoutType> {
                 height: 50.0,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFFEDF2FF),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
@@ -95,7 +95,7 @@ class _FullbodyState extends State<workoutType> {
                   height: 5.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: const Color.fromRGBO(233, 232, 232, 1.0),
+                    color: const Color(0xFFE0E0E0), // Soft gray
                   ),
                 ),
               ),
@@ -110,7 +110,9 @@ class _FullbodyState extends State<workoutType> {
                   Text(
                     widget.workoutTypeName + "  Workout",
                     style: GoogleFonts.poppins(
-                        fontSize: 23, fontWeight: FontWeight.w700),
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF333333)), // Dark gray for text
                   ),
                   const SizedBox(
                     height: 10,
@@ -121,7 +123,7 @@ class _FullbodyState extends State<workoutType> {
                     margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromRGBO(233, 237, 255, 1)),
+                        color: const Color(0xFFEDF2FF)), // Soft pastel blue
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(context,
@@ -140,9 +142,14 @@ class _FullbodyState extends State<workoutType> {
                           Text(
                             "Schedule Workout     5/27, 9:00 AM",
                             style: GoogleFonts.poppins(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(
+                                    0xFF333333)), // Dark gray for text
                           ),
-                          Icon(Icons.arrow_forward_ios, color: Colors.grey)
+                          Icon(Icons.arrow_forward_ios,
+                              color: const Color(
+                                  0xFF666666)) // Softer gray for icon
                         ],
                       ),
                     ),
@@ -150,7 +157,9 @@ class _FullbodyState extends State<workoutType> {
                   Text(
                     "Exercises",
                     style: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.w600),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF333333)), // Dark gray for text
                   ),
                 ],
               ),
@@ -163,7 +172,6 @@ class _FullbodyState extends State<workoutType> {
           ),
         ],
       ),
-      // Position as needed
     );
   }
 }

@@ -26,12 +26,11 @@ class _WorkoutState extends State {
 
   List scheduleData = [];
   getWorkoutscheduleData() async {
-  scheduleData = await MainApp().sqfliteObj?.getWorkoutData() ?? [];
-  _generateTimeSlots(); // Regenerate time slots after updating scheduleData
-  setState(() {});
-  log("GET WORKOUT SCHEDULE $scheduleData");
-}
-
+    scheduleData = await MainApp().sqfliteObj?.getWorkoutData() ?? [];
+    _generateTimeSlots(); // Regenerate time slots after updating scheduleData
+    setState(() {});
+    log("GET WORKOUT SCHEDULE $scheduleData");
+  }
 
   @override
   void initState() {
@@ -50,35 +49,36 @@ class _WorkoutState extends State {
     }
   }
 
- void _generateTimeSlots() {
-  timeSlots.clear();
+  void _generateTimeSlots() {
+    timeSlots.clear();
 
-  // Define the start and end time for workout slots (6:00 AM to 8:00 PM)
-  DateTime startTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 6, 0);
-  DateTime endTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 20, 0);
+    // Define the start and end time for workout slots (6:00 AM to 8:00 PM)
+    DateTime startTime =
+        DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 6, 0);
+    DateTime endTime = DateTime(
+        selectedDate.year, selectedDate.month, selectedDate.day, 20, 0);
 
-  // Loop through every hour between 6:00 AM and 8:00 PM
-  while (startTime.isBefore(endTime)) {
-    String formattedTime = DateFormat('hh:mm a').format(startTime);
+    // Loop through every hour between 6:00 AM and 8:00 PM
+    while (startTime.isBefore(endTime)) {
+      String formattedTime = DateFormat('hh:mm a').format(startTime);
 
-    // Check if a workout is scheduled for this time
-    String workout = "";
-   for (var schedule in scheduleData) {
-  if (schedule["DATE"] == DateFormat('EEE, d MMM y').format(selectedDate) &&
-      schedule["TIME"] == formattedTime) {
-    workout = schedule["WORKOUTTYPE"]!;
-    break;
+      // Check if a workout is scheduled for this time
+      String workout = "";
+      for (var schedule in scheduleData) {
+        if (schedule["DATE"] ==
+                DateFormat('EEE, d MMM y').format(selectedDate) &&
+            schedule["TIME"] == formattedTime) {
+          workout = schedule["WORKOUTTYPE"]!;
+          break;
+        }
+      }
+
+      // Add the time slot with any workout found
+      timeSlots.add({"time": formattedTime, "workout": workout});
+      startTime =
+          startTime.add(const Duration(hours: 1)); // Increment by 1 hour
+    }
   }
-}
-
-
-    // Add the time slot with any workout found
-    timeSlots.add({"time": formattedTime, "workout": workout});
-    startTime = startTime.add(const Duration(hours: 1));  // Increment by 1 hour
-  }
-}
-
-
 
   void _previousMonth() {
     setState(() {
@@ -107,8 +107,7 @@ class _WorkoutState extends State {
           const SizedBox(width: 15),
           Expanded(
             child: workout.isNotEmpty
-                ?
-                Container(
+                ? Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
@@ -227,15 +226,20 @@ class _WorkoutState extends State {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                itemCount: timeSlots.length,
-                itemBuilder: (context, index) {
-                  String time = timeSlots[index]["time"]!;
-                  String workout = timeSlots[index]["workout"]!;
-                  return buildTimeSlot(time, workout, index);
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await getWorkoutscheduleData();
                 },
+                child: ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  itemCount: timeSlots.length,
+                  itemBuilder: (context, index) {
+                    String time = timeSlots[index]["time"]!;
+                    String workout = timeSlots[index]["workout"]!;
+                    return buildTimeSlot(time, workout, index);
+                  },
+                ),
               ),
             ),
           ],
@@ -292,7 +296,10 @@ class _WorkoutState extends State {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Divider(thickness: 2,color: Colors.grey,),
+                                  Divider(
+                                    thickness: 2,
+                                    color: Colors.grey,
+                                  ),
                                   // Hours Scroll
                                   SizedBox(
                                     width: 50,

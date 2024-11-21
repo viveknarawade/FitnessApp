@@ -3,302 +3,447 @@ import 'dart:io';
 
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/userInfo.dart';
-import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 Map<String, dynamic> signupData = {};
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
+  const Signup({Key? key}) : super(key: key);
 
   @override
   State<Signup> createState() => _SignupState();
 }
 
 class _SignupState extends State<Signup> {
-  static File? image;
+  static File? _image;
   bool _passwordVisible = false;
-  bool confirmpasswordVisible = false;
+  bool _confirmPasswordVisible = false;
+
+  final _formKey = GlobalKey<FormState>();
+
   // Controllers to capture user input
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  clearController() {
-    userNameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
+  void _clearControllers() {
+    _userNameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 
-  pickImage() async {
+  Future<void> _pickImage() async {
     ImagePicker picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      image = File(pickedImage.path);
-      setState(() {});
+      setState(() {
+        _image = File(pickedImage.path);
+      });
     } else {
       log("NO IMAGE SELECTED");
+    }
+  }
+
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      // Check if passwords match
+      if (_passwordController.text != _confirmPasswordController.text) {
+        CustomSnackBar.customSnackBar(
+          context: context,
+          message: "Passwords do not match",
+          color: Colors.red,
+        );
+        return;
+      }
+
+      signupData.addAll({
+        "userName": _userNameController.text.trim(),
+        "email": _emailController.text.trim(),
+        "password": _confirmPasswordController.text.trim(),
+        "profilePic": _image
+      });
+
+      CustomSnackBar.customSnackBar(
+        context: context,
+        message: "Registration Successful",
+        color: Colors.green,
+      );
+
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const Userinfo()),
+      );
+
+      _clearControllers();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 90,
-            left: 35,
-            right: 35,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Ensure full width
-            children: [
-              Text(
-                "Hey there,",
-                style: GoogleFonts.poppins(
-                    fontSize: 17, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "Create an Account",
-                style: GoogleFonts.poppins(
-                    fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              Stack(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      pickImage();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(150, 179, 254, 1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: image != null
-                          ? ClipOval(
-                              child: Image.file(
-                                image!,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                            )
-                          : SvgPicture.asset("assets/icon/profile.svg"),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              TextField(
-                controller: userNameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  hintText: "Username",
-                  filled: true,
-                  fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                  hintStyle: GoogleFonts.poppins(
-                      fontSize: 17, fontWeight: FontWeight.w300),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset(
-                      "assets/icon/profile.svg",
-                      color: const Color.fromRGBO(123, 111, 114, 1),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  hintText: "Email",
-                  filled: true,
-                  fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                  hintStyle: GoogleFonts.poppins(
-                      fontSize: 17, fontWeight: FontWeight.w300),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/email.svg"),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-              // Password TextField
-              TextField(
-                controller: passwordController,
-                obscureText: !_passwordVisible,// Hide the text to show it as a password field
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  hintText: "Password",
-                  filled: true,
-                  fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                  hintStyle: GoogleFonts.poppins(
-                      fontSize: 17, fontWeight: FontWeight.w300),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: SvgPicture.asset("assets/icon/Lock.svg"),
-                  ),
-                   suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    )
-                ),
-              ),
-              const SizedBox(height: 30),
-              // Confirm Password TextField
-              TextField(
-                 obscureText: !confirmpasswordVisible,
-                controller: confirmPasswordController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    hintText: "Confirm Password",
-                    filled: true,
-                    fillColor: const Color.fromRGBO(247, 248, 248, 1),
-                    hintStyle: GoogleFonts.poppins(
-                        fontSize: 17, fontWeight: FontWeight.w300),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(11),
-                      child: SvgPicture.asset("assets/icon/Lock.svg"),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        confirmpasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          confirmpasswordVisible = !confirmpasswordVisible;
-                        });
-                      },
-                    )),
-              ),
-              const SizedBox(height: 60),
-              SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(150, 179, 254, 1)),
-                  ),
-                  onPressed: () {
-                    if (userNameController.text.trim().isNotEmpty &&
-                        emailController.text.trim().isNotEmpty &&
-                        passwordController.text.trim().isNotEmpty &&
-                        confirmPasswordController.text.trim().isNotEmpty) {
-                      signupData.addAll(
-                        {
-                          "userName": userNameController.text.trim(),
-                          "email": emailController.text.trim(),
-                          "password": confirmPasswordController.text.trim(),
-                          "profilePic": image
-                        },
-                      );
-                      print(signupData);
-
-                      CustomSnackBar.customSnackBar(
-                          context: context,
-                          message: "Register Sucsseful",
-                          color: Colors.green);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const Userinfo(),
-                        ),
-                      );
-                      clearController();
-                    } else {}
-
-                    setState(() {});
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  // Header
+                  Column(
                     children: [
-                      SvgPicture.asset(
-                        "assets/icon/Login.svg",
-                        width: 30,
-                        height: 24,
-                      ),
-                      const SizedBox(width: 10),
                       Text(
-                        "Register",
+                        "Hey there,",
                         style: GoogleFonts.poppins(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Create an Account",
+                        style: GoogleFonts.poppins(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account yet?",
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
+                  const SizedBox(height: 30),
+
+                  // Profile Picture Selector
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.blue.shade300,
+                              width: 3,
+                            ),
+                          ),
+                          child: _image != null
+                              ? ClipOval(
+                                  child: Image.file(
+                                    _image!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  ),
+                                )
+                              : Center(
+                                  child: SvgPicture.asset(
+                                    "assets/icon/profile.svg",
+                                    width: 50,
+                                    color: Colors.blue.shade300,
+                                  ),
+                                ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade300,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 8,
+                  const SizedBox(height: 30),
+
+                  // Username Field
+                  TextFormField(
+                    controller: _userNameController,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter a username';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          "assets/icon/profile.svg",
+                          colorFilter: ColorFilter.mode(
+                            Colors.blue.shade300,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                    ),
                   ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Login()),
-                        );
-                      },
-                      child: Text(
-                        "Login",
+                  const SizedBox(height: 20),
+
+                  // Email Field
+                  TextFormField(
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter an email';
+                      }
+                      // Basic email validation
+                      final emailRegex = RegExp(
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                      );
+                      if (!emailRegex.hasMatch(value)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          "assets/icon/email.svg",
+                          colorFilter: ColorFilter.mode(
+                            Colors.blue.shade300,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Password Field
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_passwordVisible,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          "assets/icon/Lock.svg",
+                          colorFilter: ColorFilter.mode(
+                            Colors.blue.shade300,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.blue.shade300,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Confirm Password Field
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    obscureText: !_confirmPasswordVisible,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please confirm your password';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Confirm Password",
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          "assets/icon/Lock.svg",
+                          colorFilter: ColorFilter.mode(
+                            Colors.blue.shade300,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _confirmPasswordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.blue.shade300,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _confirmPasswordVisible = !_confirmPasswordVisible;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Register Button
+                  ElevatedButton(
+                    onPressed: _register,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue.shade300,
+                      minimumSize: const Size(double.infinity, 60),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icon/Login.svg",
+                          width: 24,
+                          height: 24,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          "Register",
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Login Link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
                         style: GoogleFonts.poppins(
-                            fontSize: 17,
-                            color: Color.fromRGBO(150, 179, 254, 1)),
-                      )),
+                          fontSize: 14,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => const Login()),
+                          );
+                        },
+                        child: Text(
+                          "Login",
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue.shade300,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _userNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 }

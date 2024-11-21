@@ -26,6 +26,7 @@ dependencies:
   path: ^1.9.0
   font_awesome_flutter: ^10.8.0
   timeline_tile: ^2.0.0
+  flutter_local_notifications: ^18.0.1
   
 
 dev_dependencies:
@@ -128,6 +129,7 @@ flutter:
       - assets/meal/pancake1.svg
 
       - assets/authentication/loginScr.svg
+      - assets/authentication/loginScr2.svg
       - assets/authentication/profileIcon.jpg
       - assets/authentication/logo.png
      

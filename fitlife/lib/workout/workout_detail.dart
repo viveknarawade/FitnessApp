@@ -59,10 +59,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF4F7FE), // Soft background color
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: const Color.fromRGBO(148, 171, 253, 1.0),
+            backgroundColor: const Color(0xFF5D7AEA), // Deep periwinkle blue
             expandedHeight: MediaQuery.of(context).size.width * 0.8,
             elevation: 0.0,
             pinned: true,
@@ -82,7 +83,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                         child: VideoPlayer(_videoController!),
                       ),
                     )
-                  : const Center(child: CircularProgressIndicator()),
+                  : const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0.0),
@@ -90,7 +95,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                 height: 50.0,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFFF4F7FE),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
@@ -101,7 +106,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                   height: 5.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    color: const Color.fromRGBO(233, 232, 232, 1.0),
+                    color: const Color(0xFFE0E0E0), // Soft gray
                   ),
                 ),
               ),
@@ -113,133 +118,157 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Exercise Name
                   Text(
                     widget.exerciseName,
                     style: GoogleFonts.poppins(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    widget.rep,
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF333333),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Descriptions",
-                    style: GoogleFonts.poppins(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+
+                  // Repetitions
                   Container(
-                    child: Text(
-                      widget.description,
-                      textAlign: TextAlign.justify,
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF4F7FE),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Custom Repetition",
-                    style: GoogleFonts.poppins(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
                       children: [
-                        SizedBox(
-                          height: 150,
-                          child: ListWheelScrollView.useDelegate(
-                            controller: _controller,
-                            itemExtent: 60, // Reduced space between items.
-                            physics: FixedExtentScrollPhysics(),
-                            perspective: 0.002,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                selectedIndex = calculateCaloriesBurned(
-                                    times[index]); // Update selected index.
-                              });
-                            },
-                            childDelegate: ListWheelChildBuilderDelegate(
-                              builder: (context, index) {
-                                return Container(
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.local_fire_department,
-                                        color: Colors.red,
-                                        size: 30,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        '${calculateCaloriesBurned(times[index])} Calories Burn',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        '${times[index]} min',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              childCount: times.length,
-                            ),
+                        Icon(Icons.repeat_rounded,
+                            color: const Color(0xFF5D7AEA)),
+                        const SizedBox(width: 10),
+                        Text(
+                          widget.rep,
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF666666),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
+                  const SizedBox(height: 20),
+
+                  // Description Section
+                  Text(
+                    "Description",
+                    style: GoogleFonts.poppins(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF333333),
+                    ),
                   ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF4F7FE),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      widget.description,
+                      textAlign: TextAlign.justify,
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF666666),
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Custom Repetition Section
+                  Text(
+                    "Custom Repetition",
+                    style: GoogleFonts.poppins(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF333333),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF4F7FE),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        )
+                      ],
+                    ),
+                    child: SizedBox(
+                      height: 150,
+                      child: ListWheelScrollView.useDelegate(
+                        controller: _controller,
+                        itemExtent: 60,
+                        physics: const FixedExtentScrollPhysics(),
+                        perspective: 0.002,
+                        onSelectedItemChanged: (index) {
+                          setState(() {
+                            selectedIndex =
+                                calculateCaloriesBurned(times[index]);
+                          });
+                        },
+                        childDelegate: ListWheelChildBuilderDelegate(
+                          builder: (context, index) {
+                            return Container(
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.local_fire_department,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    '${calculateCaloriesBurned(times[index])} Calories',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      color: const Color(0xFF666666),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    '${times[index]} min',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      color: const Color(0xFF666666),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          childCount: times.length,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+
+                  // Save Button
                   Center(
                     child: GestureDetector(
                       onTap: () async {
                         try {
-                          // Log the selected calories
                           log("Calories burned = $selectedIndex");
-
-                          // Save daily burned calories to Firestore
                           await CaloriesBurn()
                               .addDayBurnCaloriesData(selectedIndex.toString());
-
-                          // Save workout data to Firestore
                           await WorkoutCalories().addWorkoutData(
                             widget.workoutTypeName,
                             {
@@ -247,19 +276,15 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                               "burn": selectedIndex,
                             },
                           );
-
-                          // Show success alert box
                           CustomAlertBoxDemo().showMyDialog(
                             context,
                             "${widget.exerciseName} Completed",
                           );
-
                           setState(() {});
                         } catch (e) {
-                          // Handle errors and display a message if needed
                           log("Error saving workout data: $e");
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content:
                                   Text("Error saving data. Please try again."),
                             ),
@@ -272,12 +297,20 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                             horizontal: 130, vertical: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: const Color.fromRGBO(148, 171, 253, 1.0),
+                          color:
+                              const Color(0xFF5D7AEA), // Deep periwinkle blue
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF5D7AEA).withOpacity(0.3),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            )
+                          ],
                         ),
                         child: Text(
                           "Save",
                           style: GoogleFonts.poppins(
-                            fontSize: 25,
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),
@@ -285,9 +318,7 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -295,11 +326,5 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _videoController?.dispose();
-    super.dispose();
   }
 }
