@@ -193,6 +193,9 @@ class _MealhomeState extends State<Mealhome> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               CustomListview(
                 data: localMealData,
                 categories: selectedCategoryValue,
@@ -216,56 +219,85 @@ class _MealhomeState extends State<Mealhome> {
                     scrollDirection: Axis.horizontal,
                     itemCount: foodCategory.length,
                     itemBuilder: (context, index) {
+                      // Define color palette variations
+                      final colorVariations = [
+                        {
+                          'background':
+                              Color.fromRGBO(255, 240, 245, 1), // Soft Lavender
+                          'accent':
+                              Color.fromRGBO(199, 21, 133, 1), // Soft Raspberry
+                          'button':
+                              Color.fromRGBO(186, 85, 211, 1), // Soft Orchid
+                        },
+                        {
+                          'background':
+                              Color.fromRGBO(230, 248, 242, 1), // Mint Green
+                          'accent': Color.fromRGBO(46, 139, 87, 1), // Sea Green
+                          'button': Color.fromRGBO(
+                              60, 179, 113, 1), // Medium Sea Green
+                        },
+                        {
+                          'background':
+                              Color.fromRGBO(255, 248, 220, 1), // Cornsilk
+                          'accent':
+                              Color.fromRGBO(210, 105, 30, 1), // Chocolate
+                          'button':
+                              Color.fromRGBO(184, 134, 11, 1), // Dark Goldenrod
+                        }
+                      ];
+
+                      final currentColorScheme =
+                          colorVariations[index % colorVariations.length];
+
                       return Stack(children: [
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           padding: const EdgeInsets.only(
                               top: 120, left: 20, right: 90, bottom: 14),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(100),
                               topLeft: Radius.circular(25),
                               bottomLeft: Radius.circular(25),
                               bottomRight: Radius.circular(25),
                             ),
-                            color: Color.fromRGBO(235, 242, 255, 1),
+                            color: currentColorScheme['background'],
                           ),
                           child: Column(
                             children: [
                               Text(
                                 foodCategory[index]['name'],
                                 style: GoogleFonts.poppins(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: currentColorScheme['accent']),
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 "20+ Foods",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 14, fontWeight: FontWeight.w300),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w300,
+                                    color: currentColorScheme['accent']),
                               ),
                               const SizedBox(height: 8),
                               ElevatedButton(
-                                style: const ButtonStyle(
+                                style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
-                                    Color.fromRGBO(147, 168, 253, 1),
-                                  ),
+                                      currentColorScheme['button']),
                                 ),
                                 onPressed: () async {
-                                  // Wait for the data to load from getFoodData
                                   List<Map<String, dynamic>> tempFoodData =
                                       await Food().getFoodData(
                                           foodCategory[index]['name']);
 
-                                  // Navigate to the Category screen and pass the data
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) {
                                         log("SELECT BUTTON CLICKED");
                                         return Category(
-                                          category: foodCategory[index][
-                                              'name'], // Pass the category name
+                                          category: foodCategory[index]['name'],
                                           itemsData: tempFoodData,
-                                          // Pass the fetched food data
                                         );
                                       },
                                     ),

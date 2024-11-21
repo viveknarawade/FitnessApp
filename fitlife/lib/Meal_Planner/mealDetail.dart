@@ -29,7 +29,6 @@ class Detail extends StatefulWidget {
 
 class _DetailState extends State<Detail> {
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(

@@ -1,8 +1,5 @@
 import 'dart:developer';
-
-import 'package:fitlife/Meal_Planner/mealCategory.dart';
 import 'package:fitlife/Meal_Planner/mealDetail.dart';
-import 'package:fitlife/Meal_Planner/mealHome.dart';
 import 'package:fitlife/widget/colorsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,12 +16,6 @@ class CustomListview extends StatefulWidget {
 
 class _CustomListviewState extends State<CustomListview> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: widget.data.length,
@@ -32,68 +23,60 @@ class _CustomListviewState extends State<CustomListview> {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final meal = widget.data[index];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              log("${widget.data[0]}");
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Detail(
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              onTap: () {
+                log("${widget.data[0]}");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Detail(
                       itemData: widget.data[index],
                       category: widget.categories!,
                       img: "img",
-                    );
-                  },
-                ),
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colorslist()
-                            .colorList[index % Colorslist().colorList.length],
-                      ),
-                      child: Image.asset(
-                        widget.data[index]["img"],
-                        width: 40,
-                        height: 40,
-                      ),
                     ),
-                    const SizedBox(width: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          meal['food_item'],
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "${meal['Day']} | ${meal['Time']}",
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
+                );
+              },
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colorslist()
+                      .colorList[index % Colorslist().colorList.length],
                 ),
-                SvgPicture.asset(
-                  "assets/icon/Button-Next.svg",
-                  width: 30,
-                  height: 33,
+                child: Image.asset(
+                  widget.data[index]["img"],
+                  width: 40,
+                  height: 40,
                 ),
-              ],
+              ),
+              title: Text(
+                meal['food_item'],
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "${meal['Day']} | ${meal['Time']}",
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 12,
+                ),
+              ),
+              trailing: SvgPicture.asset(
+                "assets/icon/Button-Next.svg",
+                width: 30,
+                height: 33,
+              ),
             ),
           ),
         );

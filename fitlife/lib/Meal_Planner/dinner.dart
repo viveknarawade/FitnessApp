@@ -12,7 +12,7 @@ class _BreakfastState extends State {
   @override
   Widget build(context) {
     return ListView.builder(
-      itemCount:2,
+      itemCount: 2,
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return Container(
@@ -21,11 +21,10 @@ class _BreakfastState extends State {
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.7),
-                  spreadRadius: 5,
-                  blurRadius: 10,
-                  offset: Offset(0,3)
-                ),
+                    color: Colors.grey.withOpacity(0.7),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: Offset(0, 3)),
               ],
               borderRadius: BorderRadius.circular(20),
               color: const Color.fromRGBO(234, 239, 255, 1)),

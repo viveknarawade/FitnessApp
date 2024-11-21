@@ -39,28 +39,39 @@ class _CommentSectionState extends State<CommentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Comments'),
+        title: const Text('Comments'),
         backgroundColor: Colors.deepOrange[400],
+        elevation: 0,
       ),
       body: Column(
         children: [
           // Original Post Preview
           Card(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
+            ),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.post.title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 18, // Larger title
+                      color: Colors.black87, // Dark text color for contrast
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Text(widget.post.content),
+                  const SizedBox(height: 5),
+                  Text(
+                    widget.post.content,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54), // Subtle content color
+                  ),
                 ],
               ),
             ),
@@ -73,11 +84,11 @@ class _CommentSectionState extends State<CommentScreen> {
                   widget.post.id), // Listening to real-time comments
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No comments yet.'));
+                  return const Center(child: Text('No comments yet.'));
                 } else {
                   List<Comment> comments = snapshot.data!;
                   return ListView.builder(
@@ -93,7 +104,7 @@ class _CommentSectionState extends State<CommentScreen> {
 
           // Comment Input Section
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Row(
               children: [
                 Expanded(
@@ -101,17 +112,33 @@ class _CommentSectionState extends State<CommentScreen> {
                     controller: _commentController,
                     decoration: InputDecoration(
                       hintText: 'Add a comment...',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 12,
+                      ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius:
+                            BorderRadius.circular(25), // Rounded input field
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(
+                          color:
+                              Colors.deepOrange, // Focus color matching theme
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 CircleAvatar(
                   backgroundColor: Colors.deepOrange[400],
+                  radius: 25, // Larger send button for easy interaction
                   child: IconButton(
-                    icon: Icon(Icons.send, color: Colors.white),
+                    icon: const Icon(Icons.send, color: Colors.white),
                     onPressed: _addCommentData,
                   ),
                 ),

@@ -25,14 +25,9 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           widget.category,
@@ -61,69 +56,90 @@ class _CategoryState extends State<Category> {
                 itemCount: widget.itemsData.length,
                 itemBuilder: (context, index) {
                   final foodItem = widget.itemsData[index];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromRGBO(234, 239, 254, 1.0),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                       Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colorslist().colorList[
-                                    index % Colorslist().colorList.length],
-                              ),
-                              child: Image.asset(
-                                foodItem["img"],
-                                width: 60,
-                                height: 60,
-                              ),
-                            ),
-                        const SizedBox(height: 9),
-                        Text(
-                          foodItem["food_item"],
-                          style: GoogleFonts.poppins(
-                              fontSize: 15, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Detail(
-                                  itemData: foodItem,
-                                  category: widget.category,
-                                  img: foodItem["img"],
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 30,
-                            width: 100,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(148, 171, 253, 1.0),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              "View",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Detail(
+                            itemData: foodItem,
+                            category: widget.category,
+                            img: foodItem["img"],
                           ),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color.fromRGBO(234, 239, 254, 1.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colorslist().colorList[
+                                  index % Colorslist().colorList.length],
+                            ),
+                            child: Image.asset(
+                              foodItem["img"],
+                              width: 60,
+                              height: 60,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            foodItem["food_item"],
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 15),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => Detail(
+                                    itemData: foodItem,
+                                    category: widget.category,
+                                    img: foodItem["img"],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 35,
+                              width: 110,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(148, 171, 253, 1.0),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                "View",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -148,90 +164,102 @@ class _CategoryState extends State<Category> {
                 itemBuilder: (context, index) {
                   final foodItem = widget.itemsData[index];
                   return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
+                        horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFFF9FAFC), // Softer white background
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.shade300,
-                          blurRadius: 14,
-                          offset: Offset(0, 5),
-                          spreadRadius: 5,
-                          blurStyle: BlurStyle.outer,
+                          color: Colors
+                              .grey.shade300, // Darker shadow for more contrast
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                          spreadRadius: 2,
                         )
                       ],
                     ),
                     child: Row(
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colorslist().colorList[
-                                    index % Colorslist().colorList.length],
-                              ),
-                              child: Image.asset(
-                                foodItem["img"],
-                                width: 60,
-                                height: 60,
-                              ),
-                            ),
-                            const SizedBox(width: 19),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  foodItem["food_item"],
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  foodItem["calories"],
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colorslist()
+                                .colorList[
+                                    index % Colorslist().colorList.length]
+                                .withOpacity(0.8),
+                          ),
+                          child: Image.asset(
+                            foodItem["img"],
+                            width: 65,
+                            height: 65,
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                foodItem["food_item"],
+                                style: GoogleFonts.poppins(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(
+                                      0xFF2C3E50), // Darker text for better readability
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "${foodItem["calories"]} kcal", // Added "kcal" for clarity
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: Colors.grey
+                                      .shade700, // Darker grey for readability
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         GestureDetector(
                           onTap: () {
-                            print(foodItem);
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) {
-                                  return Detail(
-                                    itemData: foodItem,
-                                    category: widget.category,
-                                    img: foodItem["img"],
-                                  );
-                                },
+                                builder: (context) => Detail(
+                                  itemData: foodItem,
+                                  category: widget.category,
+                                  img: foodItem["img"],
+                                ),
                               ),
                             );
                           },
-                          child: SvgPicture.asset(
-                            "assets/icon/Button-Next.svg",
-                            height: 30,
-                            width: 30,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xFF94ABFD)
+                                  .withOpacity(0.15), // Softer blue accent
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: const Color(
+                                  0xFF5A6CFF), // Stronger blue for the icon
+                              size: 20,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 10),
                       ],
                     ),
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       ),

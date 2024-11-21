@@ -13,6 +13,7 @@ class WeeklyCaloriesChart extends StatefulWidget {
 class _WeeklyCaloriesChartState extends State<WeeklyCaloriesChart> {
   Map<String, String> weeklyCalories = {};
   bool isLoading = true;
+  bool hasError = false;
 
   @override
   void initState() {
@@ -22,23 +23,27 @@ class _WeeklyCaloriesChartState extends State<WeeklyCaloriesChart> {
 
   Future<void> loadData() async {
     try {
+      setState(() => isLoading = true);
       final data = await CaloriesIntake().getWeeklyCaloriesData();
       setState(() {
         weeklyCalories = data;
         isLoading = false;
+        hasError = false;
       });
     } catch (e) {
-      debugPrint('Error loading weekly calories: $e');
       setState(() {
         isLoading = false;
+        hasError = true;
       });
+      debugPrint('Error loading weekly calories: $e');
     }
   }
 
-  TextStyle textStyle() {
+  TextStyle textStyle({Color? color, double? fontSize}) {
     return GoogleFonts.poppins(
-      fontSize: 14,
+      fontSize: fontSize ?? 14,
       fontWeight: FontWeight.w500,
+      color: color ?? Colors.black87,
     );
   }
 
@@ -52,118 +57,144 @@ class _WeeklyCaloriesChartState extends State<WeeklyCaloriesChart> {
       'Friday',
       'Saturday'
     ];
-    List<FlSpot> spots = [];
-
-    for (int i = 0; i < dayOrder.length; i++) {
+    return List.generate(dayOrder.length, (i) {
       final calories = double.tryParse(weeklyCalories[dayOrder[i]] ?? '0') ?? 0;
-      // Assuming 2000 calories is 100% for visualization
       final percentage = (calories / 2000) * 100;
-      spots.add(FlSpot(i.toDouble(), percentage.clamp(0, 100)));
-    }
-
-    return spots;
+      return FlSpot(i.toDouble(), percentage.clamp(0, 100));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+        ),
+      );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 0.0, right: 0),
-      child: AspectRatio(
-        aspectRatio: 2.0,
-        child: LineChart(
-          LineChartData(
-            minY: 0, // Set minimum Y value to 0
-            maxY: 100, // Set maximum Y value to 100
-            lineBarsData: [
-              LineChartBarData(
-                spots: _getSpots(),
-                color: Colors.blue,
-                isCurved: true,
-                curveSmoothness: 0.35,
-                preventCurveOverShooting: true,
-                dotData: FlDotData(
-                  show: true,
-                  getDotPainter: (spot, percent, barData, index) {
-                    return FlDotCirclePainter(
-                      radius: 4,
-                      color: Colors.blue,
-                      strokeWidth: 2,
-                      strokeColor: Colors.white,
-                    );
-                  },
-                ),
-              )
-            ],
-            titlesData: FlTitlesData(
-              rightTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false, // Hiding right titles
-                ),
-              ),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    final days = [
-                      'Sun',
-                      'Mon',
-                      'Tue',
-                      'Wed',
-                      'Thu',
-                      'Fri',
-                      'Sat'
-                    ];
-                    if (value >= 0 && value < days.length) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          days[value.toInt()],
-                          style: textStyle(),
-                        ),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  interval: 1,
-                  reservedSize: 40,
-                ),
-              ),
-              topTitles: AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
-              leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    if (value % 20 == 0) {
-                      return Text(
-                        '${value.toInt()}%',
-                        style: textStyle(),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  interval: 20, // Show percentage scale at 20% intervals
-                  reservedSize: 40,
-                ),
-              ),
+    if (hasError) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, color: Colors.red, size: 60),
+            Text(
+              'Failed to load calories data',
+              style: textStyle(color: Colors.red, fontSize: 16),
             ),
-            borderData: FlBorderData(show: false),
-            gridData: FlGridData(
-              show: true,
-              drawHorizontalLine: true,
-              drawVerticalLine: false,
-              getDrawingHorizontalLine: (value) {
-                return FlLine(
-                  color: Colors.black.withOpacity(0.5),
-                  strokeWidth: 1,
-                );
-              },
-              horizontalInterval: 20, // Set grid lines at 20% intervals
+            ElevatedButton(
+              onPressed: loadData,
+              child: Text('Retry', style: textStyle()),
+            )
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: loadData,
+      color: Colors.blue,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: AspectRatio(
+            aspectRatio: 1.7,
+            child: LineChart(
+              LineChartData(
+                minY: 0,
+                maxY: 100,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: _getSpots(),
+                    color: Colors.blue.shade600,
+                    isCurved: true,
+                    curveSmoothness: 0.4,
+                    preventCurveOverShooting: true,
+                    barWidth: 4,
+                    dotData: FlDotData(
+                      show: true,
+                      getDotPainter: (spot, percent, barData, index) {
+                        return FlDotCirclePainter(
+                          radius: 5,
+                          color: Colors.white,
+                          strokeWidth: 2,
+                          strokeColor: Colors.blue.shade600,
+                        );
+                      },
+                    ),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.blue.shade200.withOpacity(0.5),
+                          Colors.blue.shade50.withOpacity(0.1),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  )
+                ],
+                titlesData: FlTitlesData(
+                  rightTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        final days = [
+                          'Sun',
+                          'Mon',
+                          'Tue',
+                          'Wed',
+                          'Thu',
+                          'Fri',
+                          'Sat'
+                        ];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            days[value.toInt()],
+                            style: textStyle(fontSize: 12),
+                          ),
+                        );
+                      },
+                      interval: 1,
+                      reservedSize: 40,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        return value % 20 == 0
+                            ? Text('${value.toInt()}%',
+                                style: textStyle(fontSize: 12))
+                            : const SizedBox.shrink();
+                      },
+                      interval: 20,
+                      reservedSize: 40,
+                    ),
+                  ),
+                ),
+                borderData: FlBorderData(show: false),
+                gridData: FlGridData(
+                  show: true,
+                  drawHorizontalLine: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: 20,
+                  getDrawingHorizontalLine: (value) => FlLine(
+                    color: Colors.grey.shade300,
+                    strokeWidth: 1,
+                    dashArray: [5, 5],
+                  ),
+                ),
+              ),
             ),
           ),
         ),

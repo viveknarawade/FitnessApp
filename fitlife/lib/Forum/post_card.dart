@@ -10,50 +10,63 @@ class ForumPostCard extends StatelessWidget {
   final ForumPost post;
 
   const ForumPostCard({Key? key, required this.post}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(10),
-      elevation: 5,
+      margin: const EdgeInsets.symmetric(
+          horizontal: 15, vertical: 10), // Updated margin for better spacing
+      elevation: 3, // Softer shadow
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(15), // Rounded corners for a modern look
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(
+            15), // Internal padding to create space inside the card
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Username with blue color
+                // Username with a more noticeable color
                 Text(
                   post.username,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF5D7AEA), // Changed to deep blue
+                    fontSize: 16, // Slightly larger for emphasis
+                    color: const Color(0xFF5D7AEA), // Blue color for username
                   ),
                 ),
                 Text(
                   post.timestamp, // Ensure the date is formatted properly
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(
+                      color: Colors.grey, fontSize: 12), // Subtle date text
                 ),
               ],
             ),
             const SizedBox(height: 10),
 
-            // Title in a larger blue font
+            // Title in a bold blue font for prominence
             Text(
               post.title,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 20, // Slightly larger font size for titles
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFF5D7AEA), // Changed to blue
+                color: const Color(0xFF2C3E50), // Darker blue for titles
               ),
             ),
             const SizedBox(height: 10),
 
-            // Content text remains black or default
-            Text(post.content),
-            const SizedBox(height: 10),
+            // Content text remains black or default, with proper spacing
+            Text(
+              post.content,
+              style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black87), // Content text in a readable size
+            ),
+            const SizedBox(
+                height: 15), // Increased spacing before interaction buttons
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,8 +79,10 @@ class ForumPostCard extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Icon(Icons.favorite_border,
-                              color: Colors.grey); // Loading state
+                          return const Icon(
+                            Icons.favorite_border,
+                            color: Colors.grey,
+                          ); // Loading state
                         }
                         bool isLiked = snapshot.data ?? false;
 
@@ -76,7 +91,7 @@ class ForumPostCard extends StatelessWidget {
                             isLiked ? Icons.favorite : Icons.favorite_border,
                             color: isLiked
                                 ? Colors.red
-                                : Colors.grey, // Like icon changed to blue
+                                : Colors.grey, // Like icon logic
                           ),
                           onPressed: () async {
                             await Postdb().toggleLike(post.id);
@@ -84,10 +99,16 @@ class ForumPostCard extends StatelessWidget {
                         );
                       },
                     ),
+                    const SizedBox(
+                        width: 5), // Small space between icon and text
                     Text(
                       '${post.likes} likes',
                       style: TextStyle(
-                          color: const Color(0xFF5D7AEA)), // Likes text in blue
+                        color: const Color(
+                            0xFF5D7AEA), // Blue color for like count
+                        fontWeight:
+                            FontWeight.w500, // Slightly bold for clarity
+                      ),
                     ),
                   ],
                 ),
@@ -100,13 +121,21 @@ class ForumPostCard extends StatelessWidget {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Text('0 Comments');
+                      return const Text(
+                        '0 Comments',
+                        style: TextStyle(
+                            color: Colors
+                                .grey), // Consistent style with placeholders
+                      );
                     }
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     }
                     if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return const Text('0 Comments');
+                      return const Text(
+                        '0 Comments',
+                        style: TextStyle(color: Colors.grey),
+                      );
                     }
 
                     var postData =
@@ -116,8 +145,11 @@ class ForumPostCard extends StatelessWidget {
                     return Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.comment,
-                              color: Colors.red), // Comment icon in light blue
+                          icon: const Icon(
+                            Icons.comment,
+                            color: Color(
+                                0xFF5D7AEA), // Consistent blue for comment icon
+                          ),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -130,8 +162,10 @@ class ForumPostCard extends StatelessWidget {
                         Text(
                           '$commentCount Comments',
                           style: TextStyle(
-                              color: const Color(
-                                  0xFF5D7AEA)), // Comment count text in blue
+                            color: const Color(
+                                0xFF5D7AEA), // Blue color for comment count
+                            fontWeight: FontWeight.w500, // Slightly bold
+                          ),
                         ),
                       ],
                     );
