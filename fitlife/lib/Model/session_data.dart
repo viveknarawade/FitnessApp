@@ -45,8 +45,6 @@ class SessionData {
     sharedPreferences.setDouble("weight", weight);
     sharedPreferences.setDouble("coloriesGoal", coloriesGoal);
 
-    
-
     // GET DATA
     getSessionData();
   }
@@ -70,10 +68,9 @@ class SessionData {
     coloriesGoal = sharedPreferences.getDouble("coloriesGoal") ?? 0.0;
   }
 
-
   // Clear Session Data
 
- static clearSessionData()  async{
+  static clearSessionData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
   }

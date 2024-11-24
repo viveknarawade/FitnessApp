@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:flutter/material.dart';
@@ -169,8 +171,8 @@ class _UserinfoState extends State<Userinfo> {
             "caloriesGoal": caloriesGoal,
           });
 
-          print(signupData);
-          Authservice().addData();
+          log("signupData: $signupData");
+          Authservice().addData(signupData);
 
           // Navigate to Login screen
           Navigator.of(context).push(

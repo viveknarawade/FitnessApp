@@ -35,44 +35,68 @@ class _CommentSectionState extends State<CommentScreen> {
     }
   }
 
+  void _dismissPost() {
+    // Handle post dismissal, for example, by removing it from the UI
+    // You can also trigger a delete operation from Firebase or navigate away.
+    log('Post dismissed: ${widget.post.title}');
+    // Example: Navigate back to the previous screen or delete the post from the database
+    // Navigator.pop(context);
+    // Commentdb().deletePost(widget.post.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Comments'),
-        backgroundColor: Colors.deepOrange[400],
+        title: const Text(
+          'Comments',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
         elevation: 0,
       ),
       body: Column(
         children: [
-          // Original Post Preview
-          Card(
-            margin: const EdgeInsets.all(10),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
+          // Original Post Preview with Dismissible Widget
+          Dismissible(
+            key: Key(widget.post.id),  // Use a unique identifier for the post (e.g., post ID)
+            direction: DismissDirection.endToStart, // Swipe from right to left
+            onDismissed: (direction) {
+              _dismissPost();  // Call the function when dismissed
+            },
+            background: Container(
+              color: Colors.red,  // Background color for the swipe
+              alignment: Alignment.centerRight,
+              child: const Icon(Icons.delete, color: Colors.white),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.post.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18, // Larger title
-                      color: Colors.black87, // Dark text color for contrast
+            child: Card(
+              margin: const EdgeInsets.all(10),
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12), // Rounded corners
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.post.title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18, // Larger title
+                        color: Colors.black87, // Dark text color for contrast
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    widget.post.content,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54), // Subtle content color
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      widget.post.content,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54), // Subtle content color
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -80,8 +104,7 @@ class _CommentSectionState extends State<CommentScreen> {
           // Comments List using StreamBuilder
           Expanded(
             child: StreamBuilder<List<Comment>>(
-              stream: Commentdb().getComment(
-                  widget.post.id), // Listening to real-time comments
+              stream: Commentdb().getComment(widget.post.id), // Listening to real-time comments
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -126,8 +149,7 @@ class _CommentSectionState extends State<CommentScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                         borderSide: const BorderSide(
-                          color:
-                              Colors.deepOrange, // Focus color matching theme
+                          color: Colors.blue, // Focus color matching theme
                         ),
                       ),
                     ),
@@ -135,7 +157,7 @@ class _CommentSectionState extends State<CommentScreen> {
                 ),
                 const SizedBox(width: 10),
                 CircleAvatar(
-                  backgroundColor: Colors.deepOrange[400],
+                  backgroundColor: Colors.blue,
                   radius: 25, // Larger send button for easy interaction
                   child: IconButton(
                     icon: const Icon(Icons.send, color: Colors.white),

@@ -63,12 +63,15 @@ class _SignupState extends State<Signup> {
         return;
       }
 
-      signupData.addAll({
-        "userName": _userNameController.text.trim(),
-        "email": _emailController.text.trim(),
-        "password": _confirmPasswordController.text.trim(),
-        "profilePic": _image
-      });
+      signupData.addAll(
+        {
+          "userName": _userNameController.text.trim(),
+          "email": _emailController.text.trim(),
+          "password": _confirmPasswordController.text.trim(),
+        },
+      );
+
+      log("${_image!.path}");
 
       CustomSnackBar.customSnackBar(
         context: context,

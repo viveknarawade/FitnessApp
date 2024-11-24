@@ -54,29 +54,42 @@ class _ProfileUiState extends State<ProfileUi> {
               Row(
                 children: [
                   Container(
-                    height: 80,
-                    width: 80,
-                    decoration: const BoxDecoration(
-                      color: Colors.amber,
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
                       shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.blue.shade300,
+                        width: 3,
+                      ),
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/icon/profile.svg",
+                        width: 50,
+                        color: Colors.blue.shade300,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 30,
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${displayData[0]['USERNAME']}",
+                        // "${displayData[0]['USERNAME']}",
+
+                        "${SessionData.userName}",
                         style: TextStyle(
                             fontSize: 23, fontWeight: FontWeight.w500),
                       ),
                       Row(
                         children: [
                           Text(
-                            "${displayData[0]['GOAL']}",
+                            //"${displayData[0]['GOAL']}",
+                            "${SessionData.goal}",
                             style: TextStyle(
                                 color: Color.fromRGBO(123, 111, 114, 1),
                                 fontSize: 15),
@@ -91,11 +104,11 @@ class _ProfileUiState extends State<ProfileUi> {
                       ),
                     ],
                   ),
-                    const Spacer(),
-                   GestureDetector(
-                    onTap: (){
-                   
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
                         return Editprofile();
                       }));
                     },
@@ -114,7 +127,6 @@ class _ProfileUiState extends State<ProfileUi> {
                       ),
                     ),
                   )
-          
                 ],
               ),
               SizedBox(
@@ -136,7 +148,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${displayData[0]["HEIGHT"]} Cm",
+                            "${SessionData.height} Cm",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -166,7 +178,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${displayData[0]['WEIGHT']} Kg",
+                            "${SessionData.weight} Kg",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -196,7 +208,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       child: Column(
                         children: [
                           Text(
-                            "${displayData[0]['AGE']}",
+                            "${SessionData.age}",
                             style: TextStyle(
                               color: Color.fromRGBO(151, 183, 254, 1),
                               fontSize: 22,
@@ -321,7 +333,7 @@ class _ProfileUiState extends State<ProfileUi> {
                       onTap: () {
                         MainApp().sqfliteObj?.deleteData(displayData[0]["ID"]);
                         SessionData.clearSessionData();
-log("SESSIONDATA CLEARED :${Authservice().toMap()}");
+                        log("SESSIONDATA CLEARED :${Authservice().toMap()}");
 
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(

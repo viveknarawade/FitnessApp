@@ -10,8 +10,8 @@ List<User> userData = [];
 List<Map> tempUserData = [];
 
 class Authservice {
-  addData() {
-    db.collection("User").add(signupData);
+  addData(Map<String, dynamic> temp) {
+    db.collection("User").add(temp);
   }
 
   Future<bool> authenticate(String userName, String password) async {
