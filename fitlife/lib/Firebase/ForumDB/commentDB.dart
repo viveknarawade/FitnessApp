@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitlife/Model/comment.dart';
 import 'package:fitlife/Model/session_data.dart';
 import 'package:intl/intl.dart';
+
 class Commentdb {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -36,6 +37,7 @@ class Commentdb {
   }
 
   // Method to fetch comments in real-time
+
   Stream<List<Comment>> getComment(String postId) {
     DocumentReference postRef = db.collection("Forum").doc(postId);
 
@@ -43,8 +45,30 @@ class Commentdb {
     return postRef.collection("Comments").orderBy("timestamp").snapshots().map(
       (querySnapshot) {
         // Convert Firestore documents into Comment objects
-        return querySnapshot.docs.map((doc) => Comment.fromFirestore(doc)).toList();
+        return querySnapshot.docs
+            .map(
+                (doc) => Comment.fromFirestore(doc)) // Pass doc.id to the model
+            .toList();
       },
     );
+  }
+
+// Method to delete a specific comment by its ID
+  Future<void> deleteComment(String postId, String commentId) async {
+    try {
+      log(commentId);
+      //Get reference to the specific post document
+      DocumentReference postRef = db.collection("Forum").doc(postId);
+
+      // Delete the comment document from the Comments subcollection using the commentId
+      await postRef.collection("Comments").doc(commentId).delete();
+
+      // Optionally, update the comment count for the post after a comment is deleted
+      await postRef.update({"comments": FieldValue.increment(-1)});
+
+      log("Comment deleted successfully");
+    } catch (e) {
+      log("Error deleting comment: $e");
+    }
   }
 }

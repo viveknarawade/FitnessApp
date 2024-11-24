@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:fitlife/Firebase/ForumDB/commentDB.dart';
 import 'package:fitlife/Forum/comment_card.dart';
-import 'package:fitlife/Forum/forum_home.dart';
 import 'package:fitlife/Model/comment.dart';
 import 'package:fitlife/Model/forum_post.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +20,7 @@ class _CommentSectionState extends State<CommentScreen> {
   void _addCommentData() async {
     if (_commentController.text.isNotEmpty) {
       // Add the new comment to Firestore
-      Commentdb().addComment(widget.post.id, _commentController.text.trim());
+      await Commentdb().addComment(widget.post.id, _commentController.text.trim());
 
       // Clear the comment input field
       _commentController.clear();
@@ -33,15 +30,6 @@ class _CommentSectionState extends State<CommentScreen> {
         widget.post.comments++;
       });
     }
-  }
-
-  void _dismissPost() {
-    // Handle post dismissal, for example, by removing it from the UI
-    // You can also trigger a delete operation from Firebase or navigate away.
-    log('Post dismissed: ${widget.post.title}');
-    // Example: Navigate back to the previous screen or delete the post from the database
-    // Navigator.pop(context);
-    // Commentdb().deletePost(widget.post.id);
   }
 
   @override
@@ -57,46 +45,34 @@ class _CommentSectionState extends State<CommentScreen> {
       ),
       body: Column(
         children: [
-          // Original Post Preview with Dismissible Widget
-          Dismissible(
-            key: Key(widget.post.id),  // Use a unique identifier for the post (e.g., post ID)
-            direction: DismissDirection.endToStart, // Swipe from right to left
-            onDismissed: (direction) {
-              _dismissPost();  // Call the function when dismissed
-            },
-            background: Container(
-              color: Colors.red,  // Background color for the swipe
-              alignment: Alignment.centerRight,
-              child: const Icon(Icons.delete, color: Colors.white),
+          // Original Post Preview
+          Card(
+            margin: const EdgeInsets.all(10),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
             ),
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // Rounded corners
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.post.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18, // Larger title
-                        color: Colors.black87, // Dark text color for contrast
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.post.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18, // Larger title
+                      color: Colors.black87, // Dark text color for contrast
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      widget.post.content,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black54), // Subtle content color
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    widget.post.content,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54), // Subtle content color
+                  ),
+                ],
               ),
             ),
           ),
@@ -117,7 +93,10 @@ class _CommentSectionState extends State<CommentScreen> {
                   return ListView.builder(
                     itemCount: comments.length,
                     itemBuilder: (context, index) {
-                      return CommentCard(comment: comments[index]);
+                      return CommentCard(
+                        comment: comments[index],  // Pass the comment object
+                        postId: widget.post.id,    // Pass the postId
+                      );
                     },
                   );
                 }
