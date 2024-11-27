@@ -291,8 +291,13 @@ class _WorkoutState extends State {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white54,
+                              ),
                               height: 100,
+                              width: 300,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -444,6 +449,7 @@ class _WorkoutState extends State {
                                 setState(() {
                                   selectedCategoryValue = newValue!;
                                   log("$newValue");
+                                  log("SECELTEd CATEGORY $selectedCategoryValue");
                                 });
                               },
                               items: <String>[
@@ -505,8 +511,8 @@ class _WorkoutState extends State {
                                 .pop(); // Close the BottomSheet
                           },
                           child: Container(
-                            width: 150,
-                            height: 40,
+                            width: 300,
+                            height: 60,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
@@ -521,7 +527,7 @@ class _WorkoutState extends State {
                             child: Text(
                               "Save",
                               style: GoogleFonts.poppins(
-                                  fontSize: 20, fontWeight: FontWeight.w400),
+                                  fontSize: 23, fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),

@@ -34,6 +34,7 @@ class CommentCard extends StatelessWidget {
       ),
       key: Key(comment.id), // Use comment.id as the key
       child: Card(
+        elevation: 3,
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: ListTile(
           title: Text(
@@ -49,7 +50,8 @@ class CommentCard extends StatelessWidget {
               Text(comment.content),
               SizedBox(height: 5),
               Text(
-                DateFormat('hh:mm a').format(comment.timestamp), // Format timestamp
+                DateFormat('hh:mm a')
+                    .format(comment.timestamp), // Format timestamp
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ],

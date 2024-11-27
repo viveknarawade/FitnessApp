@@ -20,7 +20,8 @@ class _CommentSectionState extends State<CommentScreen> {
   void _addCommentData() async {
     if (_commentController.text.isNotEmpty) {
       // Add the new comment to Firestore
-      await Commentdb().addComment(widget.post.id, _commentController.text.trim());
+      await Commentdb()
+          .addComment(widget.post.id, _commentController.text.trim());
 
       // Clear the comment input field
       _commentController.clear();
@@ -46,33 +47,36 @@ class _CommentSectionState extends State<CommentScreen> {
       body: Column(
         children: [
           // Original Post Preview
-          Card(
-            margin: const EdgeInsets.all(10),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.post.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18, // Larger title
-                      color: Colors.black87, // Dark text color for contrast
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Card(
+              margin: const EdgeInsets.all(10),
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12), // Rounded corners
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.post.title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18, // Larger title
+                        color: Colors.black87, // Dark text color for contrast
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    widget.post.content,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54), // Subtle content color
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      widget.post.content,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54), // Subtle content color
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -80,7 +84,8 @@ class _CommentSectionState extends State<CommentScreen> {
           // Comments List using StreamBuilder
           Expanded(
             child: StreamBuilder<List<Comment>>(
-              stream: Commentdb().getComment(widget.post.id), // Listening to real-time comments
+              stream: Commentdb().getComment(
+                  widget.post.id), // Listening to real-time comments
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -94,8 +99,8 @@ class _CommentSectionState extends State<CommentScreen> {
                     itemCount: comments.length,
                     itemBuilder: (context, index) {
                       return CommentCard(
-                        comment: comments[index],  // Pass the comment object
-                        postId: widget.post.id,    // Pass the postId
+                        comment: comments[index], // Pass the comment object
+                        postId: widget.post.id, // Pass the postId
                       );
                     },
                   );

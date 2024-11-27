@@ -14,12 +14,15 @@ class WorkoutDetail extends StatefulWidget {
   String rep;
   String description;
   String workoutTypeName;
+  String workoutVideo;
+
   WorkoutDetail({
     super.key,
     required this.exerciseName,
     required this.rep,
     required this.description,
     required this.workoutTypeName,
+    required this.workoutVideo,
   });
 
   @override
@@ -46,10 +49,11 @@ class _WorkoutDetailState extends State<WorkoutDetail> {
   void initState() {
     super.initState();
     _initializeVideo();
+    log("${widget.workoutVideo}");
   }
 
   void _initializeVideo() async {
-    _videoController = VideoPlayerController.asset('assets/video/tricep.mp4')
+    _videoController = VideoPlayerController.asset("${widget.workoutVideo}")
       ..initialize().then((_) {
         setState(() {});
         _videoController!.setLooping(false); // Disable infinite looping

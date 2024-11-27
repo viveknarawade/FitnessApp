@@ -166,7 +166,7 @@ class _CustomWaterBottomSheetState extends State<CustomWaterBottomSheet> {
                         ],
                       ),
                       SizedBox(
-                        width: 30,
+                        width: 20,
                       ),
                       Column(
                         children: [

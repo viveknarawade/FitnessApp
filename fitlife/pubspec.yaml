@@ -43,7 +43,14 @@ flutter:
       - assets/video/lunges.mp4
       - assets/video/bicep_curl.mp4
       - assets/video/tricep.mp4
-      - assets/video/mountain_climbers.mp4
+      - assets/video/skipping.mp4
+      - assets/video/chestPress.mp4
+      - assets/video/planks.mp4
+      - assets/video/burpees.mp4
+      - assets/video/gluteBridges.mp4
+      - assets/video/jumpSquates.mp4
+      - assets/video/calfRaises.mp4
+      - assets/video/sideLunges.mp4
 
 
       - assets/workout/skipping.png

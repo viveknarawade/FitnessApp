@@ -99,7 +99,7 @@ class _FitnessNutritionForumState extends State<FitnessNutritionForum> {
                 ),
                 child: Text(
                   'Post',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
               SizedBox(height: 10),

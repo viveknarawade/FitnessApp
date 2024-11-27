@@ -1,8 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/userInfo.dart';
+import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,8 +44,14 @@ class _SignupState extends State<Signup> {
 
   Future<void> _pickImage() async {
     ImagePicker picker = ImagePicker();
+
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
     if (pickedImage != null) {
+      Uint8List imageBytes = await File(pickedImage.path).readAsBytes();
+
+      await MainApp().sqfliteObj?.insertPic(imageBytes);
+
       setState(() {
         _image = File(pickedImage.path);
       });
@@ -80,7 +89,7 @@ class _SignupState extends State<Signup> {
       );
 
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const Userinfo()),
+        MaterialPageRoute(builder: (context) =>  Userinfo(img: _image!,)),
       );
 
       _clearControllers();

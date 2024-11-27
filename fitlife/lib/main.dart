@@ -1,15 +1,7 @@
-import 'package:fitlife/Authentication/login.dart';
-import 'package:fitlife/Dashboard/editProfile.dart';
 import 'package:fitlife/Firebase/Config/config.dart';
-import 'package:fitlife/Firebase/Firestore/User/auth.dart';
-import 'package:fitlife/Firebase/Storage/fooddata.dart';
-
 import 'package:fitlife/Onboarding/splashScreen.dart';
-
 import 'package:fitlife/SqfLite/intializeSqfLite.dart';
-import 'package:fitlife/widget/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:fitlife/Dashboard/home_ui.dart';
 
 SqfLite? sqflite;
 void main() async {
@@ -20,6 +12,7 @@ void main() async {
   runApp(MainApp());
 }
 
+// ignore: must_be_immutable
 class MainApp extends StatelessWidget {
   MainApp({super.key});
   SqfLite? sqfliteObj = sqflite;

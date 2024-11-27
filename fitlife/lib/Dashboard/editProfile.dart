@@ -194,7 +194,7 @@ class _EditprofileState extends State {
                         weight: double.parse(weightController.text.trim()),
                         coloriesGoal: SessionData.coloriesGoal!);
                   }
-
+                  Navigator.of(context).pop();
                   setState(() {});
                 },
                 child: Container(
@@ -219,7 +219,7 @@ class _EditprofileState extends State {
                       ]),
                   child: Center(
                     child: Text(
-                      "Next",
+                      "Update",
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

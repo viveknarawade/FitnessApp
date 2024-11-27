@@ -22,6 +22,48 @@ class Exercisecard extends StatefulWidget {
 }
 
 class _ExerciseState extends State<Exercisecard> {
+  List fullbodyWorkoutVideo = [
+    "",
+    "",
+    " assets/video/push_up.mp4",
+    "assets/video/skipping.mp4",
+    "assets/video/lunges.mp4",
+    "assets/video/planks.mp4",
+    "assets/video/burpees.mp4",
+    "assets/video/squats.mp4"
+  ];
+  List lowerWorkoutVideo = [
+    "assets/video/gluteBridges.mp4",
+    "assets/video/squats.mp4",
+    "assets/video/lunges.mp4",
+    "",
+    "assets/video/jumpSquates.mp4",
+    "",
+    "assets/video/calfRaises.mp4",
+    "assets/video/sideLunges.mp4"
+  ];
+  List upperbodyWorkoutVideo = [
+    "assets/video/bicep_curl.mp4",
+    "",
+    "assets/video/chestPress.mp4",
+    "",
+    "assets/video/tricep.mp4",
+    "assets/video/push_up.mp4",
+    "",
+    "",
+  ];
+
+  workoutTypesVideo(int index) {
+    log("${widget.workoutTypeName}");
+    if (widget.workoutTypeName == 'FullBody') {
+      return fullbodyWorkoutVideo[index];
+    } else if (widget.workoutTypeName == 'LowerBody') {
+      return lowerWorkoutVideo[index];
+    } else {
+      return upperbodyWorkoutVideo[index];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
@@ -41,6 +83,7 @@ class _ExerciseState extends State<Exercisecard> {
                       description: widget.tempexerciseData[index]
                           ["description"],
                       workoutTypeName: widget.workoutTypeName,
+                      workoutVideo: workoutTypesVideo(index),
                     );
                   },
                 ),

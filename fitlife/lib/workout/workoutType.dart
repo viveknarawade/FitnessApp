@@ -25,6 +25,7 @@ class workoutType extends StatefulWidget {
 }
 
 class _FullbodyState extends State<workoutType> {
+ 
   List<Map<String, dynamic>> tempexerciseData = [];
   storeData() async {
     tempexerciseData =
@@ -132,21 +133,24 @@ class _FullbodyState extends State<workoutType> {
                         }));
                       },
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SvgPicture.asset(
                             "assets/icon/Calendar.svg",
                             width: 18,
                             height: 27,
                           ),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Text(
-                            "Schedule Workout     5/27, 9:00 AM",
+                            "Schedule Workout ",
                             style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                                 color: const Color(
                                     0xFF333333)), // Dark gray for text
                           ),
+                          Spacer(),
                           Icon(Icons.arrow_forward_ios,
                               color: const Color(
                                   0xFF666666)) // Softer gray for icon

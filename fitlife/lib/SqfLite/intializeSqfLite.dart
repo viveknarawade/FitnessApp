@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
@@ -50,6 +51,13 @@ class SqfLite {
           )
 """);
         log("WORKOUTSCHEDULE Table Created");
+
+        db.execute("""
+            CREATE TABLE PROFILEPIC(
+              PIC BLOB
+            )
+
+""");
       },
     );
 
@@ -137,16 +145,28 @@ class SqfLite {
     await localdb.insert("WORKOUTSCHEDULE",
         {"DATE": date, "TIME": time, "WORKOUTTYPE": workout});
 
-    List<Map<String, dynamic>> workoutData = await localdb
-        .query("WORKOUTSCHEDULE");
+    List<Map<String, dynamic>> workoutData =
+        await localdb.query("WORKOUTSCHEDULE");
     log("WORKOUT INSERTED $workoutData");
   }
 
- getWorkoutData()async{
+  getWorkoutData() async {
     Database localdb = await database;
 
-    List<Map<String, dynamic>> workoutData = await localdb
-        .query("WORKOUTSCHEDULE");
+    List<Map<String, dynamic>> workoutData =
+        await localdb.query("WORKOUTSCHEDULE");
     return workoutData;
+  }
+
+  insertPic(Uint8List picbyte) async {
+    Database localdb = await database;
+    await localdb.insert("PROFILEPIC", {"PIC": picbyte});
+    log("IMAGE BYTES $picbyte");
+  }
+
+  getPic() async {
+    Database localdb = await database;
+    List<Map<String, dynamic>> pic = await localdb.query("PROFILEPIC");
+    return pic[0]['PIC'];
   }
 }

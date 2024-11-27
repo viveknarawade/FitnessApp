@@ -13,11 +13,11 @@ import 'package:fitlife/widget/custom_navbar.dart';
 import 'package:fitlife/workout/workoutTracker.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
-import 'package:path/path.dart';
+
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
@@ -122,6 +122,7 @@ class _HomeUiState extends State<HomeUi> {
       });
     }
 
+    // Use setState after async operation completes
     setState(() {
       letestBurnMap = tempBurnMap;
     });
@@ -155,7 +156,7 @@ class _HomeUiState extends State<HomeUi> {
                       Text(
                         "Hello ,",
                         style: GoogleFonts.poppins(
-                            fontSize: 18, fontWeight: FontWeight.w400),
+                            fontSize: 23, fontWeight: FontWeight.w400),
                       ),
                       const Spacer(),
                       GestureDetector(
@@ -179,7 +180,9 @@ class _HomeUiState extends State<HomeUi> {
                   Text(
                     "${SessionData.userName!}",
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600, fontSize: 30),
+                        color: Color(0xFF5D7AEA),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 32),
                   ),
                   const SizedBox(
                     height: 16,
@@ -273,7 +276,7 @@ class _HomeUiState extends State<HomeUi> {
                                         const SizedBox(width: 8),
                                         Expanded(
                                           child: Text(
-                                            "Goal: $Goal",
+                                            "Goal: ${Goal.toInt()}",
                                             style: GoogleFonts.poppins(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w500,
@@ -534,104 +537,107 @@ class _HomeUiState extends State<HomeUi> {
                   const SizedBox(
                       height: 8), // Add consistent spacing explicitly
 
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: letestBurnMap.length,
-                    itemBuilder: (context, index) {
-                      final workout = letestBurnMap[index];
-                      return Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              spreadRadius: 1,
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Workout Icon
-                            Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(255, 102, 102, 1),
-                                shape: BoxShape.circle,
+                  RefreshIndicator(
+                    onRefresh: getLestestWorkoutData,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: letestBurnMap.length,
+                      itemBuilder: (context, index) {
+                        final workout = letestBurnMap[index];
+                        return Container(
+                          padding: const EdgeInsets.all(12),
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
                               ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  "assets/workout/fullbody.svg",
-                                  fit: BoxFit.contain,
-                                  width: 40,
-                                  height: 40,
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Workout Icon
+                              Container(
+                                width: 70,
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(255, 102, 102, 1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    "assets/workout/fullbody.svg",
+                                    fit: BoxFit.contain,
+                                    width: 40,
+                                    height: 40,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 15),
+                              const SizedBox(width: 15),
 
-                            // Workout Details
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    workout["WorkoutName"],
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
+                              // Workout Details
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      workout["WorkoutName"],
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    "${workout["burn"]} calories burned",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "${workout["burn"]} calories burned",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
+                                    const SizedBox(height: 10),
 
-                                  // Progress Bar
-                                  SimpleAnimationProgressBar(
-                                    borderRadius: BorderRadius.circular(20),
-                                    ratio:
-                                        workout["burn"] / 1000, // Example ratio
-                                    width: MediaQuery.of(context).size.width *
-                                        0.55,
-                                    height: 10,
-                                    direction: Axis.horizontal,
-                                    backgroundColor:
-                                        const Color.fromRGBO(247, 248, 248, 1),
-                                    foregrondColor:
-                                        const Color.fromRGBO(159, 158, 251, 1),
-                                    duration: const Duration(seconds: 2),
-                                    curve: Curves.easeInOut,
-                                  ),
-                                ],
+                                    // Progress Bar
+                                    SimpleAnimationProgressBar(
+                                      borderRadius: BorderRadius.circular(20),
+                                      ratio: workout["burn"] /
+                                          1000, // Example ratio
+                                      width: MediaQuery.of(context).size.width *
+                                          0.55,
+                                      height: 10,
+                                      direction: Axis.horizontal,
+                                      backgroundColor: const Color.fromRGBO(
+                                          247, 248, 248, 1),
+                                      foregrondColor: const Color.fromRGBO(
+                                          159, 158, 251, 1),
+                                      duration: const Duration(seconds: 2),
+                                      curve: Curves.easeInOut,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
 
-                            // Next Button
-                            GestureDetector(
-                              child: SvgPicture.asset(
-                                "assets/icon/next-btn.svg",
-                                width: 30,
-                                height: 30,
+                              // Next Button
+                              GestureDetector(
+                                child: SvgPicture.asset(
+                                  "assets/icon/next-btn.svg",
+                                  width: 30,
+                                  height: 30,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

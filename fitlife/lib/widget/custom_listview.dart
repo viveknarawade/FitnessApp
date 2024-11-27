@@ -24,8 +24,9 @@ class _CustomListviewState extends State<CustomListview> {
       itemBuilder: (context, index) {
         final meal = widget.data[index];
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
           child: Card(
+            color: Colors.lightBlue[50],
             elevation: 3,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

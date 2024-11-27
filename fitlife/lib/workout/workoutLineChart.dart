@@ -60,7 +60,9 @@ class _DemoState extends State<Workoutlinechart> {
           double.tryParse(weeklyBurnCalories[dayOrder[i]] ?? '0') ?? 0;
       // Assuming 2000 calories is 100% for visualization
       final percentage = (calories / 2000) * 100;
-      spots.add(FlSpot(i.toDouble(), percentage.clamp(0, 100)));
+      // Formatting percentage to two decimal places
+      final formattedPercentage = double.parse(percentage.toStringAsFixed(2));
+      spots.add(FlSpot(i.toDouble(), formattedPercentage.clamp(0, 100)));
     }
 
     return spots;

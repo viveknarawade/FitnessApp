@@ -44,6 +44,8 @@ class WorkoutTracker extends StatefulWidget {
     "assets/workout/latePullDown.png",
   ];
 
+  
+
   @override
   State<WorkoutTracker> createState() => _WorkoutTrackerState();
 }

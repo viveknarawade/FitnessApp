@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/signUp.dart';
@@ -10,7 +11,8 @@ import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 import 'package:fitlife/Firebase/Firestore/User/goalGenration.dart'; // Import GoalGeneration class
 
 class Userinfo extends StatefulWidget {
-  const Userinfo({super.key});
+  File img;
+  Userinfo({super.key, required this.img});
 
   @override
   State<Userinfo> createState() => _UserinfoState();
@@ -176,7 +178,7 @@ class _UserinfoState extends State<Userinfo> {
 
           // Navigate to Login screen
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) =>  Login()),
+            MaterialPageRoute(builder: (context) => Login()),
           );
           clearController();
           setState(() {});
