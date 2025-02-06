@@ -132,11 +132,15 @@ class _HomeUiState extends State<HomeUi> {
   Widget build(context) {
     double progressVal = step / stepsGoal;
     getCalories();
-    // Calculate the total to derive percentage values
+    // Calculate the total  percentage values
     double total = Goal + Food + Exercise;
     double goalPercentage = (Goal / total) * 100;
     double foodPercentage = (Food / total) * 100;
     double exercisePercentage = (Exercise / total) * 100;
+
+    double remainingPercentage = (Goal - Exercise) - Food;
+    log(remainingPercentage.toString());
+
     return Stack(children: [
       Scaffold(
         body: RefreshIndicator(
@@ -319,6 +323,27 @@ class _HomeUiState extends State<HomeUi> {
                                         Expanded(
                                           child: Text(
                                             "Exercise: $Exercise",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        // SvgPicture.asset(
+                                        //   "assets/icon/fire.svg",
+                                        //   color: const Color(0xFF7C75FF),
+                                        //   width: 24,
+                                        //   height: 24,
+                                        // ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            "Remaining: ${remainingPercentage.toInt()}",
                                             style: GoogleFonts.poppins(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w500,

@@ -18,9 +18,9 @@ class MainApp extends StatelessWidget {
   SqfLite? sqfliteObj = sqflite;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Splashscreen()),
+      home: Scaffold(body:  Splashscreen()),
     );
   }
 }

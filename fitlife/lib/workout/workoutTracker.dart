@@ -1,9 +1,11 @@
-import 'package:fitlife/Dashboard/home_ui.dart';
-import 'package:fitlife/widget/custom_navbar.dart';
+
 import 'package:fitlife/workout/workoutCard.dart';
 import 'package:fitlife/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../Meal_Planner/mealLineChart.dart';
+import 'line_chart_workout.dart';
 
 class WorkoutTracker extends StatefulWidget {
   WorkoutTracker({super.key});
@@ -87,7 +89,7 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
                 child: Padding(
                   padding: const EdgeInsets.only(
                       top: 120.0, left: 10, right: 30, bottom: 40),
-                  child: Workoutlinechart(),
+                  child:WorkoutLineChart(),
                 ),
               ),
             ),

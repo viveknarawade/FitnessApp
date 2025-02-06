@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:fitlife/Authentication/signUp.dart';
 import 'package:fitlife/Dashboard/home_ui.dart';
 import 'package:fitlife/Firebase/Firestore/User/auth.dart';
-import 'package:fitlife/SqfLite/intializeSqfLite.dart';
+
 import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';

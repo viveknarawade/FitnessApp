@@ -1,5 +1,6 @@
 import 'package:fitlife/Dashboard/feed.dart';
 import 'package:fitlife/Dashboard/groups.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,15 +14,14 @@ class Community extends StatefulWidget {
 
 class _CommunityState extends State {
   String whichTab = "Feed";
-ChagingNavigationtan(){
-  if(whichTab=="Feed"){
-        Feed();
-      }else if(whichTab=="Groups"){
-        Groups();
-      } else{
-        print("Invalid Tab"); 
-      }
-}
+  ChagingNavigationtan() {
+    if (whichTab == "Feed") {
+      Feed();
+    } else {
+      print("Invalid Tab");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +43,8 @@ ChagingNavigationtan(){
                     },
                   ),
                 );
-                whichTab="Feed";
-                setState(() {
-                  
-                });
+                whichTab = "Feed";
+                setState(() {});
               },
               child: Text(
                 "feed",
@@ -64,12 +62,9 @@ ChagingNavigationtan(){
                     },
                   ),
                 );
-                whichTab="Groups";
-                setState(() {
-                  
-                });
+                whichTab = "Groups";
+                setState(() {});
               },
-
               child: Text(
                 "Groups",
                 style: GoogleFonts.poppins(
@@ -86,11 +81,9 @@ ChagingNavigationtan(){
                     },
                   ),
                 );
-                whichTab="";
-setState(() {
-  
-});              },
-
+                whichTab = "";
+                setState(() {});
+              },
               child: Text(
                 "Workout Partner",
                 style: GoogleFonts.poppins(

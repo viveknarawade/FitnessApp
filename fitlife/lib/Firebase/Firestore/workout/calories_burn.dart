@@ -28,15 +28,13 @@ class CaloriesBurn {
         return '';
     }
   }
-
-  // Helper method to generate document ID for a specific date
-  String _generateDocIdForDate(DateTime date) {
-    String dayName = _getDayName(date);
-    String formattedDate = "$dayName-${date.year}-${date.month}-${date.day}";
-    log("Generated docId: $formattedDate");
-    return formattedDate;
-  }
-
+String _generateDocIdForDate(DateTime date) {
+  String dayName = _getDayName(date);
+  // Pad single-digit months and days with a leading zero
+  String formattedDate = "$dayName-${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  log("Generated docId: $formattedDate");
+  return formattedDate;
+}
   // Add calories for current day
   Future<void> addDayBurnCaloriesData(String caloriesString) async {
     await getCaloriesBurnData();

@@ -30,14 +30,13 @@ class CaloriesIntake {
     }
   }
 
-  // Helper method to generate document ID for a specific date
-  String _generateDocIdForDate(DateTime date) {
-    String dayName = _getDayName(date);
-    String formattedDate = "$dayName-${date.year}-${date.month}-${date.day}";
-    log("Generated docId: $formattedDate");
-    return formattedDate;
-  }
-
+String _generateDocIdForDate(DateTime date) {
+  String dayName = _getDayName(date);
+  // Pad single-digit months and days with a leading zero
+  String formattedDate = "$dayName-${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  log("Generated docId: $formattedDate");
+  return formattedDate;
+}
   // Add calories for current day
   Future<void> addDayCaloriesData(String caloriesString) async {
     await getCaloriesIntakeData();
@@ -45,6 +44,9 @@ class CaloriesIntake {
 
     String dayAndDateId = MealIntake().generateDayDateDocumentId();
     log("Adding calories with docId: $dayAndDateId");
+
+    // Add more detailed logging
+    log("SessionData.id___________________________: ${SessionData.id}");
 
     try {
       await db
@@ -81,7 +83,6 @@ class CaloriesIntake {
   Future<int> getCaloriesIntakeData() async {
     try {
       String dayAndDateId = MealIntake().generateDayDateDocumentId();
- 
 
       var docSnapshot = await db
           .collection("Calories")
@@ -98,7 +99,6 @@ class CaloriesIntake {
         var dailyIntake = docSnapshot.data()?["DailyIntake"] ?? "0";
         dayCalories = int.tryParse(dailyIntake.toString()) ?? 0;
       }
-
     } catch (e) {
       log("Error fetching calorie intake data: $e");
     }
@@ -108,6 +108,7 @@ class CaloriesIntake {
 
   // Updated method to fetch weekly calories with proper handling of missing data
   Future<Map<String, String>> getWeeklyCaloriesData() async {
+    
     Map<String, String> weeklyCalories = {
       'Monday': '0',
       'Tuesday': '0',
@@ -131,8 +132,6 @@ class CaloriesIntake {
         String docId = _generateDocIdForDate(currentDate);
         String dayName = _getDayName(currentDate);
 
-       
-
         try {
           var docSnapshot = await db
               .collection("Calories")
@@ -146,7 +145,6 @@ class CaloriesIntake {
           if (docSnapshot.exists) {
             var dailyIntake = docSnapshot.data()?["DailyIntake"] ?? "0";
             weeklyCalories[dayName] = dailyIntake;
-       
           } else {
             log("No data found for $dayName with docId: $docId");
           }
@@ -154,7 +152,6 @@ class CaloriesIntake {
           log("Error fetching data for $dayName: $e");
         }
       }
-
     } catch (e) {
       log("Error in getWeeklyCaloriesData: $e");
     }

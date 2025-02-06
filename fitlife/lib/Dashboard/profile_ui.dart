@@ -148,29 +148,6 @@ class _ProfileUiState extends State<ProfileUi> {
               ],
             ),
           ),
-
-          // Edit Button
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Editprofile()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-            child: Text(
-              'Edit',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -369,4 +346,6 @@ class _ProfileUiState extends State<ProfileUi> {
       ),
     );
   }
+
+  
 }

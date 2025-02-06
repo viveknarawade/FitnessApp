@@ -10,6 +10,7 @@ import 'package:fitlife/Firebase/Firestore/User/auth.dart';
 
 import 'package:fitlife/Firebase/Firestore/User/goalGenration.dart'; // Import GoalGeneration class
 
+// ignore: must_be_immutable
 class Userinfo extends StatefulWidget {
   File img;
   Userinfo({super.key, required this.img});

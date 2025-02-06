@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:fitlife/Authentication/login.dart';
 import 'package:fitlife/Authentication/userInfo.dart';
-import 'package:fitlife/Firebase/Firestore/User/auth.dart';
+
 import 'package:fitlife/main.dart';
 import 'package:fitlife/widget/customSnackBar.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +89,10 @@ class _SignupState extends State<Signup> {
       );
 
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) =>  Userinfo(img: _image!,)),
+        MaterialPageRoute(
+            builder: (context) => Userinfo(
+                  img: _image!,
+                )),
       );
 
       _clearControllers();
