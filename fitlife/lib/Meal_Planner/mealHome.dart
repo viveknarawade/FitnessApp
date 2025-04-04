@@ -43,6 +43,8 @@ class _MealhomeState extends State<Mealhome> {
     MealIntake mealIntake = MealIntake();
     await mealIntake.getMealData();
 
+    if (!mounted) return; // <-- Prevent setState() if widget is disposed
+
     if (category == "Dinner") {
       localMealData = mealIntake.mealDinnerData;
     } else if (category == "Lunch") {
@@ -50,7 +52,8 @@ class _MealhomeState extends State<Mealhome> {
     } else {
       localMealData = mealIntake.mealBreakfastData;
     }
-    setState(() {});
+
+    setState(() {}); // Only update state if widget is still in the tree
   }
 
   @override
@@ -61,10 +64,11 @@ class _MealhomeState extends State<Mealhome> {
     reload();
   }
 
-  reload() {
-    WeeklyCaloriesChart();
-    setState(() {});
-  }
+reload() {
+  WeeklyCaloriesChart(); // This doesn’t modify state
+  setState(() {}); // Unnecessary
+}
+
 
   @override
   Widget build(BuildContext context) {

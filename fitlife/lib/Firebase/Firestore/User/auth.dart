@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitlife/Authentication/signUp.dart';
@@ -14,11 +16,14 @@ class Authservice {
     db.collection("User").add(temp);
   }
 
-  Future<bool> authenticate(String userName, String password) async {
+  Future<bool> authenticate(String email, String password) async {
     QuerySnapshot response = await db.collection("User").get();
 
     for (int i = 0; i < response.docs.length; i++) {
-      if (response.docs[i]["userName"] == userName &&
+      log("${response.docs[i]["email"] + "=" + email}\n");
+      log("${response.docs[i]["password"] + "=" + password}\n");
+
+      if (response.docs[i]["email"] == email &&
           response.docs[i]["password"] == password) {
         tempUserData.add(
           {
@@ -48,8 +53,6 @@ class Authservice {
             gender: response.docs[i]["gender"],
           ),
         );
-        print("${response.docs[i]["userName"] == userName}");
-        print("${response.docs[i]["password"] == password}");
 
         return true;
       }

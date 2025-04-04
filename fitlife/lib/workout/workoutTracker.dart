@@ -1,4 +1,3 @@
-
 import 'package:fitlife/workout/workoutCard.dart';
 import 'package:fitlife/workout/workoutLineChart.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +45,6 @@ class WorkoutTracker extends StatefulWidget {
     "assets/workout/latePullDown.png",
   ];
 
-  
-
   @override
   State<WorkoutTracker> createState() => _WorkoutTrackerState();
 }
@@ -88,8 +85,8 @@ class _WorkoutTrackerState extends State<WorkoutTracker> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 120.0, left: 10, right: 30, bottom: 40),
-                  child:WorkoutLineChart(),
+                      top: 110.0, left: 10, right: 30, bottom: 40),
+                  child: WorkoutLineChart(),
                 ),
               ),
             ),

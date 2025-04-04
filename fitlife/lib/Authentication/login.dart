@@ -26,6 +26,9 @@ class _LoginState extends State<Login> {
 
   void _login() async {
     if (_formKey.currentState!.validate()) {
+      log("username = ${_userNameController.text}");
+      log("password = ${_passwordController.text}");
+
       bool isAuthenticated = await Authservice().authenticate(
         _userNameController.text.trim(),
         _passwordController.text.trim(),
